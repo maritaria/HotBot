@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using TwitchDungeon.Model;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading;
-using System.IO;
-using TwitchDungeon.DataStorage;
 
 namespace TwitchDungeon
 {
@@ -19,27 +12,41 @@ namespace TwitchDungeon
 
 		private object _consoleLock = new object();
 		public IrcClient IrcClient { get; }
+		public TwitchContext Database { get; private set; }
 
 		public string PrimaryChannel { get; }
-		
+
 		public TwitchBot(string primaryChannel)
 		{
 			PrimaryChannel = primaryChannel;
 			IrcClient = new IrcClient(Hostname, 6667);
 			IrcClient.ChatMessageReceived += IrcClient_ChatMessageReceived;
 			IrcClient.Connect();
+			InitializeDatabaseConnection();
 			WriterMethod();
+		}
+
+		private void InitializeDatabaseConnection()
+		{
+			Database = new TwitchContext();
 		}
 
 		private void IrcClient_ChatMessageReceived(object sender, IrcChatMessageEventArgs e)
 		{
-			IrcClient.SendMessage(PrimaryChannel, "Hello World!");
-
-			User user = new User(e.Username);
-			user.Money = 100;
-
-			RepositoryHelper.Users.Save(user);
-
+			User user = Database.Users.Where(u => u.Username == e.Username).FirstOrDefault();
+			if (user == null)
+			{
+				user = new User(e.Username);
+				user.Money = 100;
+				IrcClient.SendMessage(PrimaryChannel, "I have created an account for you :D Enjoy the money (+100)");
+				Database.Users.Add(user);
+			}
+			else
+			{
+				user.Money += 100;
+				IrcClient.SendMessage(PrimaryChannel, $"You deserve a raise ({user.Money})");
+			}
+			Database.SaveChanges();
 		}
 
 		private void WriterMethod()
