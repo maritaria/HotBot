@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using TwitchDungeon.Services.DataStorage;
 using TwitchDungeon.Services.Irc;
-using TwitchDungeon.Services.Messages;
 using TwitchDungeon.Services.Util;
 
 namespace TwitchDungeon.Services.Commands

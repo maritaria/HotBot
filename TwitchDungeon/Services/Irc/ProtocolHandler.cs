@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using TwitchDungeon.Services.DataStorage;
-using TwitchDungeon.Services.Messages;
 using TwitchDungeon.Services.Util;
 
 namespace TwitchDungeon.Services.Irc

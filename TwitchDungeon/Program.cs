@@ -5,7 +5,7 @@ using System.Reflection;
 using TwitchDungeon.Services.Commands;
 using TwitchDungeon.Services.DataStorage;
 using TwitchDungeon.Services.Irc;
-using TwitchDungeon.Services.Messages;
+using TwitchDungeon.Services;
 
 namespace TwitchDungeon
 {

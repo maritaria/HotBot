@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Services\Commands\CommandInitializer.cs" />
+    <Compile Include="Services\Commands\CommandRedirecter.cs" />
     <Compile Include="Services\DataStorage\Channel.cs" />
     <Compile Include="Services\DataStorage\DbContextDataStore.cs" />
     <Compile Include="Services\DataStorage\Permissions\Authorizer.cs" />
@@ -88,9 +89,9 @@
     <Compile Include="Services\Irc\ProtocolHandler.cs" />
     <Compile Include="Services\Irc\SendChatMessage.cs" />
     <Compile Include="Services\Irc\SendIrcMessage.cs" />
-    <Compile Include="Services\Messages\MessageHandler.cs" />
-    <Compile Include="Services\Messages\DictionaryMessageBus.cs" />
-    <Compile Include="Services\Messages\MessageBus.cs" />
+    <Compile Include="Services\MessageHandler.cs" />
+    <Compile Include="Services\DictionaryMessageBus.cs" />
+    <Compile Include="Services\MessageBus.cs" />
     <Compile Include="Services\Util\StringExtensions.cs" />
     <Compile Include="ThrottleController.cs" />
     <Compile Include="TwitchBot.cs" />

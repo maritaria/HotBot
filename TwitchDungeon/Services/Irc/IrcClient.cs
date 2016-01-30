@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
 using TwitchDungeon.Services.DataStorage;
-using TwitchDungeon.Services.Messages;
 
 namespace TwitchDungeon.Services.Irc
 {
