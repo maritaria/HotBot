@@ -30,7 +30,7 @@ namespace TwitchDungeon
 			container.RegisterType<MessageBus, DictionaryMessageBus>(new ContainerControlledLifetimeManager());
 			container.RegisterType<TwitchBot, TwitchBot>(new ContainerControlledLifetimeManager());
 
-			container.RegisterType<CommandHandler, SimpleCommandHandler>(new ContainerControlledLifetimeManager());
+			container.RegisterType<CommandListener, SimpleCommandHandler>(new ContainerControlledLifetimeManager());
 			
 			var bot = container.Resolve<TwitchBot>();
 

@@ -7,7 +7,7 @@ namespace TwitchDungeon.Services.Irc
 {
 	public class ProtocolHandler : MessageHandler<IrcMessageReceived>
 	{
-		public DataStore Database { get; }
+		public DataStore DataStore { get; }
 		public MessageBus Bus { get; }
 
 		public ProtocolHandler(DataStore datastore, MessageBus bus)
@@ -20,7 +20,7 @@ namespace TwitchDungeon.Services.Irc
 			{
 				throw new ArgumentNullException("bus");
 			}
-			Database = datastore;
+			DataStore = datastore;
 			Bus = bus;
 			bus.Subscribe(this);
 		}
@@ -67,7 +67,7 @@ namespace TwitchDungeon.Services.Irc
 			string chatmessage = chatParts[1];
 
 			User user = GetUser(username);
-			Channel channel = Database.Channels.FirstOrDefault(c => c.Name == channelName);
+			Channel channel = DataStore.Channels.FirstOrDefault(c => c.Name == channelName);
 
 			return new IrcMessageEnhanced(channel, user, chatmessage);
 		}

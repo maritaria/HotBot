@@ -19,13 +19,21 @@ namespace TwitchDungeon.Services.Irc
 		public string Hostname { get; private set; }
 		public int Port { get; private set; }
 		public string Username { get; private set; }
-		public DataStore Database { get; }
+		public DataStore DataStore { get; }
 		public MessageBus Bus { get; }
 
-		public IrcClient(DataStore database, MessageBus bus)
+		public IrcClient(MessageBus bus, DataStore dataStore)
 		{
-			Database = database;
+			if (bus == null)
+			{
+				throw new ArgumentNullException("bus");
+			}
+			if (dataStore == null)
+			{
+				throw new ArgumentNullException("dataStore");
+			}
 			Bus = bus;
+			DataStore = dataStore;
 		}
 
 		public void Connect(string hostname, UInt16 port)
@@ -83,12 +91,12 @@ namespace TwitchDungeon.Services.Irc
 
 		public Channel GetChannel(string channelName)
 		{
-			Channel channel = Database.Channels.FirstOrDefault(c => c.Name == channelName);
+			Channel channel = DataStore.Channels.FirstOrDefault(c => c.Name == channelName);
 			if (channel == null)
 			{
 				channel = new Channel(channelName);
-				Database.Channels.Add(channel);
-				Database.SaveChanges();
+				DataStore.Channels.Add(channel);
+				DataStore.SaveChanges();
 			}
 			else
 			{

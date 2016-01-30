@@ -18,6 +18,7 @@ namespace TwitchDungeon.Services.DataStorage
 		public void Initialize()
 		{
 			//TODO: do the heavy lifting
+			Database.Connection.Open();
 		}
 	}
 }

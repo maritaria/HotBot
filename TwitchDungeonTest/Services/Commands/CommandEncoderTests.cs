@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using TwitchDungeon.Services.DataStorage;
 using TwitchDungeon.Services.Irc;
-using TwitchDungeon.Services.Messages;
 
 namespace TwitchDungeon.Services.Commands.Tests
 {

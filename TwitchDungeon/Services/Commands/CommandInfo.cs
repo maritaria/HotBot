@@ -21,7 +21,7 @@ namespace TwitchDungeon.Services.Commands
 		/// Gets or sets the entity holding the permissions available for the command
 		/// </summary>
 		public Authorizer Authorizer { get; set; }
-		
+
 		/// <summary>
 		/// The name of the command
 		/// </summary>
@@ -32,10 +32,8 @@ namespace TwitchDungeon.Services.Commands
 		/// </summary>
 		public string ArgumentText { get; }
 
-
 		public CommandInfo(Channel channel, User sender, string commandName, string argumentText) : this(channel, sender, sender, commandName, argumentText)
 		{
-
 		}
 
 		public CommandInfo(Channel channel, User sender, User authorizer, string commandName, string argumentText)
@@ -45,6 +43,36 @@ namespace TwitchDungeon.Services.Commands
 			Authorizer = authorizer;
 			CommandName = commandName;
 			ArgumentText = argumentText;
+		}
+
+		public static bool IsValidCommandName(string commandName)
+		{
+			try
+			{
+				VerifyCommandName(commandName);
+			}
+			catch(InvalidCommandNameException)
+			{
+				return false;
+			}
+			return true;
+		}
+		
+		//TODO: Create new type to encapsulate commandname behaviour
+		public static void VerifyCommandName(string commandName)
+		{
+			if (commandName == null)
+			{
+				throw new InvalidCommandNameException("Command name cannot be null");
+			}
+			if (commandName == string.Empty)
+			{
+				throw new InvalidCommandNameException("Command name cannot be empty");
+			}
+			if (commandName.Any(char.IsWhiteSpace))
+			{
+				throw new InvalidCommandNameException("Command name cannot contain whitespace");
+			}
 		}
 	}
 }

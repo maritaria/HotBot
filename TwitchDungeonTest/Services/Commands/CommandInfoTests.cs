@@ -41,5 +41,40 @@ namespace TwitchDungeon.Services.Commands.Tests
 			Assert.AreEqual(command, info.CommandName, "CommandName not equal");
 			Assert.AreEqual(args, info.ArgumentText, "ArgumentText not equal");
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(InvalidCommandNameException))]
+		public void VerifyCommandName_Null()
+		{
+			CommandInfo.VerifyCommandName(null);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(InvalidCommandNameException))]
+		public void VerifyCommandName_Empty()
+		{
+			CommandInfo.VerifyCommandName("");
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(InvalidCommandNameException))]
+		public void VerifyCommandName_ContainsWhitespace()
+		{
+			CommandInfo.VerifyCommandName("hello world");
+		}
+
+		[TestMethod]
+		public void VerifyCommandName_Valid()
+		{
+			CommandInfo.VerifyCommandName("a");
+			CommandInfo.VerifyCommandName("hello");
+			CommandInfo.VerifyCommandName("can");
+			CommandInfo.VerifyCommandName("asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasd");
+			CommandInfo.VerifyCommandName("hello_q");
+			CommandInfo.VerifyCommandName("hello-q");
+			CommandInfo.VerifyCommandName("hello'q");
+			CommandInfo.VerifyCommandName("hello\"q");
+			CommandInfo.VerifyCommandName("hello\\q");
+		}
 	}
 }

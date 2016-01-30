@@ -70,11 +70,12 @@
   <ItemGroup>
     <Compile Include="Services\Commands\CommandInitializer.cs" />
     <Compile Include="Services\Commands\CommandRedirecter.cs" />
+    <Compile Include="Services\Commands\InvalidCommandNameException.cs" />
     <Compile Include="Services\DataStorage\Channel.cs" />
     <Compile Include="Services\DataStorage\DbContextDataStore.cs" />
     <Compile Include="Services\DataStorage\Permissions\Authorizer.cs" />
     <Compile Include="Services\DataStorage\Permissions\UserRole.cs" />
-    <Compile Include="Services\Commands\CommandHandler.cs" />
+    <Compile Include="Services\Commands\CommandListener.cs" />
     <Compile Include="Services\Commands\CommandEncoder.cs" />
     <Compile Include="Services\Commands\CommandInfo.cs" />
     <Compile Include="Services\Commands\SimpleCommandHandler.cs" />

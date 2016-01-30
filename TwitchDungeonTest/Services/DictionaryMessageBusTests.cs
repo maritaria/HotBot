@@ -1,10 +1,9 @@
-﻿using TwitchDungeon.Services.Messages;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using Moq;
 
-namespace TwitchDungeon.Services.Messages.Tests
+namespace TwitchDungeon.Services.Tests
 {
 	[TestClass()]
 	public class DictionaryMessageBusTests

@@ -68,8 +68,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Commands\CommandEncoderTests.cs" />
     <Compile Include="Services\Commands\CommandInfoTests.cs" />
+    <Compile Include="Services\Commands\CommandRedirecterTests.cs" />
+    <Compile Include="Services\DataStorage\UserTests.cs" />
     <Compile Include="Services\Irc\SendChatMessageTests.cs" />
-    <Compile Include="Services\Messages\DictionaryMessageBusTests.cs" />
+    <Compile Include="Services\DictionaryMessageBusTests.cs" />
     <Compile Include="Services\Util\StringExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
