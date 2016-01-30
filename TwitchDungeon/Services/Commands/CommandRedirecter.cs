@@ -6,8 +6,9 @@ namespace TwitchDungeon.Services.Commands
 {
 	public class CommandRedirecter : MessageHandler<CommandInfo>
 	{
-		private Dictionary<string, HashSet<CommandListener>> _handlers = new Dictionary<string, HashSet<CommandListener>>();
-		private object _handlersLock = new object();
+		private Dictionary<string, HashSet<CommandListener>> _listeners = new Dictionary<string, HashSet<CommandListener>>();
+		private object _listenersLock = new object();
+
 		public MessageBus Bus { get; }
 
 		public CommandRedirecter(MessageBus bus)
@@ -20,44 +21,44 @@ namespace TwitchDungeon.Services.Commands
 			Bus.Subscribe(this);
 		}
 
-		public void AddHandler(string commandName, CommandListener listener)
+		public void AddListener(string commandName, CommandListener listener)
 		{
 			CommandInfo.VerifyCommandName(commandName);
 			if (listener == null)
 			{
 				throw new ArgumentNullException("listener");
 			}
-			lock (_handlersLock)
+			lock (_listenersLock)
 			{
-				if (!_handlers.ContainsKey(commandName))
+				if (!_listeners.ContainsKey(commandName))
 				{
 					var listeners = new HashSet<CommandListener>();
 					listeners.Add(listener);
-					_handlers[commandName] = listeners;
+					_listeners[commandName] = listeners;
 				}
 				else
 				{
-					_handlers[commandName].Add(listener);
+					_listeners[commandName].Add(listener);
 				}
 			}
 		}
 
-		public void RemoveHandler(string commandName, CommandListener listener)
+		public void RemoveListener(string commandName, CommandListener listener)
 		{
 			CommandInfo.VerifyCommandName(commandName);
 			if (listener == null)
 			{
 				throw new ArgumentNullException("listener");
 			}
-			lock (_handlersLock)
+			lock (_listenersLock)
 			{
-				if (_handlers.ContainsKey(commandName))
+				if (_listeners.ContainsKey(commandName))
 				{
-					HashSet<CommandListener> set = _handlers[commandName];
+					HashSet<CommandListener> set = _listeners[commandName];
 					set.Remove(listener);
 					if (set.Count == 0)
 					{
-						_handlers.Remove(commandName);
+						_listeners.Remove(commandName);
 					}
 				}
 			}
@@ -70,13 +71,13 @@ namespace TwitchDungeon.Services.Commands
 				throw new ArgumentNullException("command");
 			}
 			CommandListener[] array = null;
-			lock (_handlers)
+			lock (_listeners)
 			{
-				if (_handlers.ContainsKey(command.CommandName))
+				if (_listeners.ContainsKey(command.CommandName))
 				{
-					var count = _handlers[command.CommandName].Count;
+					var count = _listeners[command.CommandName].Count;
 					array = new CommandListener[count];
-					_handlers[command.CommandName].CopyTo(array, 0);
+					_listeners[command.CommandName].CopyTo(array, 0);
 				}
 			}
 			if (array != null)

@@ -68,7 +68,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\Commands\CommandInitializer.cs" />
+    <Compile Include="Plugins\Lottery\JoinLotteryListener.cs" />
+    <Compile Include="Plugins\Lottery\Lottery.cs" />
+    <Compile Include="Plugins\Lottery\LotteryCommandListener.cs" />
+    <Compile Include="Plugins\Lottery\LotteryController.cs" />
+    <Compile Include="Plugins\Lottery\LotteryException.cs" />
+    <Compile Include="Plugins\Lottery\LotteryState.cs" />
+    <Compile Include="Plugins\Lottery\LotteryWinnerFound.cs" />
+    <Compile Include="Plugins\Lottery\StartLotteryListener.cs" />
     <Compile Include="Services\Commands\CommandRedirecter.cs" />
     <Compile Include="Services\Commands\InvalidCommandNameException.cs" />
     <Compile Include="Services\DataStorage\Channel.cs" />
@@ -80,6 +87,7 @@
     <Compile Include="Services\Commands\CommandInfo.cs" />
     <Compile Include="Services\Commands\SimpleCommandHandler.cs" />
     <Compile Include="Services\DataStorage\DataStore.cs" />
+    <Compile Include="Services\DataStorage\SaveChanges.cs" />
     <Compile Include="Services\Irc\IrcLogger.cs" />
     <Compile Include="Services\Irc\IrcMessageEnhanced.cs" />
     <Compile Include="Services\Irc\IrcClient.cs" />

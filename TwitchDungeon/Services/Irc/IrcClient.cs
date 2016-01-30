@@ -7,7 +7,7 @@ using TwitchDungeon.Services.DataStorage;
 
 namespace TwitchDungeon.Services.Irc
 {
-	public class IrcClient : IDisposable
+	public class IrcClient : IDisposable, MessageHandler<SendIrcMessage>, MessageHandler<SendChatMessage>
 	{
 		private object _tcpClientLock = new object();
 		private TcpClient _tcpClient;
@@ -33,6 +33,8 @@ namespace TwitchDungeon.Services.Irc
 				throw new ArgumentNullException("dataStore");
 			}
 			Bus = bus;
+			Bus.Subscribe<SendIrcMessage>(this);
+			Bus.Subscribe<SendChatMessage>(this);
 			DataStore = dataStore;
 		}
 
@@ -100,7 +102,6 @@ namespace TwitchDungeon.Services.Irc
 			}
 			else
 			{
-
 			}
 			return channel;
 		}
@@ -167,7 +168,7 @@ namespace TwitchDungeon.Services.Irc
 		}
 
 		#endregion IDisposable Support
-		
+
 		private void Send(params string[] commands)
 		{
 			foreach (string line in commands)
@@ -185,6 +186,20 @@ namespace TwitchDungeon.Services.Irc
 				string message = _reader.ReadLine();
 				Bus.Publish(new IrcMessageReceived(message));
 			}
+		}
+
+		void MessageHandler<SendIrcMessage>.HandleMessage(SendIrcMessage message)
+		{
+			if (message == null)
+			{
+				throw new ArgumentNullException("message");
+			}
+			Send(message.IrcCommand);
+		}
+
+		void MessageHandler<SendChatMessage>.HandleMessage(SendChatMessage message)
+		{
+			(this as MessageHandler<SendIrcMessage>).HandleMessage(message);
 		}
 	}
 }

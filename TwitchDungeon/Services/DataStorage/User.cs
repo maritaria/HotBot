@@ -14,7 +14,7 @@ namespace TwitchDungeon.Services.DataStorage
 		[StringLength(25)]
 		public string Username { get; private set; }
 
-		public long Money { get; set; }
+		public double Money { get; set; }
 
 		public UserRole Role { get; set; }
 

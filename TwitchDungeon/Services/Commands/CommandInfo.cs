@@ -34,10 +34,29 @@ namespace TwitchDungeon.Services.Commands
 
 		public CommandInfo(Channel channel, User sender, string commandName, string argumentText) : this(channel, sender, sender, commandName, argumentText)
 		{
+			//TODO: Expand unit tests
 		}
 
 		public CommandInfo(Channel channel, User sender, User authorizer, string commandName, string argumentText)
 		{
+			if (channel == null)
+			{
+				throw new ArgumentNullException("channel");
+			}
+			if (sender == null)
+			{
+				throw new ArgumentNullException("sender");
+			}
+			if (authorizer == null)
+			{
+				throw new ArgumentNullException("authorizer");
+			}
+			VerifyCommandName(commandName);
+			if (argumentText == null)
+			{
+				throw new ArgumentNullException("argumentText");
+			}
+
 			Channel = channel;
 			User = sender;
 			Authorizer = authorizer;

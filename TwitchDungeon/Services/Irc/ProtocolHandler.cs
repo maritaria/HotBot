@@ -67,14 +67,26 @@ namespace TwitchDungeon.Services.Irc
 			string chatmessage = chatParts[1];
 
 			User user = GetUser(username);
-			Channel channel = DataStore.Channels.FirstOrDefault(c => c.Name == channelName);
+			Channel channel = GetChannel(channelName);
 
 			return new IrcMessageEnhanced(channel, user, chatmessage);
 		}
 
 		private User GetUser(string username)
 		{
-			return null;
+			User user = DataStore.Users.FirstOrDefault(u => u.Username == username);
+			if (user == null)
+			{
+				user = new User(username);//TODO: Add new user message
+				DataStore.Users.Add(user);
+				DataStore.SaveChanges();
+			}
+			return user;
+		}
+
+		private Channel GetChannel(string channelName)
+		{
+			return DataStore.Channels.FirstOrDefault(c => c.Name == channelName);
 		}
 	}
 }

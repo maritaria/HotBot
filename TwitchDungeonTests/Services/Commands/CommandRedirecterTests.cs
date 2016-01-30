@@ -27,70 +27,70 @@ namespace TwitchDungeon.Services.Commands.Tests
 
 		[TestMethod()]
 		[ExpectedException(typeof(InvalidCommandNameException))]
-		public void AddHandler_Null_CommandName()
+		public void AddListener_Null_CommandName()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
 			var commandListener = new Mock<CommandListener>();
-			redirecter.AddHandler(null, commandListener.Object);
+			redirecter.AddListener(null, commandListener.Object);
 		}
 
 		[TestMethod()]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void AddHandler_Null_Listener()
+		public void AddListener_Null_Listener()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
-			redirecter.AddHandler("command", null);
+			redirecter.AddListener("command", null);
 		}
 
 		[TestMethod()]
-		public void AddHandler_Valid()
+		public void AddListener_Valid()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
 			var commandListener = new Mock<CommandListener>();
-			redirecter.AddHandler("command", commandListener.Object);
+			redirecter.AddListener("command", commandListener.Object);
 		}
 
 		[TestMethod()]
 		[ExpectedException(typeof(InvalidCommandNameException))]
-		public void RemoveHandler_Null_CommandName()
+		public void RemoveListener_Null_CommandName()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var commandListener = new Mock<CommandListener>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
-			redirecter.RemoveHandler(null, commandListener.Object);
+			redirecter.RemoveListener(null, commandListener.Object);
 		}
 
 		[TestMethod()]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void RemoveHandler_Null_Listener()
+		public void RemoveListener_Null_Listener()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var commandListener = new Mock<CommandListener>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
-			redirecter.RemoveHandler("command", null);
+			redirecter.RemoveListener("command", null);
 		}
 
 		[TestMethod()]
-		public void RemoveHandler_NotAdded()
+		public void RemoveListener_NotAdded()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var commandListener = new Mock<CommandListener>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
-			redirecter.RemoveHandler("command", commandListener.Object);
+			redirecter.RemoveListener("command", commandListener.Object);
 		}
 
 		[TestMethod()]
-		public void RemoveHandler_RemoveTwice()
+		public void RemoveListener_RemoveTwice()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var commandListener = new Mock<CommandListener>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
-			redirecter.AddHandler("command", commandListener.Object);
-			redirecter.RemoveHandler("command", commandListener.Object);
-			redirecter.RemoveHandler("command", commandListener.Object);
+			redirecter.AddListener("command", commandListener.Object);
+			redirecter.RemoveListener("command", commandListener.Object);
+			redirecter.RemoveListener("command", commandListener.Object);
 		}
 
 		[TestMethod()]
@@ -103,7 +103,7 @@ namespace TwitchDungeon.Services.Commands.Tests
 		}
 
 		[TestMethod()]
-		public void ExecuteCommand_NoHandler()
+		public void ExecuteCommand_NoListener()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
@@ -123,7 +123,7 @@ namespace TwitchDungeon.Services.Commands.Tests
 			var commandInfo = new CommandInfo(channel.Object, user.Object, "command", "args");
 			var listener = new Mock<CommandListener>();
 
-			redirecter.AddHandler("command", listener.Object);
+			redirecter.AddListener("command", listener.Object);
 			redirecter.ExecuteCommand(commandInfo);
 
 			listener.Verify(l => l.OnCommand(commandInfo), Times.Once());
@@ -139,8 +139,8 @@ namespace TwitchDungeon.Services.Commands.Tests
 			var commandInfo = new CommandInfo(channel.Object, user.Object, "command", "args");
 			var listener = new Mock<CommandListener>();
 
-			redirecter.AddHandler("command", listener.Object);
-			redirecter.RemoveHandler("command", listener.Object);
+			redirecter.AddListener("command", listener.Object);
+			redirecter.RemoveListener("command", listener.Object);
 			redirecter.ExecuteCommand(commandInfo);
 
 			listener.Verify(l => l.OnCommand(commandInfo), Times.Never());
@@ -165,7 +165,7 @@ namespace TwitchDungeon.Services.Commands.Tests
 			var commandInfo = new CommandInfo(channel.Object, user.Object, "command", "args");
 			var listener = new Mock<CommandListener>();
 
-			redirecter.AddHandler("command", listener.Object);
+			redirecter.AddListener("command", listener.Object);
 			(redirecter as MessageHandler<CommandInfo>).HandleMessage(commandInfo);
 
 			listener.Verify(l => l.OnCommand(commandInfo), Times.Once());

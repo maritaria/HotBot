@@ -17,12 +17,11 @@ namespace TwitchDungeon
 
 		public string PrimaryChannel { get; } = "maritaria";
 
-		public TwitchBot(IrcClient ircClient, PipelineInitializer messagePipeline, CommandInitializer commandPipeline)
+		public TwitchBot(IrcClient ircClient, PipelineInitializer messagePipeline)
 		{
-			IrcClient = ircClient;// new IrcClient(Hostname, 6667);
+			IrcClient = ircClient;
 			IrcClient.Connect(Hostname, Port);//TODO: check if connected if not connect
 			messagePipeline.Initialize();
-			commandPipeline.Initialize();
 			WriterMethod();
 		}
 		
@@ -31,6 +30,7 @@ namespace TwitchDungeon
 			IrcClient.Login("maritaria_bot01", "oauth:to4julsv3nu1c6lx9l1s13s7nj25yp");
 			IrcClient.JoinChannel(PrimaryChannel);
 			IrcClient.SendMessage(PrimaryChannel, "Hello World! I'm a bot :)");
+			IrcClient.SendMessage(PrimaryChannel, "/mods");
 		}
 	}
 }

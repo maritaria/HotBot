@@ -16,7 +16,7 @@ namespace TwitchDungeon.Services.Commands
 				throw new ArgumentNullException("redirecter");
 			}
 			Redirecter = redirecter;
-			Redirecter.AddHandler("test", this);
+			Redirecter.AddListener("test", this);
 		}
 
 		public void OnCommand(CommandInfo info)
