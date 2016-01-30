@@ -68,15 +68,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\Commands\CommandsInitializer.cs" />
+    <Compile Include="Services\Commands\CommandInitializer.cs" />
     <Compile Include="Services\DataStorage\Channel.cs" />
+    <Compile Include="Services\DataStorage\DbContextDataStore.cs" />
     <Compile Include="Services\DataStorage\Permissions\Authorizer.cs" />
     <Compile Include="Services\DataStorage\Permissions\UserRole.cs" />
     <Compile Include="Services\Commands\CommandHandler.cs" />
-    <Compile Include="Services\Commands\CommandHandlerService.cs" />
+    <Compile Include="Services\Commands\CommandEncoder.cs" />
     <Compile Include="Services\Commands\CommandInfo.cs" />
     <Compile Include="Services\Commands\SimpleCommandHandler.cs" />
-    <Compile Include="Services\DataStorage\DataService.cs" />
+    <Compile Include="Services\DataStorage\DataStore.cs" />
+    <Compile Include="Services\Irc\IrcLogger.cs" />
     <Compile Include="Services\Irc\IrcMessageEnhanced.cs" />
     <Compile Include="Services\Irc\IrcClient.cs" />
     <Compile Include="Program.cs" />
@@ -86,8 +88,11 @@
     <Compile Include="Services\Irc\ProtocolHandler.cs" />
     <Compile Include="Services\Irc\SendChatMessage.cs" />
     <Compile Include="Services\Irc\SendIrcMessage.cs" />
-    <Compile Include="Services\Messages\Handler.cs" />
+    <Compile Include="Services\Messages\InvalidHandlerArgumentException.cs" />
+    <Compile Include="Services\Messages\MessageHandler.cs" />
+    <Compile Include="Services\Messages\DictionaryMessageBus.cs" />
     <Compile Include="Services\Messages\MessageBus.cs" />
+    <Compile Include="Services\Util\StringExtensions.cs" />
     <Compile Include="ThrottleController.cs" />
     <Compile Include="TwitchBot.cs" />
     <Compile Include="Services\DataStorage\User.cs" />

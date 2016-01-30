@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace TwitchDungeon.Services.Messages
 {
-	public interface Handler
+	public interface MessageHandler
 	{
 		MessageBus Bus { get; }
 
 		void Handle(object o);
 	}
 
-	public abstract class Handler<T> : Handler
+	public abstract class MessageHandler<T> : MessageHandler
 	{
 		public MessageBus Bus { get; internal set; }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TwitchDungeon.Services.Commands
 {
-	public abstract class SimpleCommandHandler : CommandHandler
+	public class SimpleCommandHandler : CommandHandler
 	{
 		public void Handle(CommandInfo e)
 		{

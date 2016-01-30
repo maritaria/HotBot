@@ -10,18 +10,20 @@ namespace TwitchDungeon
 	public class TwitchBot
 	{
 		public static readonly string Hostname = "irc.twitch.tv";
-		public static readonly int Port = 6667;
+		public static readonly UInt16 Port = 6667;
 
 		private object _consoleLock = new object();
 		public IrcClient IrcClient { get; }
-		public CommandHandlerService CommandHandlerService { get; }
+		public CommandEncoder CommandHandlerService { get; }
 
 		public string PrimaryChannel { get; } = "maritaria";
 
-		public TwitchBot(IrcClient ircClient, PipelineInitializer messagePipeline, CommandPipeline commandPipeline)
+		public TwitchBot(IrcClient ircClient, PipelineInitializer messagePipeline, CommandInitializer commandPipeline)
 		{
 			IrcClient = ircClient;// new IrcClient(Hostname, 6667);
-			IrcClient.Connect();//TODO: check if connected if not connect
+			IrcClient.Connect(Hostname, Port);//TODO: check if connected if not connect
+			messagePipeline.Initialize();
+			commandPipeline.Initialize();
 			WriterMethod();
 		}
 		

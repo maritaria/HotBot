@@ -16,20 +16,24 @@ namespace TwitchDungeon.Services.Irc
 		private Thread _readerThread;
 		private StreamReader _reader;
 		private StreamWriter _writer;
-		private MessageBus _bus;
 
-		public string Hostname { get; }
-		public int Port { get; }
+		public string Hostname { get; private set; }
+		public int Port { get; private set; }
 		public string Username { get; private set; }
-		
-		public IrcClient(string hostname, UInt16 port)
+		public DataStore Database { get; }
+		public MessageBus Bus { get; }
+
+		public IrcClient(DataStore database, MessageBus bus)
+		{
+			Database = database;
+			Bus = bus;
+		}
+
+		public void Connect(string hostname, UInt16 port)
 		{
 			Hostname = hostname;
 			Port = port;
-		}
-
-		public void Connect()
-		{
+			//TODO: Cleanup
 			lock (_tcpClientLock)
 			{
 				if (_tcpClient != null && _tcpClient.Connected)
@@ -69,7 +73,29 @@ namespace TwitchDungeon.Services.Irc
 
 		public void JoinChannel(string channelName)
 		{
+			EnsureChannel(channelName);
 			Send(string.Format("JOIN #{0}", channelName));
+		}
+
+		private void EnsureChannel(string channelName)
+		{
+			GetChannel(channelName);
+		}
+
+		public Channel GetChannel(string channelName)
+		{
+			Channel channel = Database.Channels.FirstOrDefault(c => c.Name == channelName);
+			if (channel == null)
+			{
+				channel = new Channel(channelName);
+				Database.Channels.Add(channel);
+				Database.SaveChanges();
+			}
+			else
+			{
+
+			}
+			return channel;
 		}
 
 		public void Login(string username, string authKey)
@@ -150,7 +176,7 @@ namespace TwitchDungeon.Services.Irc
 			{
 				//TODO: Make this async and allow for cancel mechanism for dispose pattern
 				string message = _reader.ReadLine();
-				_bus.Publish<IrcMessageReceived>(new IrcMessageReceived(message));
+				Bus.Publish(new IrcMessageReceived(message));
 			}
 		}
 	}

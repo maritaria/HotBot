@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TwitchDungeon.Services.DataStorage;
 
 namespace TwitchDungeon.Services.Irc
 {
 	public class IrcMessageEnhanced
 	{
-		public string Channel { get; }
+		public Channel Channel { get; }
 		public User User { get; }
-		public string Message { get; }
+		public string Text { get; }
 
-		public IrcMessageEnhanced(string channel, User user, string message)
+		public IrcMessageEnhanced(Channel channel, User user, string message)
 		{
 			Channel = channel;
 			User = user;
-			Message = message;
+			Text = message;
 		}
 	}
 

@@ -18,8 +18,8 @@ namespace TwitchDungeon.Services.Irc
 
 		public void Initialize()
 		{
-
 			_container.Resolve<ProtocolHandler>();
+			_container.Resolve<IrcLogger>();
 		}
 
 	}

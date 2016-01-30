@@ -1,17 +1,23 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace TwitchDungeon.Services.DataStorage
 {
-	public sealed class DataService : DbContext
+	public class DbContextDataStore : DbContext, DataStore
 	{
-		private DataService() : base()
+		public DbContextDataStore() : base()
 		{
+			//TODO: read config for database clear instructions
 		}
 
 		public DbSet<User> Users { get; set; }
 
+		public DbSet<Channel> Channels { get; set; }
+		
 		private void NewMethod()
 		{
 			string targetUsername = "";// e.Message.Username;

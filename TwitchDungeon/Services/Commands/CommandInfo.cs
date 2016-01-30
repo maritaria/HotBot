@@ -15,21 +15,29 @@ namespace TwitchDungeon.Services.Commands
 		/// Get's the entity holding the permissions available for the command
 		/// </summary>
 		public Authorizer Authorizer { get; }
+		
+		/// <summary>
+		/// The name of the command
+		/// </summary>
+		public string CommandName { get; }
 
 		/// <summary>
-		/// Get's the unparsed command string
+		/// The string containing the arguments for the command
 		/// </summary>
-		public string CommandText { get; }
+		public string ArgumentText { get; }
 
-		public CommandInfo(User sender, string commandText) : this(sender, sender, commandText)
+
+		public CommandInfo(User sender, string commandName, string argumentText) : this(sender, sender, commandName, argumentText)
 		{
+
 		}
 
-		public CommandInfo(User sender, User authorizer, string commandText)
+		public CommandInfo(User sender, User authorizer, string commandName, string argumentText)
 		{
 			Sender = sender;
 			Authorizer = authorizer;
-			CommandText = commandText;
+			CommandName = commandName;
+			ArgumentText = argumentText;
 		}
 	}
 }

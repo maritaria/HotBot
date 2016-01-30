@@ -23,14 +23,15 @@ namespace TwitchDungeon
 
 			//container.RegisterTypes(Assembly.GetExecutingAssembly().GetTypes().Where()
 
-			container.RegisterType(typeof(CommandHandlerService), typeof(CommandHandlerService), new ContainerControlledLifetimeManager());
-			container.RegisterType(typeof(DataService), typeof(DataService), new ContainerControlledLifetimeManager());
-			container.RegisterType(typeof(IrcClient), typeof(IrcClient), new ContainerControlledLifetimeManager());
-			container.RegisterType(typeof(MessageBus), typeof(MessageBus), new ContainerControlledLifetimeManager());
-			container.RegisterType(typeof(TwitchBot), typeof(TwitchBot), new ContainerControlledLifetimeManager());
+			container.RegisterType<CommandEncoder, CommandEncoder>(new ContainerControlledLifetimeManager());
+			container.RegisterType<DataStore, DbContextDataStore>(new ContainerControlledLifetimeManager());
+			container.RegisterType<IrcClient, IrcClient>(new ContainerControlledLifetimeManager());
+			container.RegisterType<IrcLogger, IrcLogger>(new ContainerControlledLifetimeManager());
+			container.RegisterType<MessageBus, DictionaryMessageBus>(new ContainerControlledLifetimeManager());
+			container.RegisterType<TwitchBot, TwitchBot>(new ContainerControlledLifetimeManager());
 
-			container.ResolveAll(typeof(CommandHandler));
-
+			container.RegisterType<CommandHandler, SimpleCommandHandler>(new ContainerControlledLifetimeManager());
+			
 			var bot = container.Resolve<TwitchBot>();
 
 		}
