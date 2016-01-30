@@ -1,6 +1,6 @@
 ﻿namespace TwitchDungeon.Services.Irc
 {
-	internal class IrcMessageReceived
+	public class IrcMessageReceived
 	{
 		public string Text { get; }
 

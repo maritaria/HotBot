@@ -10,7 +10,8 @@ namespace TwitchDungeon.Services.Commands
 {
 	public class CommandEncoder : MessageHandler<IrcMessageEnhanced>
 	{
-		public Collection<char> Prefixes { get; } = new Collection<char>();
+		//TODO: Make prefixes strings
+		public Collection<char> Prefixes { get; set; } = new Collection<char>();
 		public MessageBus Bus { get; }
 
 		public CommandEncoder(MessageBus bus)
@@ -22,42 +23,41 @@ namespace TwitchDungeon.Services.Commands
 			//TODO: Read prefixes from configuration
 			Prefixes.Add('!');
 			Bus = bus;
-			Bus.Subscribe<IrcMessageEnhanced>(this);
+			Bus.Subscribe(this);
 		}
 
-		private void OnIrcMessageEnhanced(MessageBus bus, IrcMessageEnhanced enhanced)
+		public void HandleMessage(IrcMessageEnhanced message)
 		{
-			if (ShouldDecode(enhanced))
+			if (message == null)
 			{
-				var commandInfo = Decode(enhanced);
+				throw new ArgumentNullException("message");
+			}
+			if (ShouldDecode(message))
+			{
+				var commandInfo = Decode(message);
 				Bus.Publish(commandInfo);
 			}
 		}
-
-		public bool ShouldDecode(IrcMessageEnhanced message)
+		
+		private bool ShouldDecode(IrcMessageEnhanced message)
 		{
 			return message.Text.Length > 0 && Prefixes.Contains(message.Text.First());
 		}
 
-		public CommandInfo Decode(IrcMessageEnhanced message)
+		private CommandInfo Decode(IrcMessageEnhanced message)
 		{
 			string content = message.Text.Trim();
 			content = RemovePrefix(content);
 			string[] parts = content.SplitOnce(" ", "\t");
 			string commandName = parts[0];
 			string argumentText = parts[1];
-			CommandInfo commandInfo = new CommandInfo(message.User, commandName, argumentText);
+			CommandInfo commandInfo = new CommandInfo(message.Channel, message.User, commandName, argumentText);
 			return commandInfo;
 		}
 
-		public string RemovePrefix(string text)
+		private string RemovePrefix(string text)
 		{
 			return text.Substring(1);
-		}
-
-		protected override void Handle(IrcMessageEnhanced item)
-		{
-			OnIrcMessageEnhanced(Bus, item);
 		}
 	}
 }

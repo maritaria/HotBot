@@ -1,6 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using TwitchDungeon.Services.Messages;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using Moq;
 
 namespace TwitchDungeon.Services.Messages.Tests
 {
@@ -14,47 +16,22 @@ namespace TwitchDungeon.Services.Messages.Tests
 		}
 
 		[TestMethod()]
-		public void Subscribe_Handler_Valid()
-		{
-			var bus = new DictionaryMessageBus();
-			bus.Subscribe(new SimpleHandler<object>());
-		}
-
-		[TestMethod()]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void Subscribe_Handler_NullArgument()
+		public void Subscribe_Null()
 		{
 			var bus = new DictionaryMessageBus();
-			SimpleHandler<object> handler = null;
+			MessageHandler<object> handler = null;
 			bus.Subscribe(handler);
 		}
 
 		[TestMethod()]
-		[ExpectedException(typeof(InvalidHandlerArgumentException))]
-		public void Subscribe_Handler_AlreadyAssigned()
+		public void Subscribe_Valid()
 		{
 			var bus = new DictionaryMessageBus();
-			var handler = new SimpleHandler<object>();
-			bus.Subscribe(handler);
-			bus.Subscribe(handler);
+			var handler = new Mock<MessageHandler<object>>();
+			bus.Subscribe(handler.Object);
 		}
-
-		[TestMethod()]
-		public void Subscribe_Action_Valid()
-		{
-			var bus = new DictionaryMessageBus();
-			bus.Subscribe(new MessageBusAction<object>(EmptyHandler));
-		}
-
-		[TestMethod()]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void Subscribe_Action_NullArgument()
-		{
-			var bus = new DictionaryMessageBus();
-			MessageBusAction<object> nullHandler = null;
-			bus.Subscribe(nullHandler);
-		}
-
+		
 		[TestMethod()]
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void Publish_Null()
@@ -67,92 +44,81 @@ namespace TwitchDungeon.Services.Messages.Tests
 		public void Publish_Valid()
 		{
 			var bus = new DictionaryMessageBus();
-			bool executed = false;
-			bus.Subscribe<object>((passedBus, passedData) =>
-			{
-				executed = true;
-			});
-			bus.Publish(new object());
-			if (!executed)
-			{
-				Assert.Fail("Handler not executed");
-			}
-		}
-
-		[TestMethod()]
-		public void Publish_Valid_PassedValues_Callback()
-		{
-			var bus = new DictionaryMessageBus();
-			object data = new object();
-			bus.Subscribe<object>((passedBus, passedData) =>
-			{
-				Assert.AreEqual(bus, passedBus);
-				Assert.AreEqual(data, passedData);
-			});
+			var handler = new Mock<MessageHandler<object>>();
+			var data = new object();
+			bus.Subscribe(handler.Object);
 			bus.Publish(data);
-		}
-
-		[TestMethod()]
-		public void Publish_Valid_PassedValues_Handler()
-		{
-			var bus = new DictionaryMessageBus();
-			object data = new object();
-			SimpleHandler<object> handler = new SimpleHandler<object>();
-			handler.Callback = (passedBus, passedData) =>
-			{
-				Assert.AreEqual(bus, passedBus);
-				Assert.AreEqual(data, passedData);
-			};
-			bus.Subscribe<object>(handler);
-			bus.Publish(data);
-		}
-
-		[TestMethod()]
-		public void Publish_Valid_RunOnce()
-		{
-			var bus = new DictionaryMessageBus();
-			int invokeCount = 0;
-			SimpleHandler<object> handler = new SimpleHandler<object>();
-			handler.Callback = (passedBus, passedData) =>
-			{
-				invokeCount++;
-			};
-			bus.Subscribe<object>(handler);
-			bus.Publish(new object());
-			Assert.AreEqual(1, invokeCount);
+			handler.Verify(h => h.HandleMessage(data), Times.Once());
 		}
 
 		[TestMethod()]
 		public void Publish_OtherType()
 		{
 			var bus = new DictionaryMessageBus();
-			bus.Subscribe<string>((passedBus, passedData) =>
-			{
-				Assert.Fail("Handler executed for wrong type");
-			});
+			var handler = new Mock<MessageHandler<string>>();
+			bus.Subscribe(handler.Object);
+			bus.Publish(new object());
+			handler.Verify(h => h.HandleMessage(It.Is<string>(o => true)), Times.Never());
+			bus.Publish<object>("");
+			handler.Verify(h => h.HandleMessage(It.Is<string>(o => true)), Times.Never());
+		}
+
+		[TestMethod()]
+		public void Publish_NoSubscibers()
+		{
+			var bus = new DictionaryMessageBus();
 			bus.Publish(new object());
 		}
 
 		[TestMethod()]
-		public void Publish_NoSubscribers()
+		public void Publish_MultiSub_RunOnce()
 		{
 			var bus = new DictionaryMessageBus();
-			Assert.AreEqual(false, bus.HasSubscribers<object>());
-			bus.Publish(new object());
+			var handler = new Mock<MessageHandler<object>>();
+			var data = new object();
+			bus.Subscribe(handler.Object);
+			bus.Subscribe(handler.Object);
+			bus.Publish(data);
+			handler.Verify(h => h.HandleMessage(data), Times.Once());
 		}
 
-		private void EmptyHandler<TData>(MessageBus bus, TData data)
+		[TestMethod()]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void IsSubscribed_Null()
 		{
+			var bus = new DictionaryMessageBus();
+			bus.IsSubscribed<object>(null);
 		}
 
-		private class SimpleHandler<T> : MessageHandler<T>
+		[TestMethod()]
+		public void IsSubscribed_Valid()
 		{
-			public Action<MessageBus, T> Callback;
+			var bus = new DictionaryMessageBus();
+			var handler = new Mock<MessageHandler<string>>();
+			Assert.AreEqual(false, bus.IsSubscribed(handler.Object));
+			bus.Subscribe<string>(handler.Object);
+			Assert.AreEqual(true, bus.IsSubscribed(handler.Object));
+		}
 
-			protected override void Handle(T item)
-			{
-				Callback(Bus, item);
-			}
+		[TestMethod()]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Unsubscribe_Null()
+		{
+			var bus = new DictionaryMessageBus();
+			MessageHandler<object> handler = null;
+			bus.Unsubscribe(handler);
+		}
+
+		[TestMethod()]
+		public void Unsubscribe_Valid()
+		{
+			var bus = new DictionaryMessageBus();
+			var handler = new Mock<MessageHandler<object>>();
+			object data = new object();
+			bus.Subscribe(handler.Object);
+			bus.Unsubscribe(handler.Object);
+			bus.Publish(data);
+			handler.Verify(h => h.HandleMessage(data), Times.Never(), "Handler called after unsubscribe");
 		}
 	}
 }

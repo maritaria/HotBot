@@ -14,7 +14,6 @@ namespace TwitchDungeon
 
 		private object _consoleLock = new object();
 		public IrcClient IrcClient { get; }
-		public CommandEncoder CommandHandlerService { get; }
 
 		public string PrimaryChannel { get; } = "maritaria";
 

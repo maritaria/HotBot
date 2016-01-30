@@ -2,6 +2,7 @@
 using Moq;
 using System;
 using System.Linq;
+using TwitchDungeon.Services.DataStorage;
 using TwitchDungeon.Services.Irc;
 using TwitchDungeon.Services.Messages;
 
@@ -11,39 +12,47 @@ namespace TwitchDungeon.Services.Commands.Tests
 	public class CommandEncoderTests
 	{
 		[TestMethod()]
-		public void CommandEncoder_Properties()
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void CommandEncoder_Constructor_Null()
 		{
-			var mockBus = new Mock<MessageBus>();
-			var encoder = new CommandEncoder(mockBus.Object);
-			Assert.AreEqual(mockBus.Object, encoder.Bus);
+			var encoder = new CommandEncoder(null);
 		}
 
 		[TestMethod()]
 		public void CommandEncoder_Constructor_Valid()
 		{
 			var mockBus = new Mock<MessageBus>();
-			var encoder = new CommandEncoder(mockBus.Object);
-		}
-
-		[TestMethod()]
-		public void CommandEncoder_Constructor_Subscribed()
-		{
-			var mockBus = new Mock<MessageBus>();
-			var encoder = new CommandEncoder(mockBus.Object);
-			mockBus.Verify(
-				m => m.Subscribe(
-					It.Is<MessageHandler<IrcMessageEnhanced>>(v => v == encoder)
-				),
-				Times.Once(),
-				"Not subscribed to IrcMessageEnhanced"
-			);
+			var encoder = new CommandEncoder(mockBus.Object) { Prefixes = { '!', '#' } };
+			mockBus.Verify(m => m.Subscribe<IrcMessageEnhanced>(encoder), Times.Once(), "Not subscribed to IrcMessageEnhanced");
+			Assert.AreEqual(mockBus.Object, encoder.Bus, "Bus property not correct");
 		}
 
 		[TestMethod()]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void CommandEncoder_Constructor_Null()
+		public void HandleMessage_Null()
 		{
-			var encoder = new CommandEncoder(null);
+			var mockBus = new Mock<MessageBus>();
+			var encoder = new CommandEncoder(mockBus.Object) { Prefixes = { '!', '#' } };
+			encoder.HandleMessage(null);
+		}
+
+		[TestMethod()]
+		public void HandleMessage_Valid()
+		{
+			var mockBus = new Mock<MessageBus>();
+			var encoder = new CommandEncoder(mockBus.Object) { Prefixes = { '!', '#' } };
+			var channel = new Mock<Channel>("TestChannel");
+			var user = new Mock<User>("TestUser");
+			var message = new IrcMessageEnhanced(channel.Object, user.Object, "#command argument1 argument2");
+
+			encoder.HandleMessage(message);
+
+			mockBus.Verify(b => b.Publish(It.Is<CommandInfo>(info =>
+				info.User == user.Object &&
+				info.Channel == channel.Object &&
+				info.CommandName == "command" &&
+				info.ArgumentText == "argument1 argument2"
+			)), Times.Once());
 		}
 	}
 }

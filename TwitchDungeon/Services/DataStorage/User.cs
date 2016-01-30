@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TwitchDungeon.DataStorage.Permissions;
 
-namespace TwitchDungeon
+namespace TwitchDungeon.Services.DataStorage
 {
 	public class User : Authorizer
 	{

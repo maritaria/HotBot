@@ -88,7 +88,6 @@
     <Compile Include="Services\Irc\ProtocolHandler.cs" />
     <Compile Include="Services\Irc\SendChatMessage.cs" />
     <Compile Include="Services\Irc\SendIrcMessage.cs" />
-    <Compile Include="Services\Messages\InvalidHandlerArgumentException.cs" />
     <Compile Include="Services\Messages\MessageHandler.cs" />
     <Compile Include="Services\Messages\DictionaryMessageBus.cs" />
     <Compile Include="Services\Messages\MessageBus.cs" />

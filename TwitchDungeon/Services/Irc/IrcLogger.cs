@@ -7,14 +7,14 @@ using TwitchDungeon.Services.Messages;
 
 namespace TwitchDungeon.Services.Irc
 {
-	public class IrcLogger
+	public class IrcLogger : MessageHandler<IrcMessageReceived>
 	{
 		public IrcLogger(MessageBus bus)
 		{
-			bus.Subscribe<IrcMessageReceived>(OnIrcMessageReceived);
+			bus.Subscribe(this);
 		}
-
-		private void OnIrcMessageReceived(MessageBus bus, IrcMessageReceived ircMessage)
+		
+		public void HandleMessage(IrcMessageReceived ircMessage)
 		{
 			Console.WriteLine(ircMessage.Text);
 		}

@@ -11,6 +11,7 @@ namespace TwitchDungeon.Services.DataStorage
 		DbSet<User> Users { get; }
 		DbSet<Channel> Channels { get; }
 
+		void Initialize();
 		int SaveChanges();
 		Task<int> SaveChangesAsync();
 		Task<int> SaveChangesAsync(CancellationToken token);

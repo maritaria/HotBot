@@ -4,21 +4,12 @@ using System.Linq;
 
 namespace TwitchDungeon.Services.Messages
 {
-	internal sealed class DictionaryMessageBus : MessageBus
+	public sealed class DictionaryMessageBus : MessageBus
 	{
-		private Dictionary<Type, List<MessageHandler>> _subscribers = new Dictionary<Type, List<MessageHandler>>();
-		
+		private Dictionary<Type, HashSet<object>> _subscribers = new Dictionary<Type, HashSet<object>>();
+
 		public DictionaryMessageBus()
 		{
-		}
-		
-		public void Subscribe<TData>(MessageBusAction<TData> callback)
-		{
-			if (callback == null)
-			{
-				throw new ArgumentNullException("callback");
-			}
-			Subscribe(new ActionHandler<TData>(callback));
 		}
 
 		public void Subscribe<TData>(MessageHandler<TData> handler)
@@ -27,16 +18,39 @@ namespace TwitchDungeon.Services.Messages
 			{
 				throw new ArgumentNullException("handler");
 			}
-			if (handler.Bus != null)
-			{
-				throw new InvalidHandlerArgumentException("already assigned to a bus", "handler");
-			}
-			handler.Bus = this;
 			if (!_subscribers.ContainsKey(typeof(TData)))
 			{
-				_subscribers.Add(typeof(TData), new List<MessageHandler>());
+				_subscribers.Add(typeof(TData), new HashSet<object>());
 			}
-			_subscribers[typeof(TData)].Add(handler);
+			HashSet<object> subs = _subscribers[typeof(TData)];
+			subs.Add(handler);
+		}
+
+		public bool IsSubscribed<TData>(MessageHandler<TData> handler)
+		{
+			if (handler == null)
+			{
+				throw new ArgumentNullException("handler");
+			}
+			if (!_subscribers.ContainsKey(typeof(TData)))
+			{
+				return false;
+			}
+			HashSet<object> subs = _subscribers[typeof(TData)];
+			return subs.Contains(handler);
+		}
+
+		public void Unsubscribe<TData>(MessageHandler<TData> handler)
+		{
+			if (handler == null)
+			{
+				throw new ArgumentNullException("handler");
+			}
+			if (_subscribers.ContainsKey(typeof(TData)))
+			{
+				HashSet<object> subs = _subscribers[typeof(TData)];
+				subs.Remove(handler);
+			}
 		}
 
 		public void Publish<TData>(TData data)
@@ -47,31 +61,16 @@ namespace TwitchDungeon.Services.Messages
 			}
 			if (HasSubscribers<TData>())
 			{
-				foreach (MessageHandler h in _subscribers[typeof(TData)])
+				foreach (MessageHandler<TData> h in _subscribers[typeof(TData)])
 				{
-					h.Handle(data);
+					h.HandleMessage(data);
 				}
 			}
 		}
 
-		public bool HasSubscribers<TData>()
+		private bool HasSubscribers<TData>()
 		{
 			return _subscribers.ContainsKey(typeof(TData));
-		}
-
-		private class ActionHandler<T> : MessageHandler<T>
-		{
-			private readonly MessageBusAction<T> _handler;
-
-			public ActionHandler(MessageBusAction<T> handler)
-			{
-				_handler = handler;
-			}
-
-			protected override void Handle(T item)
-			{
-				_handler(Bus, item);
-			}
 		}
 	}
 }

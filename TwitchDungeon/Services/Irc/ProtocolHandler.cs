@@ -6,23 +6,33 @@ using TwitchDungeon.Services.Util;
 
 namespace TwitchDungeon.Services.Irc
 {
-	public class ProtocolHandler
+	public class ProtocolHandler : MessageHandler<IrcMessageReceived>
 	{
 		public DataStore Database { get; }
+		public MessageBus Bus { get; }
 
-		public ProtocolHandler(MessageBus bus, DataStore database)
+		public ProtocolHandler(DataStore datastore, MessageBus bus)
 		{
-			Database = database;
-			bus.Subscribe<IrcMessageReceived>(OnIrcMessageReceived);
+			if (datastore == null)
+			{
+				throw new ArgumentNullException("datastore");
+			}
+			if (bus == null)
+			{
+				throw new ArgumentNullException("bus");
+			}
+			Database = datastore;
+			Bus = bus;
+			bus.Subscribe(this);
 		}
 
-		private void OnIrcMessageReceived(MessageBus bus, IrcMessageReceived message)
+		public void HandleMessage(IrcMessageReceived message)
 		{
 			IrcMessageEnhanced enhancedMessage = HandleMessage(message.Text);
 
 			if (enhancedMessage != null)
 			{
-				bus.Publish(enhancedMessage);
+				Bus.Publish(enhancedMessage);
 			}
 		}
 
