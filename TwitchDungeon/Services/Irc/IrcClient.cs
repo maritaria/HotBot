@@ -3,8 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
+using TwitchDungeon.Services.DataStorage;
+using TwitchDungeon.Services.Messages;
 
-namespace TwitchDungeon
+namespace TwitchDungeon.Services.Irc
 {
 	public class IrcClient : IDisposable
 	{
@@ -14,11 +16,12 @@ namespace TwitchDungeon
 		private Thread _readerThread;
 		private StreamReader _reader;
 		private StreamWriter _writer;
+		private MessageBus _messageBus;
 
 		public string Hostname { get; }
 		public int Port { get; }
 		public string Username { get; private set; }
-
+		
 		public IrcClient(string hostname, UInt16 port)
 		{
 			Hostname = hostname;
@@ -132,9 +135,9 @@ namespace TwitchDungeon
 
 		#endregion IDisposable Support
 
-		public event EventHandler<IrcChatMessageEventArgs> ChatMessageReceived;
+		public event EventHandler<ChatMessageEventArgs> ChatMessageReceived;
 
-		protected virtual void OnChatMessageReceived(IrcChatMessageEventArgs e)
+		protected virtual void OnChatMessageReceived(ChatMessageEventArgs e)
 		{
 			ChatMessageReceived?.Invoke(this, e);
 		}
@@ -190,7 +193,17 @@ namespace TwitchDungeon
 			string channel = chatParts[0];
 			string chatmessage = chatParts[1];
 
-			OnChatMessageReceived(new IrcChatMessageEventArgs(this, channel, username, chatmessage));
+			//Defenetly need the C.O.R. here
+
+			User user = GetUser(username);
+			
+
+			OnChatMessageReceived(new ChatMessageEventArgs(new ChatMessage(this, channel, user, chatmessage)));
+		}
+
+		private User GetUser(string username)
+		{
+			return null;
 		}
 
 		private string[] SplitOnFirstOccurence(string source, string splitter)

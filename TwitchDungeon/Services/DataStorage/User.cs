@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TwitchDungeon.DataStorage.Permissions;
 
 namespace TwitchDungeon
 {
-	public class User
+	public class User : Authorizer
 	{
+		[Key]
 		public Guid Id { get; private set; }
 
 		[Index(IsUnique = true)]
@@ -13,6 +15,8 @@ namespace TwitchDungeon
 		public string Username { get; private set; }
 
 		public long Money { get; set; }
+
+		public UserRole Role { get; set; }
 
 		public User(string username) : this()
 		{
@@ -22,6 +26,8 @@ namespace TwitchDungeon
 		protected User()
 		{
 			Id = Guid.NewGuid();
+			Role = UserRole.User;
 		}
+
 	}
 }
