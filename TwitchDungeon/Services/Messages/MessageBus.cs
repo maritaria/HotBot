@@ -33,6 +33,10 @@ namespace TwitchDungeon.Services.Messages
 
 		public void Publish<TData>(TData data)
 		{
+			if (data == null)
+			{
+				throw new ArgumentNullException("data");
+			}
 			foreach (Handler h in _subscribers[typeof(TData)])
 			{
 				h.Handle(data);

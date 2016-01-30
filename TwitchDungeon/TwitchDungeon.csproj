@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services\Commands\CommandsInitializer.cs" />
     <Compile Include="Services\DataStorage\Channel.cs" />
     <Compile Include="Services\DataStorage\Permissions\Authorizer.cs" />
     <Compile Include="Services\DataStorage\Permissions\UserRole.cs" />
@@ -76,12 +77,15 @@
     <Compile Include="Services\Commands\CommandInfo.cs" />
     <Compile Include="Services\Commands\SimpleCommandHandler.cs" />
     <Compile Include="Services\DataStorage\DataService.cs" />
-    <Compile Include="Services\Irc\ChatMessage.cs" />
-    <Compile Include="Services\Irc\ChatMessageEventArgs.cs" />
+    <Compile Include="Services\Irc\IrcMessageEnhanced.cs" />
     <Compile Include="Services\Irc\IrcClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Irc\IrcMessageReceived.cs" />
+    <Compile Include="Services\Irc\PipelineInitializer.cs" />
     <Compile Include="Services\Irc\ProtocolHandler.cs" />
+    <Compile Include="Services\Irc\SendChatMessage.cs" />
+    <Compile Include="Services\Irc\SendIrcMessage.cs" />
     <Compile Include="Services\Messages\Handler.cs" />
     <Compile Include="Services\Messages\MessageBus.cs" />
     <Compile Include="ThrottleController.cs" />
@@ -91,11 +95,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="hibernate.cfg.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

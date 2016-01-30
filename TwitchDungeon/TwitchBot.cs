@@ -18,21 +18,13 @@ namespace TwitchDungeon
 
 		public string PrimaryChannel { get; } = "maritaria";
 
-		public TwitchBot(IrcClient ircClient, CommandHandlerService commandHandlerService)
+		public TwitchBot(IrcClient ircClient, PipelineInitializer messagePipeline, CommandPipeline commandPipeline)
 		{
 			IrcClient = ircClient;// new IrcClient(Hostname, 6667);
-			IrcClient.ChatMessageReceived += IrcClient_ChatMessageReceived;
 			IrcClient.Connect();//TODO: check if connected if not connect
-			CommandHandlerService = commandHandlerService;
-
 			WriterMethod();
 		}
-
-		private void IrcClient_ChatMessageReceived(object sender, ChatMessageEventArgs e)
-		{
-			CommandHandlerService.TryHandle(e.Message);
-		}
-
+		
 		private void WriterMethod()
 		{
 			IrcClient.Login("maritaria_bot01", "oauth:to4julsv3nu1c6lx9l1s13s7nj25yp");

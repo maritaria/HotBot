@@ -6,19 +6,21 @@ using System.Threading.Tasks;
 
 namespace TwitchDungeon.Services.Irc
 {
-	public class ChatMessage
+	public class IrcMessageEnhanced
 	{
-		public IrcClient Connection { get; }
 		public string Channel { get; }
 		public User User { get; }
 		public string Message { get; }
 
-		public ChatMessage(IrcClient connection, string channel, User user, string message)
+		public IrcMessageEnhanced(string channel, User user, string message)
 		{
-			Connection = connection;
 			Channel = channel;
 			User = user;
 			Message = message;
 		}
 	}
+
+
+
+
 }

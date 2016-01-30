@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
-  <session-factory name="NHibernate.Test">
-    <property name="connection.driver_class">NHibernate.Driver.OleDbDriver</property>
-    <property name="connection.connection_string">Data Source=TwitchDungeon.mdb;Provider=Microsoft.Jet.OLEDB.4.0</property>
-    <property name="dialect">NHibernate.Dialect.SQLiteDialect</property>
-    <property name="show_sql">true</property>
-  </session-factory>
-</hibernate-configuration>

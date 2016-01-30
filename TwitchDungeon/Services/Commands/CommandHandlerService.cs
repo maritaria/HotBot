@@ -35,7 +35,7 @@ namespace TwitchDungeon.Services.Commands
 			}
 		}
 
-		internal void TryHandle(ChatMessage message)
+		internal void TryHandle(IrcMessageEnhanced message)
 		{
 			if (ShouldHandle(message))
 			{
@@ -43,12 +43,12 @@ namespace TwitchDungeon.Services.Commands
 			}
 		}
 
-		private bool ShouldHandle(ChatMessage message)
+		private bool ShouldHandle(IrcMessageEnhanced message)
 		{
 			return message.Message.Length > 0 && Prefixes.Contains(message.Message.First());
 		}
 
-		private void Handle(ChatMessage message)
+		private void Handle(IrcMessageEnhanced message)
 		{
 			CommandInfo info = new CommandInfo(message.User, message.Message);
 			foreach(CommandHandler handler in Handlers)
