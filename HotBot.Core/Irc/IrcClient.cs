@@ -7,7 +7,7 @@ using HotBot.Core;
 
 namespace HotBot.Core.Irc
 {
-	public class IrcClient : IDisposable, MessageHandler<SendIrcMessage>, MessageHandler<SendChatMessage>
+	public class IrcClient : IDisposable, MessageHandler<IrcTransmitEvent>, MessageHandler<ChatTransmitEvent>
 	{
 		private object _tcpClientLock = new object();
 		private TcpClient _tcpClient;
@@ -33,8 +33,8 @@ namespace HotBot.Core.Irc
 				throw new ArgumentNullException("dataStore");
 			}
 			Bus = bus;
-			Bus.Subscribe<SendIrcMessage>(this);
-			Bus.Subscribe<SendChatMessage>(this);
+			Bus.Subscribe<IrcTransmitEvent>(this);
+			Bus.Subscribe<ChatTransmitEvent>(this);
 			DataStore = dataStore;
 		}
 
@@ -184,11 +184,11 @@ namespace HotBot.Core.Irc
 			{
 				//TODO: Make this async and allow for cancel mechanism for dispose pattern
 				string message = _reader.ReadLine();
-				Bus.Publish(new IrcMessageReceived(message));
+				Bus.Publish(new IrcReceivedEvent(message));
 			}
 		}
 
-		void MessageHandler<SendIrcMessage>.HandleMessage(SendIrcMessage message)
+		void MessageHandler<IrcTransmitEvent>.HandleMessage(IrcTransmitEvent message)
 		{
 			if (message == null)
 			{
@@ -197,9 +197,9 @@ namespace HotBot.Core.Irc
 			Send(message.IrcCommand);
 		}
 
-		void MessageHandler<SendChatMessage>.HandleMessage(SendChatMessage message)
+		void MessageHandler<ChatTransmitEvent>.HandleMessage(ChatTransmitEvent message)
 		{
-			(this as MessageHandler<SendIrcMessage>).HandleMessage(message);
+			(this as MessageHandler<IrcTransmitEvent>).HandleMessage(message);
 		}
 	}
 }

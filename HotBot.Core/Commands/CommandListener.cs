@@ -6,6 +6,6 @@ namespace HotBot.Core.Commands
 {
 	public interface CommandListener
 	{
-		void OnCommand(CommandInfo info);
+		void OnCommand(CommandEvent info);
 	}
 }

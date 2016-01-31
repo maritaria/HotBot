@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc
 {
-	public class SendIrcMessage
+	public class IrcTransmitEvent
 	{
 		public virtual string IrcCommand { get; }
 		
-		public SendIrcMessage(string ircCommand)
+		public IrcTransmitEvent(string ircCommand)
 		{
 			IrcCommand = ircCommand;
 		}

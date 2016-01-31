@@ -16,7 +16,7 @@ namespace HotBot.Core.Commands.Tests
 			var user = new Mock<User>("TestChannel");
 			var command = "command";
 			var args = "args";
-			var info = new CommandInfo(channel.Object, user.Object, command, args);
+			var info = new CommandEvent(channel.Object, user.Object, command, args);
 
 			Assert.AreEqual(channel.Object, info.Channel, "Channel not equal");
 			Assert.AreEqual(user.Object, info.User, "User not equal");
@@ -33,7 +33,7 @@ namespace HotBot.Core.Commands.Tests
 			var authorizer = new Mock<User>("TestAuthorizer");
 			var command = "command";
 			var args = "args";
-			var info = new CommandInfo(channel.Object, user.Object, authorizer.Object, command, args);
+			var info = new CommandEvent(channel.Object, user.Object, authorizer.Object, command, args);
 
 			Assert.AreEqual(channel.Object, info.Channel, "Channel not equal");
 			Assert.AreEqual(user.Object, info.User, "User not equal");
@@ -43,38 +43,38 @@ namespace HotBot.Core.Commands.Tests
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(InvalidCommandNameException))]
+		[ExpectedException(typeof(CommandEvent.InvalidCommandNameException))]
 		public void VerifyCommandName_Null()
 		{
-			CommandInfo.VerifyCommandName(null);
+			CommandEvent.VerifyCommandName(null);
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(InvalidCommandNameException))]
+		[ExpectedException(typeof(CommandEvent.InvalidCommandNameException))]
 		public void VerifyCommandName_Empty()
 		{
-			CommandInfo.VerifyCommandName("");
+			CommandEvent.VerifyCommandName("");
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(InvalidCommandNameException))]
+		[ExpectedException(typeof(CommandEvent.InvalidCommandNameException))]
 		public void VerifyCommandName_ContainsWhitespace()
 		{
-			CommandInfo.VerifyCommandName("hello world");
+			CommandEvent.VerifyCommandName("hello world");
 		}
 
 		[TestMethod]
 		public void VerifyCommandName_Valid()
 		{
-			CommandInfo.VerifyCommandName("a");
-			CommandInfo.VerifyCommandName("hello");
-			CommandInfo.VerifyCommandName("can");
-			CommandInfo.VerifyCommandName("asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasd");
-			CommandInfo.VerifyCommandName("hello_q");
-			CommandInfo.VerifyCommandName("hello-q");
-			CommandInfo.VerifyCommandName("hello'q");
-			CommandInfo.VerifyCommandName("hello\"q");
-			CommandInfo.VerifyCommandName("hello\\q");
+			CommandEvent.VerifyCommandName("a");
+			CommandEvent.VerifyCommandName("hello");
+			CommandEvent.VerifyCommandName("can");
+			CommandEvent.VerifyCommandName("asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasd");
+			CommandEvent.VerifyCommandName("hello_q");
+			CommandEvent.VerifyCommandName("hello-q");
+			CommandEvent.VerifyCommandName("hello'q");
+			CommandEvent.VerifyCommandName("hello\"q");
+			CommandEvent.VerifyCommandName("hello\\q");
 		}
 	}
 }

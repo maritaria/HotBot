@@ -24,7 +24,7 @@ namespace HotBot.Plugin.Lottery
 			redirecter.AddListener("startlottery", this);
 		}
 
-		public override void OnCommand(CommandInfo info)
+		public override void OnCommand(CommandEvent info)
 		{
 			if (Controller.CurrentLottery == null)
 			{
@@ -32,11 +32,11 @@ namespace HotBot.Plugin.Lottery
 				Controller.CurrentLottery.Pot = 1000;
 				Controller.CurrentLottery.Duration = TimeSpan.FromSeconds(30);
 				Controller.CurrentLottery.Start(info.Channel);
-				Bus.Publish(new SendChatMessage(info.Channel, "A new lottery has been started. Type !joinlottery to participate :D"));
+				Bus.Publish(new ChatTransmitEvent(info.Channel, "A new lottery has been started. Type !joinlottery to participate :D"));
 			}
 			else
 			{
-				Bus.Publish(new SendChatMessage(info.Channel, "A lottery is already running"));
+				Bus.Publish(new ChatTransmitEvent(info.Channel, "A lottery is already running"));
 			}
 		}
 	}

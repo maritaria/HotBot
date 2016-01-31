@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace HotBot.Core
 {
-	public interface MessageHandler<T>
+	public interface MessageHandler<TData>
 	{
-		void HandleMessage(T message);
+		void HandleMessage(TData message);
 	}
 }

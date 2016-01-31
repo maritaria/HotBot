@@ -6,7 +6,7 @@ using HotBot.Core.Util;
 
 namespace HotBot.Core.Commands
 {
-	public class CommandEncoder : MessageHandler<IrcMessageEnhanced>
+	public class CommandEncoder : MessageHandler<ChatReceivedEvent>
 	{
 		public Collection<string> Prefixes { get; set; } = new Collection<string>();
 
@@ -24,7 +24,7 @@ namespace HotBot.Core.Commands
 			Bus.Subscribe(this);
 		}
 
-		public void HandleMessage(IrcMessageEnhanced message)
+		public void HandleMessage(ChatReceivedEvent message)
 		{
 			if (message == null)
 			{
@@ -37,7 +37,7 @@ namespace HotBot.Core.Commands
 			}
 		}
 
-		private bool ShouldDecode(IrcMessageEnhanced message)
+		private bool ShouldDecode(ChatReceivedEvent message)
 		{
 			if (message.Message.Length > 0)
 			{
@@ -52,14 +52,14 @@ namespace HotBot.Core.Commands
 			return false;
 		}
 
-		private CommandInfo Decode(IrcMessageEnhanced message)
+		private CommandEvent Decode(ChatReceivedEvent message)
 		{
 			string content = message.Message.Trim();
 			content = RemovePrefix(content);
 			string[] parts = content.SplitOnce(" ", "\t");
 			string commandName = parts[0];
 			string argumentText = parts[1];
-			CommandInfo commandInfo = new CommandInfo(message.Channel, message.User, commandName, argumentText);
+			CommandEvent commandInfo = new CommandEvent(message.Channel, message.User, commandName, argumentText);
 			return commandInfo;
 		}
 

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace HotBot.Core.Commands
 {
-	public class CommandRedirecter : MessageHandler<CommandInfo>
+	public class CommandRedirecter : MessageHandler<CommandEvent>
 	{
 		private Dictionary<string, HashSet<CommandListener>> _listeners = new Dictionary<string, HashSet<CommandListener>>();
 		private object _listenersLock = new object();
@@ -23,7 +23,7 @@ namespace HotBot.Core.Commands
 
 		public void AddListener(string commandName, CommandListener listener)
 		{
-			CommandInfo.VerifyCommandName(commandName);
+			CommandEvent.VerifyCommandName(commandName);
 			if (listener == null)
 			{
 				throw new ArgumentNullException("listener");
@@ -45,7 +45,7 @@ namespace HotBot.Core.Commands
 
 		public void RemoveListener(string commandName, CommandListener listener)
 		{
-			CommandInfo.VerifyCommandName(commandName);
+			CommandEvent.VerifyCommandName(commandName);
 			if (listener == null)
 			{
 				throw new ArgumentNullException("listener");
@@ -64,7 +64,7 @@ namespace HotBot.Core.Commands
 			}
 		}
 
-		public void ExecuteCommand(CommandInfo command)
+		public void ExecuteCommand(CommandEvent command)
 		{
 			if (command == null)
 			{
@@ -89,7 +89,7 @@ namespace HotBot.Core.Commands
 			}
 		}
 
-		void MessageHandler<CommandInfo>.HandleMessage(CommandInfo message)
+		void MessageHandler<CommandEvent>.HandleMessage(CommandEvent message)
 		{
 			ExecuteCommand(message);
 		}

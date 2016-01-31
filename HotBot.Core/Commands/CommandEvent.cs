@@ -5,7 +5,7 @@ using HotBot.Core;
 
 namespace HotBot.Core.Commands
 {
-	public sealed class CommandInfo
+	public sealed class CommandEvent
 	{
 		/// <summary>
 		/// Gets the user who is the main focus of the command
@@ -32,12 +32,12 @@ namespace HotBot.Core.Commands
 		/// </summary>
 		public string ArgumentText { get; }
 
-		public CommandInfo(Channel channel, User sender, string commandName, string argumentText) : this(channel, sender, sender, commandName, argumentText)
+		public CommandEvent(Channel channel, User sender, string commandName, string argumentText) : this(channel, sender, sender, commandName, argumentText)
 		{
 			//TODO: Expand unit tests
 		}
 
-		public CommandInfo(Channel channel, User sender, User authorizer, string commandName, string argumentText)
+		public CommandEvent(Channel channel, User sender, User authorizer, string commandName, string argumentText)
 		{
 			if (channel == null)
 			{

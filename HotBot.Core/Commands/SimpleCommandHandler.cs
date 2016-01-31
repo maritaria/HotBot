@@ -19,7 +19,7 @@ namespace HotBot.Core.Commands
 			Redirecter.AddListener("test", this);
 		}
 
-		public void OnCommand(CommandInfo info)
+		public void OnCommand(CommandEvent info)
 		{
 			Console.WriteLine($"SimpleCommandHandler.OnCommand({info.CommandName})");
 		}

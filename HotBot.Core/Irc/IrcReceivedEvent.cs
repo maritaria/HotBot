@@ -2,11 +2,11 @@
 
 namespace HotBot.Core.Irc
 {
-	public class IrcMessageReceived
+	public class IrcReceivedEvent
 	{
 		public string Message { get; }
 
-		public IrcMessageReceived(string message)
+		public IrcReceivedEvent(string message)
 		{
 			if (message == null)
 			{

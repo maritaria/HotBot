@@ -71,7 +71,7 @@
     <Compile Include="Commands\CommandRedirecterTests.cs" />
     <Compile Include="DataStorage\ChannelTests.cs" />
     <Compile Include="DataStorage\UserTests.cs" />
-    <Compile Include="Irc\SendChatMessageTests.cs" />
+    <Compile Include="Irc\ChatTransmitEventTests.cs" />
     <Compile Include="DictionaryMessageBusTests.cs" />
     <Compile Include="Util\StringExtensionsTests.cs" />
   </ItemGroup>

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc
 {
-	public class IrcLogger : MessageHandler<IrcMessageReceived>
+	public class IrcLogger : MessageHandler<IrcReceivedEvent>
 	{
 		public IrcLogger(MessageBus bus)
 		{
 			bus.Subscribe(this);
 		}
 		
-		public void HandleMessage(IrcMessageReceived ircMessage)
+		public void HandleMessage(IrcReceivedEvent ircMessage)
 		{
 			Console.WriteLine(ircMessage.Message);
 		}

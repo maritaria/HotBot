@@ -17,6 +17,6 @@ namespace HotBot.Plugin.Lottery
 			Controller = controller;
 		}
 
-		public abstract void OnCommand(CommandInfo info);
+		public abstract void OnCommand(CommandEvent info);
 	}
 }

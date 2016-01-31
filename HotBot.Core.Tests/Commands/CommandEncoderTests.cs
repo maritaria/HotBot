@@ -22,7 +22,7 @@ namespace HotBot.Core.Commands.Tests
 		{
 			var mockBus = new Mock<MessageBus>();
 			var encoder = new CommandEncoder(mockBus.Object) { Prefixes = { "!", "#" } };
-			mockBus.Verify(m => m.Subscribe<IrcMessageEnhanced>(encoder), Times.Once(), "Not subscribed to IrcMessageEnhanced");
+			mockBus.Verify(m => m.Subscribe<ChatReceivedEvent>(encoder), Times.Once(), "Not subscribed to IrcMessageEnhanced");
 			Assert.AreEqual(mockBus.Object, encoder.Bus, "Bus property not correct");
 		}
 
@@ -42,11 +42,11 @@ namespace HotBot.Core.Commands.Tests
 			var encoder = new CommandEncoder(mockBus.Object) { Prefixes = { "!", "#" } };
 			var channel = new Mock<Channel>("TestChannel");
 			var user = new Mock<User>("TestUser");
-			var message = new IrcMessageEnhanced(channel.Object, user.Object, "#command argument1 argument2");
+			var message = new ChatReceivedEvent(channel.Object, user.Object, "#command argument1 argument2");
 
 			encoder.HandleMessage(message);
 
-			mockBus.Verify(b => b.Publish(It.Is<CommandInfo>(info =>
+			mockBus.Verify(b => b.Publish(It.Is<CommandEvent>(info =>
 				info.User == user.Object &&
 				info.Channel == channel.Object &&
 				info.CommandName == "command" &&
@@ -61,11 +61,11 @@ namespace HotBot.Core.Commands.Tests
 			var encoder = new CommandEncoder(mockBus.Object) { Prefixes = { "QQ", "#" } };
 			var channel = new Mock<Channel>("TestChannel");
 			var user = new Mock<User>("TestUser");
-			var message = new IrcMessageEnhanced(channel.Object, user.Object, "QQcommand argument1 argument2");
+			var message = new ChatReceivedEvent(channel.Object, user.Object, "QQcommand argument1 argument2");
 
 			encoder.HandleMessage(message);
 
-			mockBus.Verify(b => b.Publish(It.Is<CommandInfo>(info =>
+			mockBus.Verify(b => b.Publish(It.Is<CommandEvent>(info =>
 				info.User == user.Object &&
 				info.Channel == channel.Object &&
 				info.CommandName == "command" &&

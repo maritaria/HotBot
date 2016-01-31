@@ -5,7 +5,7 @@ using HotBot.Core.Util;
 
 namespace HotBot.Core.Irc
 {
-	public class PrivateMessageDecoder : MessageHandler<IrcMessageReceived>
+	public class PrivateMessageDecoder : MessageHandler<IrcReceivedEvent>
 	{
 		public DataStore DataStore { get; }
 		public MessageBus Bus { get; }
@@ -25,9 +25,9 @@ namespace HotBot.Core.Irc
 			bus.Subscribe(this);
 		}
 
-		public void HandleMessage(IrcMessageReceived message)
+		public void HandleMessage(IrcReceivedEvent message)
 		{
-			IrcMessageEnhanced enhancedMessage = HandleMessage(message.Message);
+			ChatReceivedEvent enhancedMessage = HandleMessage(message.Message);
 
 			if (enhancedMessage != null)
 			{
@@ -35,7 +35,7 @@ namespace HotBot.Core.Irc
 			}
 		}
 
-		private IrcMessageEnhanced HandleMessage(string message)
+		private ChatReceivedEvent HandleMessage(string message)
 		{
 			if (string.IsNullOrEmpty(message))
 			{
@@ -69,7 +69,7 @@ namespace HotBot.Core.Irc
 			User user = GetUser(username);
 			Channel channel = GetChannel(channelName);
 
-			return new IrcMessageEnhanced(channel, user, chatmessage);
+			return new ChatReceivedEvent(channel, user, chatmessage);
 		}
 
 		private User GetUser(string username)

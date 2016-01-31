@@ -80,28 +80,28 @@
     <Compile Include="Permissions\UserRole.cs" />
     <Compile Include="Commands\CommandListener.cs" />
     <Compile Include="Commands\CommandEncoder.cs" />
-    <Compile Include="Commands\CommandInfo.cs" />
+    <Compile Include="Commands\CommandEvent.cs" />
     <Compile Include="Commands\SimpleCommandHandler.cs" />
     <Compile Include="DataStore.cs" />
     <Compile Include="Plugin\AssemblyLoader.cs" />
     <Compile Include="Plugin\Plugin.cs" />
     <Compile Include="Plugin\PluginContainer.cs" />
     <Compile Include="Plugin\PluginManager.cs" />
-    <Compile Include="SaveChanges.cs" />
+    <Compile Include="SaveChangesNotificationArgs.cs" />
     <Compile Include="Irc\IrcLogger.cs" />
-    <Compile Include="Irc\IrcMessageEnhanced.cs" />
+    <Compile Include="Irc\ChatReceivedEvent.cs" />
     <Compile Include="Irc\IrcClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Irc\IrcMessageReceived.cs" />
+    <Compile Include="Irc\IrcReceivedEvent.cs" />
     <Compile Include="Irc\PipelineInitializer.cs" />
     <Compile Include="Irc\PrivateMessageDecoder.cs" />
-    <Compile Include="Irc\SendChatMessage.cs" />
-    <Compile Include="Irc\SendIrcMessage.cs" />
+    <Compile Include="Irc\ChatTransmitEvent.cs" />
+    <Compile Include="Irc\IrcTransmitEvent.cs" />
     <Compile Include="MessageHandler.cs" />
     <Compile Include="DictionaryMessageBus.cs" />
     <Compile Include="MessageBus.cs" />
     <Compile Include="Util\StringExtensions.cs" />
-    <Compile Include="Irc\ThrottleController.cs" />
+    <Compile Include="Irc\TransmissionThrottler.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>

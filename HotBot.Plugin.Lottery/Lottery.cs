@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Timers;
 using HotBot.Core;
-using HotBot.Core;
 using HotBot.Core.Irc;
 
 namespace HotBot.Plugin.Lottery
@@ -29,7 +28,7 @@ namespace HotBot.Plugin.Lottery
 			private set
 			{
 				_winner = value;
-				Bus.Publish(new LotteryWinnerFound(this));
+				Bus.Publish(new LotteryWinnerEvent(this));
 			}
 		}
 
@@ -116,7 +115,7 @@ namespace HotBot.Plugin.Lottery
 		{
 			if (Participants.Count == 0)
 			{
-				Bus.Publish(new SendChatMessage(Channel, $"The lottery is over, but nobody participated :("));
+				Bus.Publish(new ChatTransmitEvent(Channel, $"The lottery is over, but nobody participated :("));
 			}
 			else
 			{

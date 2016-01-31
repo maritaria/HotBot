@@ -20,7 +20,7 @@ namespace HotBot
 		public TwitchBot(IrcClient ircClient, PipelineInitializer messagePipeline)
 		{
 			IrcClient = ircClient;
-			IrcClient.Connect(Hostname, Port);//TODO: check if connected if not connect
+			IrcClient.Connect(Hostname, Port);//TODO: connect inside the IrcClient class using config data
 			messagePipeline.Initialize();
 			WriterMethod();
 		}

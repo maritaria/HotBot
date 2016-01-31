@@ -26,7 +26,7 @@ namespace HotBot.Core.Commands.Tests
 		}
 
 		[TestMethod()]
-		[ExpectedException(typeof(InvalidCommandNameException))]
+		[ExpectedException(typeof(CommandEvent.InvalidCommandNameException))]
 		public void AddListener_Null_CommandName()
 		{
 			var mockBus = new Mock<MessageBus>();
@@ -54,7 +54,7 @@ namespace HotBot.Core.Commands.Tests
 		}
 
 		[TestMethod()]
-		[ExpectedException(typeof(InvalidCommandNameException))]
+		[ExpectedException(typeof(CommandEvent.InvalidCommandNameException))]
 		public void RemoveListener_Null_CommandName()
 		{
 			var mockBus = new Mock<MessageBus>();
@@ -109,7 +109,7 @@ namespace HotBot.Core.Commands.Tests
 			var redirecter = new CommandRedirecter(mockBus.Object);
 			var user = new Mock<User>();
 			var channel = new Mock<Channel>();
-			var commandInfo = new CommandInfo(channel.Object, user.Object, "command", "args");
+			var commandInfo = new CommandEvent(channel.Object, user.Object, "command", "args");
 			redirecter.ExecuteCommand(commandInfo);
 		}
 
@@ -120,7 +120,7 @@ namespace HotBot.Core.Commands.Tests
 			var redirecter = new CommandRedirecter(mockBus.Object);
 			var user = new Mock<User>("user");
 			var channel = new Mock<Channel>("channel");
-			var commandInfo = new CommandInfo(channel.Object, user.Object, "command", "args");
+			var commandInfo = new CommandEvent(channel.Object, user.Object, "command", "args");
 			var listener = new Mock<CommandListener>();
 
 			redirecter.AddListener("command", listener.Object);
@@ -136,7 +136,7 @@ namespace HotBot.Core.Commands.Tests
 			var redirecter = new CommandRedirecter(mockBus.Object);
 			var user = new Mock<User>("user");
 			var channel = new Mock<Channel>("channel");
-			var commandInfo = new CommandInfo(channel.Object, user.Object, "command", "args");
+			var commandInfo = new CommandEvent(channel.Object, user.Object, "command", "args");
 			var listener = new Mock<CommandListener>();
 
 			redirecter.AddListener("command", listener.Object);
@@ -152,7 +152,7 @@ namespace HotBot.Core.Commands.Tests
 		{
 			var mockBus = new Mock<MessageBus>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
-			(redirecter as MessageHandler<CommandInfo>).HandleMessage(null);
+			(redirecter as MessageHandler<CommandEvent>).HandleMessage(null);
 		}
 
 		[TestMethod()]
@@ -162,11 +162,11 @@ namespace HotBot.Core.Commands.Tests
 			var redirecter = new CommandRedirecter(mockBus.Object);
 			var user = new Mock<User>("user");
 			var channel = new Mock<Channel>("channel");
-			var commandInfo = new CommandInfo(channel.Object, user.Object, "command", "args");
+			var commandInfo = new CommandEvent(channel.Object, user.Object, "command", "args");
 			var listener = new Mock<CommandListener>();
 
 			redirecter.AddListener("command", listener.Object);
-			(redirecter as MessageHandler<CommandInfo>).HandleMessage(commandInfo);
+			(redirecter as MessageHandler<CommandEvent>).HandleMessage(commandInfo);
 
 			listener.Verify(l => l.OnCommand(commandInfo), Times.Once());
 		}

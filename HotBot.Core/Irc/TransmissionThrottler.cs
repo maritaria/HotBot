@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc
 {
-	public sealed class ThrottleController
+	public sealed class TransmissionThrottler
 	{
+		//TODO: Implement this class
 		List<int> _history = new List<int>();
 		int _pressure = 0;
-		DateTime _lastPressure;
 
 		public int CommandLimit { get; set; } = 20;
 		public TimeSpan CommandLimitReach { get; set; } = TimeSpan.FromSeconds(25);

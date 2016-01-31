@@ -7,13 +7,13 @@ using HotBot.Core;
 
 namespace HotBot.Core.Irc
 {
-	public class IrcMessageEnhanced
+	public class ChatReceivedEvent
 	{
 		public Channel Channel { get; }
 		public User User { get; }
 		public string Message { get; }
 
-		public IrcMessageEnhanced(Channel channel, User user, string message)
+		public ChatReceivedEvent(Channel channel, User user, string message)
 		{
 			if (channel == null)
 			{
