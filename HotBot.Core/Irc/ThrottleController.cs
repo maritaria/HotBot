@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotBot.Core
+namespace HotBot.Core.Irc
 {
 	public sealed class ThrottleController
 	{

@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotBot.Core.DataStorage
+namespace HotBot.Core
 {
 	public class Channel
 	{

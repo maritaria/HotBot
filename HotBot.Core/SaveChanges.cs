@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotBot.Core.DataStorage
+namespace HotBot.Core
 {
 	public sealed class SaveChanges
 	{

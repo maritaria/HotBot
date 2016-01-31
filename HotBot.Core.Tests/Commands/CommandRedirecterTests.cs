@@ -2,7 +2,7 @@
 using Moq;
 using System;
 using System.Linq;
-using HotBot.Core.DataStorage;
+using HotBot.Core;
 
 namespace HotBot.Core.Commands.Tests
 {

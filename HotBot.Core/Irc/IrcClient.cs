@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
-using HotBot.Core.DataStorage;
+using HotBot.Core;
 
 namespace HotBot.Core.Irc
 {

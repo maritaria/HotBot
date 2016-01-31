@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using HotBot.Core.DataStorage.Permissions;
+using HotBot.Core.Permissions;
 
-namespace HotBot.Core.DataStorage.Tests
+namespace HotBot.Core.Tests
 {
 	[TestClass()]
 	public class UserTests

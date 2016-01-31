@@ -1,4 +1,4 @@
-﻿namespace HotBot.Core.DataStorage.Permissions
+﻿namespace HotBot.Core.Permissions
 {
 	public enum PermissionType
 	{

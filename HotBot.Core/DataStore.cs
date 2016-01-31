@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HotBot.Core.DataStorage
+namespace HotBot.Core
 {
 	public interface DataStore
 	{

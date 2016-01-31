@@ -73,18 +73,18 @@
   <ItemGroup>
     <Compile Include="Commands\CommandRedirecter.cs" />
     <Compile Include="Commands\InvalidCommandNameException.cs" />
-    <Compile Include="DataStorage\Channel.cs" />
-    <Compile Include="DataStorage\DbContextDataStore.cs" />
-    <Compile Include="DataStorage\Permissions\Authorizer.cs" />
-    <Compile Include="DataStorage\Permissions\PermissionNode.cs" />
-    <Compile Include="DataStorage\Permissions\PermissionType.cs" />
-    <Compile Include="DataStorage\Permissions\UserRole.cs" />
+    <Compile Include="Channel.cs" />
+    <Compile Include="DbContextDataStore.cs" />
+    <Compile Include="Permissions\Authorizer.cs" />
+    <Compile Include="Permissions\PermissionNode.cs" />
+    <Compile Include="Permissions\PermissionType.cs" />
+    <Compile Include="Permissions\UserRole.cs" />
     <Compile Include="Commands\CommandListener.cs" />
     <Compile Include="Commands\CommandEncoder.cs" />
     <Compile Include="Commands\CommandInfo.cs" />
     <Compile Include="Commands\SimpleCommandHandler.cs" />
-    <Compile Include="DataStorage\DataStore.cs" />
-    <Compile Include="DataStorage\SaveChanges.cs" />
+    <Compile Include="DataStore.cs" />
+    <Compile Include="SaveChanges.cs" />
     <Compile Include="Irc\IrcLogger.cs" />
     <Compile Include="Irc\IrcMessageEnhanced.cs" />
     <Compile Include="Irc\IrcClient.cs" />
@@ -98,12 +98,16 @@
     <Compile Include="DictionaryMessageBus.cs" />
     <Compile Include="MessageBus.cs" />
     <Compile Include="Util\StringExtensions.cs" />
-    <Compile Include="ThrottleController.cs" />
-    <Compile Include="DataStorage\User.cs" />
+    <Compile Include="Irc\ThrottleController.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataStorage\" />
+    <Folder Include="Plugins\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

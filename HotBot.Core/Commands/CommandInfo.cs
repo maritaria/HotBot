@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using HotBot.Core.DataStorage.Permissions;
-using HotBot.Core.DataStorage;
+using HotBot.Core.Permissions;
+using HotBot.Core;
 
 namespace HotBot.Core.Commands
 {

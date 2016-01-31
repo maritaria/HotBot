@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using HotBot.Core.DataStorage;
+using HotBot.Core;
 using HotBot.Core.Util;
 
 namespace HotBot.Core.Irc

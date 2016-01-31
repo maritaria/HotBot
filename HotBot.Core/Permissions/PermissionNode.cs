@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace HotBot.Core.DataStorage.Permissions
+namespace HotBot.Core.Permissions
 {
 	public class PermissionNode
 	{

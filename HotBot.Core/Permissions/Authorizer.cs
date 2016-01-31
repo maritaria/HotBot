@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotBot.Core.DataStorage.Permissions
+namespace HotBot.Core.Permissions
 {
 	public interface Authorizer
 	{
