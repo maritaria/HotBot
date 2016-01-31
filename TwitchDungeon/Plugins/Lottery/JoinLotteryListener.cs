@@ -28,7 +28,7 @@ namespace TwitchDungeon.Plugins.Lottery
 		{
 			if (Controller.CurrentLottery == null)
 			{
-				Bus.Publish(new SendChatMessage(info.Channel, $"@{info.User.Username}, there is no lottery right now :("));
+				Bus.Publish(new SendChatMessage(info.Channel, $"@{info.User.Name}, there is no lottery right now :("));
 			}
 			else
 			{
@@ -46,12 +46,12 @@ namespace TwitchDungeon.Plugins.Lottery
 					catch (LotteryException ex)
 					{
 						success = false;
-						Bus.Publish(new SendChatMessage(info.Channel, $"@{info.User.Username} ERROR: {ex.Message}"));
+						Bus.Publish(new SendChatMessage(info.Channel, $"@{info.User.Name} ERROR: {ex.Message}"));
 						return;
 					}
 					if (success)
 					{
-						Bus.Publish(new SendChatMessage(info.Channel, $"New lottery participant: (@{info.User.Username})"));
+						Bus.Publish(new SendChatMessage(info.Channel, $"New lottery participant: (@{info.User.Name})"));
 					}
 				}
 			}

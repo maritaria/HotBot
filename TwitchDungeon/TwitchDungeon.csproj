@@ -81,6 +81,8 @@
     <Compile Include="Services\DataStorage\Channel.cs" />
     <Compile Include="Services\DataStorage\DbContextDataStore.cs" />
     <Compile Include="Services\DataStorage\Permissions\Authorizer.cs" />
+    <Compile Include="Services\DataStorage\Permissions\PermissionNode.cs" />
+    <Compile Include="Services\DataStorage\Permissions\PermissionType.cs" />
     <Compile Include="Services\DataStorage\Permissions\UserRole.cs" />
     <Compile Include="Services\Commands\CommandListener.cs" />
     <Compile Include="Services\Commands\CommandEncoder.cs" />
@@ -95,7 +97,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Irc\IrcMessageReceived.cs" />
     <Compile Include="Services\Irc\PipelineInitializer.cs" />
-    <Compile Include="Services\Irc\ProtocolHandler.cs" />
+    <Compile Include="Services\Irc\PrivateMessageDecoder.cs" />
     <Compile Include="Services\Irc\SendChatMessage.cs" />
     <Compile Include="Services\Irc\SendIrcMessage.cs" />
     <Compile Include="Services\MessageHandler.cs" />

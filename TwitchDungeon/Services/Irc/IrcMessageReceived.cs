@@ -1,12 +1,18 @@
-﻿namespace TwitchDungeon.Services.Irc
+﻿using System;
+
+namespace TwitchDungeon.Services.Irc
 {
 	public class IrcMessageReceived
 	{
-		public string Text { get; }
+		public string Message { get; }
 
 		public IrcMessageReceived(string message)
 		{
-			Text = message;
+			if (message == null)
+			{
+				throw new ArgumentNullException("message");
+			}
+			Message = message;
 		}
 	}
 }

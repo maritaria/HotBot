@@ -15,6 +15,5 @@ namespace TwitchDungeon.Services.DataStorage
 		int SaveChanges();
 		Task<int> SaveChangesAsync();
 		Task<int> SaveChangesAsync(CancellationToken token);
-
 	}
 }

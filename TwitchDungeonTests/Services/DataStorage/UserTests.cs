@@ -1,10 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TwitchDungeon.Services.DataStorage;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TwitchDungeon.DataStorage.Permissions;
 
 namespace TwitchDungeon.Services.DataStorage.Tests
 {
@@ -12,9 +9,34 @@ namespace TwitchDungeon.Services.DataStorage.Tests
 	public class UserTests
 	{
 		[TestMethod()]
-		public void UserTest()
+		[ExpectedException(typeof(User.InvalidNameException))]
+		public void Constructor_Username_Null()
 		{
-			Assert.Fail();
+			new User(null);
+		}
+
+		[TestMethod()]
+		[ExpectedException(typeof(User.InvalidNameException))]
+		public void Constructor_Username_TooShort()
+		{
+			new User("");
+		}
+
+		[TestMethod()]
+		[ExpectedException(typeof(User.InvalidNameException))]
+		public void Constructor_Username_TooLong()
+		{
+			new User("123456789012345678901234567890");
+		}
+
+		[TestMethod()]
+		public void Constructor_Valid()
+		{
+			User user = new User("username");
+			Assert.AreNotEqual(Guid.Empty, user.Id, "Id not randomized");
+			Assert.AreEqual("username", user.Name);
+			Assert.AreEqual(0d, user.Money, "Money does not start at 0");
+			Assert.AreEqual(UserRole.User, user.Role, "Incorrect default role");
 		}
 	}
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using TwitchDungeon.Services.DataStorage;
 using TwitchDungeon.Services.Irc;
 using TwitchDungeon.Services.Util;
 
@@ -9,8 +8,8 @@ namespace TwitchDungeon.Services.Commands
 {
 	public class CommandEncoder : MessageHandler<IrcMessageEnhanced>
 	{
-		//TODO: Make prefixes strings
-		public Collection<char> Prefixes { get; set; } = new Collection<char>();
+		public Collection<string> Prefixes { get; set; } = new Collection<string>();
+
 		public MessageBus Bus { get; }
 
 		public CommandEncoder(MessageBus bus)
@@ -20,7 +19,7 @@ namespace TwitchDungeon.Services.Commands
 				throw new ArgumentNullException("bus");
 			}
 			//TODO: Read prefixes from configuration
-			Prefixes.Add('!');
+			Prefixes.Add("!");
 			Bus = bus;
 			Bus.Subscribe(this);
 		}
@@ -37,15 +36,25 @@ namespace TwitchDungeon.Services.Commands
 				Bus.Publish(commandInfo);
 			}
 		}
-		
+
 		private bool ShouldDecode(IrcMessageEnhanced message)
 		{
-			return message.Text.Length > 0 && Prefixes.Contains(message.Text.First());
+			if (message.Message.Length > 0)
+			{
+				foreach (string prefix in Prefixes)
+				{
+					if (message.Message.StartsWith(prefix))
+					{
+						return true;
+					}
+				}
+			}
+			return false;
 		}
 
 		private CommandInfo Decode(IrcMessageEnhanced message)
 		{
-			string content = message.Text.Trim();
+			string content = message.Message.Trim();
 			content = RemovePrefix(content);
 			string[] parts = content.SplitOnce(" ", "\t");
 			string commandName = parts[0];
@@ -56,7 +65,14 @@ namespace TwitchDungeon.Services.Commands
 
 		private string RemovePrefix(string text)
 		{
-			return text.Substring(1);
+			foreach(string prefix in Prefixes)
+			{
+				if (text.StartsWith(prefix))
+				{
+					return text.Substring(prefix.Length);
+				}
+			}
+			throw new InvalidOperationException("string does not start with known prefix");
 		}
 	}
 }

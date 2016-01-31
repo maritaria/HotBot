@@ -5,12 +5,12 @@ using TwitchDungeon.Services.Util;
 
 namespace TwitchDungeon.Services.Irc
 {
-	public class ProtocolHandler : MessageHandler<IrcMessageReceived>
+	public class PrivateMessageDecoder : MessageHandler<IrcMessageReceived>
 	{
 		public DataStore DataStore { get; }
 		public MessageBus Bus { get; }
 
-		public ProtocolHandler(DataStore datastore, MessageBus bus)
+		public PrivateMessageDecoder(DataStore datastore, MessageBus bus)
 		{
 			if (datastore == null)
 			{
@@ -27,7 +27,7 @@ namespace TwitchDungeon.Services.Irc
 
 		public void HandleMessage(IrcMessageReceived message)
 		{
-			IrcMessageEnhanced enhancedMessage = HandleMessage(message.Text);
+			IrcMessageEnhanced enhancedMessage = HandleMessage(message.Message);
 
 			if (enhancedMessage != null)
 			{
@@ -74,7 +74,7 @@ namespace TwitchDungeon.Services.Irc
 
 		private User GetUser(string username)
 		{
-			User user = DataStore.Users.FirstOrDefault(u => u.Username == username);
+			User user = DataStore.Users.FirstOrDefault(u => u.Name == username);
 			if (user == null)
 			{
 				user = new User(username);//TODO: Add new user message

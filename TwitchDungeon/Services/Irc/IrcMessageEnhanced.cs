@@ -11,13 +11,25 @@ namespace TwitchDungeon.Services.Irc
 	{
 		public Channel Channel { get; }
 		public User User { get; }
-		public string Text { get; }
+		public string Message { get; }
 
 		public IrcMessageEnhanced(Channel channel, User user, string message)
 		{
+			if (channel == null)
+			{
+				throw new ArgumentNullException("channel");
+			}
+			if (user == null)
+			{
+				throw new ArgumentNullException("user");
+			}
+			if (message == null)
+			{
+				throw new ArgumentNullException("message");
+			}
 			Channel = channel;
 			User = user;
-			Text = message;
+			Message = message;
 		}
 	}
 

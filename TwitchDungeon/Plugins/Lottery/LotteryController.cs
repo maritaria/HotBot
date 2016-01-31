@@ -55,7 +55,7 @@ namespace TwitchDungeon.Plugins.Lottery
 		void MessageHandler<LotteryWinnerFound>.HandleMessage(LotteryWinnerFound message)
 		{
 			CurrentLottery = null;
-			Bus.Publish(new SendChatMessage(message.Lottery.Channel, $"Lottery finished, the winner is {message.Lottery.Winner.Username}!"));
+			Bus.Publish(new SendChatMessage(message.Lottery.Channel, $"Lottery finished, the winner is {message.Lottery.Winner.Name}!"));
 			message.Lottery.Winner.Money += message.Lottery.Pot;
 			Bus.Publish(new SaveChanges());
 		}

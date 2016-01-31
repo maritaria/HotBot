@@ -15,7 +15,7 @@ namespace TwitchDungeon.Services.Irc
 		
 		public void HandleMessage(IrcMessageReceived ircMessage)
 		{
-			Console.WriteLine(ircMessage.Text);
+			Console.WriteLine(ircMessage.Message);
 		}
 	}
 }
