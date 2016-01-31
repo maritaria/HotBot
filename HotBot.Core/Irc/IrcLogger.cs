@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotBot.Core.Services.Irc
+namespace HotBot.Core.Irc
 {
 	public class IrcLogger : MessageHandler<IrcMessageReceived>
 	{

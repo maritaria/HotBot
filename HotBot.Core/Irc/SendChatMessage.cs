@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using HotBot.Core.Services.DataStorage;
+using HotBot.Core.DataStorage;
 
-namespace HotBot.Core.Services.Irc
+namespace HotBot.Core.Irc
 {
 	public class SendChatMessage : SendIrcMessage
 	{

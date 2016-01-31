@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using Moq;
 
-namespace HotBot.Core.Services.Tests
+namespace HotBot.Core.Tests
 {
 	[TestClass()]
 	public class DictionaryMessageBusTests

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace HotBot.Core.Services.Util
+namespace HotBot.Core.Util
 {
 	public static class StringExtensions
 	{

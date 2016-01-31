@@ -3,9 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
-using HotBot.Core.Services.DataStorage;
+using HotBot.Core.DataStorage;
 
-namespace HotBot.Core.Services.Irc
+namespace HotBot.Core.Irc
 {
 	public class IrcClient : IDisposable, MessageHandler<SendIrcMessage>, MessageHandler<SendChatMessage>
 	{

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HotBot.Core.Services.Commands
+namespace HotBot.Core.Commands
 {
 	public interface CommandListener
 	{

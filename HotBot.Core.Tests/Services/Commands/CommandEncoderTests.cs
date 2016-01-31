@@ -2,10 +2,10 @@
 using Moq;
 using System;
 using System.Linq;
-using HotBot.Core.Services.DataStorage;
-using HotBot.Core.Services.Irc;
+using HotBot.Core.DataStorage;
+using HotBot.Core.Irc;
 
-namespace HotBot.Core.Services.Commands.Tests
+namespace HotBot.Core.Commands.Tests
 {
 	[TestClass()]
 	public class CommandEncoderTests

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HotBot.Core.Services
+namespace HotBot.Core
 {
 	public interface MessageBus
 	{

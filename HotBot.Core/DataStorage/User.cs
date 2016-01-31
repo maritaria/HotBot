@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using HotBot.Core.DataStorage.Permissions;
 
-namespace HotBot.Core.Services.DataStorage
+namespace HotBot.Core.DataStorage
 {
 	public class User : Authorizer
 	{

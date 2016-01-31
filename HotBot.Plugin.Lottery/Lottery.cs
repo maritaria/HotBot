@@ -2,9 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Timers;
-using HotBot.Core.Services;
-using HotBot.Core.Services.DataStorage;
-using HotBot.Core.Services.Irc;
+using HotBot.Core;
+using HotBot.Core.DataStorage;
+using HotBot.Core.Irc;
 
 namespace HotBot.Plugin.Lottery
 {

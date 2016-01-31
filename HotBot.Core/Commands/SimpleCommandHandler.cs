@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotBot.Core.Services.Commands
+namespace HotBot.Core.Commands
 {
 	public class SimpleCommandHandler : CommandListener
 	{

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using HotBot.Core.DataStorage.Permissions;
-using HotBot.Core.Services.DataStorage;
+using HotBot.Core.DataStorage;
 
-namespace HotBot.Core.Services.Commands
+namespace HotBot.Core.Commands
 {
 	public sealed class CommandInfo
 	{

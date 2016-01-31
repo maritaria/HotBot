@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HotBot.Core.Services.DataStorage;
+using HotBot.Core.DataStorage;
 
-namespace HotBot.Core.Services.Irc
+namespace HotBot.Core.Irc
 {
 	public class IrcMessageEnhanced
 	{

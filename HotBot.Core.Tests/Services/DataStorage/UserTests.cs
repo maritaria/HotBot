@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using HotBot.Core.DataStorage.Permissions;
 
-namespace HotBot.Core.Services.DataStorage.Tests
+namespace HotBot.Core.DataStorage.Tests
 {
 	[TestClass()]
 	public class UserTests

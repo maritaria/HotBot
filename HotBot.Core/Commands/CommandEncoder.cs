@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using HotBot.Core.Services.Irc;
-using HotBot.Core.Services.Util;
+using HotBot.Core.Irc;
+using HotBot.Core.Util;
 
-namespace HotBot.Core.Services.Commands
+namespace HotBot.Core.Commands
 {
 	public class CommandEncoder : MessageHandler<IrcMessageEnhanced>
 	{

@@ -2,9 +2,9 @@
 using Moq;
 using System;
 using System.Linq;
-using HotBot.Core.Services.DataStorage;
+using HotBot.Core.DataStorage;
 
-namespace HotBot.Core.Services.Commands.Tests
+namespace HotBot.Core.Commands.Tests
 {
 	[TestClass()]
 	public class CommandRedirecterTests

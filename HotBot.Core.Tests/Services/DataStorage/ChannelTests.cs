@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace HotBot.Core.Services.DataStorage.Tests
+namespace HotBot.Core.DataStorage.Tests
 {
 	[TestClass()]
 	public class ChannelTests

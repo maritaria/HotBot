@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using HotBot.Core.Services.DataStorage;
-using HotBot.Core.Services.Util;
+using HotBot.Core.DataStorage;
+using HotBot.Core.Util;
 
-namespace HotBot.Core.Services.Irc
+namespace HotBot.Core.Irc
 {
 	public class PrivateMessageDecoder : MessageHandler<IrcMessageReceived>
 	{

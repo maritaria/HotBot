@@ -1,8 +1,8 @@
 ﻿using HotBot.Core;
-using HotBot.Core.Services;
-using HotBot.Core.Services.Commands;
-using HotBot.Core.Services.DataStorage;
-using HotBot.Core.Services.Irc;
+using HotBot.Core;
+using HotBot.Core.Commands;
+using HotBot.Core.DataStorage;
+using HotBot.Core.Irc;
 using HotBot.Plugin.Lottery;
 using Microsoft.Practices.Unity;
 using System;

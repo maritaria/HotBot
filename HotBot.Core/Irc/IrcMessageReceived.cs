@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HotBot.Core.Services.Irc
+namespace HotBot.Core.Irc
 {
 	public class IrcMessageReceived
 	{

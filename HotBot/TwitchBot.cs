@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using HotBot.Core.Services;
-using HotBot.Core.Services.Commands;
-using HotBot.Core.Services.Irc;
+using HotBot.Core;
+using HotBot.Core.Commands;
+using HotBot.Core.Irc;
 
 namespace HotBot
 {

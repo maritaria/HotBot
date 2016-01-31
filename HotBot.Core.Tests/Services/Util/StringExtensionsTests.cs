@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace HotBot.Core.Services.Util.Tests
+namespace HotBot.Core.Util.Tests
 {
 	[TestClass()]
 	public class StringExtensionsTests

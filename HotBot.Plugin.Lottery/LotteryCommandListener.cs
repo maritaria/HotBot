@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using HotBot.Core.Services.Commands;
+using HotBot.Core.Commands;
 
 namespace HotBot.Plugin.Lottery
 {

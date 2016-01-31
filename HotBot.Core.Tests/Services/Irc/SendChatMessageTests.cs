@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using HotBot.Core.Services.DataStorage;
+using HotBot.Core.DataStorage;
 
-namespace HotBot.Core.Services.Irc.Tests
+namespace HotBot.Core.Irc.Tests
 {
 	[TestClass()]
 	public class SendChatMessageTests

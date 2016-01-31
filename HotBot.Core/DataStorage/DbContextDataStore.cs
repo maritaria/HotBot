@@ -2,7 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 
-namespace HotBot.Core.Services.DataStorage
+namespace HotBot.Core.DataStorage
 {
 	public class DbContextDataStore : DbContext, DataStore, MessageHandler<SaveChanges>
 	{

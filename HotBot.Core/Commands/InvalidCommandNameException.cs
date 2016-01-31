@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotBot.Core.Services.Commands
+namespace HotBot.Core.Commands
 {
 	public sealed class InvalidCommandNameException : Exception
 	{
