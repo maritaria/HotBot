@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchDungeon", "TwitchDungeon\TwitchDungeon.csproj", "{AFD7D526-9449-4EC9-834B-A2E1DBFE00F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotBot.Core", "HotBot.Core\HotBot.Core.csproj", "{AFD7D526-9449-4EC9-834B-A2E1DBFE00F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchDungeonTests", "TwitchDungeonTests\TwitchDungeonTests.csproj", "{2C8E5E32-A775-4DA3-8610-18FAF2BF326E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotBot.Core.Tests", "HotBot.Core.Tests\HotBot.Core.Tests.csproj", "{2C8E5E32-A775-4DA3-8610-18FAF2BF326E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
