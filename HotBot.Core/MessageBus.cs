@@ -6,10 +6,10 @@ namespace HotBot.Core
 {
 	public interface MessageBus
 	{
-		void Subscribe<TData>(MessageHandler<TData> handler);
-		bool IsSubscribed<TData>(MessageHandler<TData> handler);
-		void Unsubscribe<TData>(MessageHandler<TData> handler);
-		void Publish<TData>(TData data);
+		void Subscribe<TEvent>(MessageHandler<TEvent> handler);
+		bool IsSubscribed<TEvent>(MessageHandler<TEvent> handler);
+		void Unsubscribe<TEvent>(MessageHandler<TEvent> handler);
+		void Publish<TEvent>(TEvent data);
 	}
 
 }

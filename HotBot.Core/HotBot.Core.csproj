@@ -74,6 +74,7 @@
     <Compile Include="Commands\CommandRedirecter.cs" />
     <Compile Include="Channel.cs" />
     <Compile Include="DbContextDataStore.cs" />
+    <Compile Include="Irc\ConnectionLostEvent.cs" />
     <Compile Include="Permissions\Authorizer.cs" />
     <Compile Include="Permissions\PermissionNode.cs" />
     <Compile Include="Permissions\PermissionType.cs" />
@@ -83,10 +84,16 @@
     <Compile Include="Commands\CommandEvent.cs" />
     <Compile Include="Commands\SimpleCommandHandler.cs" />
     <Compile Include="DataStore.cs" />
-    <Compile Include="Plugin\AssemblyLoader.cs" />
-    <Compile Include="Plugin\Plugin.cs" />
-    <Compile Include="Plugin\PluginContainer.cs" />
-    <Compile Include="Plugin\PluginManager.cs" />
+    <Compile Include="Plugins\AssemblyLoader.cs" />
+    <Compile Include="Plugins\DependencyType.cs" />
+    <Compile Include="Plugins\Plugin.cs" />
+    <Compile Include="Plugins\Dependency.cs" />
+    <Compile Include="Plugins\PluginDescription.cs" />
+    <Compile Include="Plugins\ReflectionPluginDescription.cs" />
+    <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="Plugins\PluginManagerState.cs" />
+    <Compile Include="Plugins\PluginNameAttribute.cs" />
+    <Compile Include="Plugins\ReflectionPluginManager.cs" />
     <Compile Include="SaveChangesNotificationArgs.cs" />
     <Compile Include="Irc\IrcLogger.cs" />
     <Compile Include="Irc\ChatReceivedEvent.cs" />
@@ -101,7 +108,7 @@
     <Compile Include="DictionaryMessageBus.cs" />
     <Compile Include="MessageBus.cs" />
     <Compile Include="Util\StringExtensions.cs" />
-    <Compile Include="Irc\TransmissionThrottler.cs" />
+    <Compile Include="Irc\Throttler.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>

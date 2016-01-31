@@ -9,9 +9,18 @@ namespace HotBot.Core.Irc
 	public class IrcTransmitEvent
 	{
 		public virtual string IrcCommand { get; }
-		
+
+		protected IrcTransmitEvent()
+		{
+
+		}
+
 		public IrcTransmitEvent(string ircCommand)
 		{
+			if (ircCommand == null)
+			{
+				throw new ArgumentNullException("ircCommand");
+			}
 			IrcCommand = ircCommand;
 		}
 

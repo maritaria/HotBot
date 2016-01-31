@@ -15,6 +15,7 @@ namespace HotBot.Core.Irc
 		private Thread _readerThread;
 		private StreamReader _reader;
 		private StreamWriter _writer;
+		private CancellationToken _cancelReader = new CancellationToken(false);
 
 		public string Hostname { get; private set; }
 		public int Port { get; private set; }
@@ -77,13 +78,13 @@ namespace HotBot.Core.Irc
 		{
 			string message = string.Format(format, args);
 			string command = string.Format(":{2}!{2}@{2}.tmi.twitch.tv PRIVMSG #{0} :{1}", channelName, message, Username);
-			Send(command);
+			SendCommands(command);
 		}
 
 		public void JoinChannel(string channelName)
 		{
 			EnsureChannel(channelName);
-			Send(string.Format("JOIN #{0}", channelName));
+			SendCommands(string.Format("JOIN #{0}", channelName));
 		}
 
 		private void EnsureChannel(string channelName)
@@ -116,7 +117,7 @@ namespace HotBot.Core.Irc
 			string passwordCommand = string.Format("PASS {0}", authKey);
 			string userCommand = string.Format("USER {0} {1} {2}: {0}", username, hostname, servername);
 			string nickCommand = string.Format("NICK {0}", username);
-			Send(passwordCommand, userCommand, nickCommand);
+			SendCommands(passwordCommand, userCommand, nickCommand);
 			Username = username;
 		}
 
@@ -169,7 +170,7 @@ namespace HotBot.Core.Irc
 
 		#endregion IDisposable Support
 
-		private void Send(params string[] commands)
+		private void SendCommands(params string[] commands)
 		{
 			foreach (string line in commands)
 			{
@@ -183,8 +184,22 @@ namespace HotBot.Core.Irc
 			while (true)
 			{
 				//TODO: Make this async and allow for cancel mechanism for dispose pattern
-				string message = _reader.ReadLine();
-				Bus.Publish(new IrcReceivedEvent(message));
+				var readTask = _reader.ReadLineAsync();
+				readTask.Wait(_cancelReader);
+				string message = readTask.Result;
+				if (_cancelReader.IsCancellationRequested)
+				{
+					break;
+				}
+				if (message != null)
+				{
+					Bus.Publish(new IrcReceivedEvent(message));
+				}
+				else
+				{
+					Bus.Publish(new ConnectionLostEvent(this));
+					break;
+				}
 			}
 		}
 
@@ -194,7 +209,7 @@ namespace HotBot.Core.Irc
 			{
 				throw new ArgumentNullException("message");
 			}
-			Send(message.IrcCommand);
+			SendCommands(message.IrcCommand);
 		}
 
 		void MessageHandler<ChatTransmitEvent>.HandleMessage(ChatTransmitEvent message)

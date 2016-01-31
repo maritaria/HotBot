@@ -8,21 +8,21 @@ namespace HotBot.Core.Tests
 	public class ChannelTests
 	{
 		[TestMethod()]
-		[ExpectedException(typeof(ArgumentNullException))]
+		[ExpectedException(typeof(Channel.InvalidNameException))]
 		public void Constructor_Null()
 		{
 			new Channel(null);
 		}
 
 		[TestMethod()]
-		[ExpectedException(typeof(User.InvalidNameException))]
+		[ExpectedException(typeof(Channel.InvalidNameException))]
 		public void Constructor_ChannelName_TooShort()
 		{
 			new Channel("");
 		}
 
 		[TestMethod()]
-		[ExpectedException(typeof(User.InvalidNameException))]
+		[ExpectedException(typeof(Channel.InvalidNameException))]
 		public void Constructor_ChannelName_TooLong()
 		{
 			new Channel("123456789012345678901234567890");

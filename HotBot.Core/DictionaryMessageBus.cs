@@ -12,65 +12,65 @@ namespace HotBot.Core
 		{
 		}
 
-		public void Subscribe<TData>(MessageHandler<TData> handler)
+		public void Subscribe<TEvent>(MessageHandler<TEvent> handler)
 		{
 			if (handler == null)
 			{
 				throw new ArgumentNullException("handler");
 			}
-			if (!_subscribers.ContainsKey(typeof(TData)))
+			if (!_subscribers.ContainsKey(typeof(TEvent)))
 			{
-				_subscribers.Add(typeof(TData), new HashSet<object>());
+				_subscribers.Add(typeof(TEvent), new HashSet<object>());
 			}
-			HashSet<object> subs = _subscribers[typeof(TData)];
+			HashSet<object> subs = _subscribers[typeof(TEvent)];
 			subs.Add(handler);
 		}
 
-		public bool IsSubscribed<TData>(MessageHandler<TData> handler)
+		public bool IsSubscribed<TEvent>(MessageHandler<TEvent> handler)
 		{
 			if (handler == null)
 			{
 				throw new ArgumentNullException("handler");
 			}
-			if (!_subscribers.ContainsKey(typeof(TData)))
+			if (!_subscribers.ContainsKey(typeof(TEvent)))
 			{
 				return false;
 			}
-			HashSet<object> subs = _subscribers[typeof(TData)];
+			HashSet<object> subs = _subscribers[typeof(TEvent)];
 			return subs.Contains(handler);
 		}
 
-		public void Unsubscribe<TData>(MessageHandler<TData> handler)
+		public void Unsubscribe<TEvent>(MessageHandler<TEvent> handler)
 		{
 			if (handler == null)
 			{
 				throw new ArgumentNullException("handler");
 			}
-			if (_subscribers.ContainsKey(typeof(TData)))
+			if (_subscribers.ContainsKey(typeof(TEvent)))
 			{
-				HashSet<object> subs = _subscribers[typeof(TData)];
+				HashSet<object> subs = _subscribers[typeof(TEvent)];
 				subs.Remove(handler);
 			}
 		}
 
-		public void Publish<TData>(TData data)
+		public void Publish<TEvent>(TEvent data)
 		{
 			if (data == null)
 			{
 				throw new ArgumentNullException("data");
 			}
-			if (HasSubscribers<TData>())
+			if (HasSubscribers<TEvent>())
 			{
-				foreach (MessageHandler<TData> h in _subscribers[typeof(TData)])
+				foreach (MessageHandler<TEvent> h in _subscribers[typeof(TEvent)])
 				{
 					h.HandleMessage(data);
 				}
 			}
 		}
 
-		private bool HasSubscribers<TData>()
+		private bool HasSubscribers<TEvent>()
 		{
-			return _subscribers.ContainsKey(typeof(TData));
+			return _subscribers.ContainsKey(typeof(TEvent));
 		}
 	}
 }

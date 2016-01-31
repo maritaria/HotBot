@@ -1,23 +1,33 @@
 ﻿using System;
 using System.Linq;
-using HotBot.Core;
 
 namespace HotBot.Core.Irc
 {
 	public class ChatTransmitEvent : IrcTransmitEvent
 	{
+		private string _ircCommand;
 		public string Text { get; }
 		public Channel Channel { get; }
+		public override string IrcCommand => _ircCommand;
 
-		public ChatTransmitEvent(Channel channel, string chatMessage) : base(GenerateCommand(channel, chatMessage))
+		public ChatTransmitEvent(Channel channel, string chatMessage)
 		{
-			Text = chatMessage;
+			if (channel == null)
+			{
+				throw new ArgumentNullException("channel");
+			}
+			if (chatMessage == null)
+			{
+				throw new ArgumentNullException("chatMessage");
+			}
 			Channel = channel;
+			Text = chatMessage;
+			_ircCommand = GenerateCommand(channel, chatMessage);
 		}
 
-		private static string GenerateCommand(Channel channel, string chatMessage)
+		private string GenerateCommand(Channel channel, string chatMessage)
 		{
-			return "PRIVMSG #" + channel.Name + " :" + chatMessage;
+			return $"PRIVMSG {channel.ToString()} :{chatMessage}";
 		}
 	}
 }
