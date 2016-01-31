@@ -9,6 +9,7 @@ namespace HotBot.Core.Irc
 {
 	public class PipelineInitializer
 	{
+		//TODO: Get rid of this
 		private IUnityContainer _container;
 
 		public PipelineInitializer(IUnityContainer container)
