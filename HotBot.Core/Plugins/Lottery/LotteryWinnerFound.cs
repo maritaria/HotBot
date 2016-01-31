@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwitchDungeon.Plugins.Lottery
+namespace HotBot.Core.Plugins.Lottery
 {
 	public sealed class LotteryWinnerFound
 	{

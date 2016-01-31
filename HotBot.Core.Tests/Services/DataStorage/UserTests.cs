@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using TwitchDungeon.DataStorage.Permissions;
+using HotBot.Core.DataStorage.Permissions;
 
-namespace TwitchDungeon.Services.DataStorage.Tests
+namespace HotBot.Core.Services.DataStorage.Tests
 {
 	[TestClass()]
 	public class UserTests

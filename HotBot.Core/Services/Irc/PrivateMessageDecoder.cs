@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using TwitchDungeon.Services.DataStorage;
-using TwitchDungeon.Services.Util;
+using HotBot.Core.Services.DataStorage;
+using HotBot.Core.Services.Util;
 
-namespace TwitchDungeon.Services.Irc
+namespace HotBot.Core.Services.Irc
 {
 	public class PrivateMessageDecoder : MessageHandler<IrcMessageReceived>
 	{

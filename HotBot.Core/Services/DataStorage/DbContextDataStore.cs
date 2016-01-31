@@ -2,7 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 
-namespace TwitchDungeon.Services.DataStorage
+namespace HotBot.Core.Services.DataStorage
 {
 	public class DbContextDataStore : DbContext, DataStore, MessageHandler<SaveChanges>
 	{

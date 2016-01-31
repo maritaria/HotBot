@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using TwitchDungeon.Services.DataStorage;
+using HotBot.Core.Services.DataStorage;
 
-namespace TwitchDungeon.Services.Irc.Tests
+namespace HotBot.Core.Services.Irc.Tests
 {
 	[TestClass()]
 	public class SendChatMessageTests

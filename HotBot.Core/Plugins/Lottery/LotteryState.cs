@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace TwitchDungeon.Plugins.Lottery
+namespace HotBot.Core.Plugins.Lottery
 {
 	public enum LotteryState
 	{

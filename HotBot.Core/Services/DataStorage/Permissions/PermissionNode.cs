@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace TwitchDungeon.Services.DataStorage.Permissions
+namespace HotBot.Core.Services.DataStorage.Permissions
 {
 	public class PermissionNode
 	{

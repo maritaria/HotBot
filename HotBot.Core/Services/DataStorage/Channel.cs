@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwitchDungeon.Services.DataStorage
+namespace HotBot.Core.Services.DataStorage
 {
 	public class Channel
 	{

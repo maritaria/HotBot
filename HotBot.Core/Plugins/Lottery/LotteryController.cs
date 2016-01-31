@@ -1,11 +1,11 @@
 ﻿using Microsoft.Practices.Unity;
 using System;
 using System.Linq;
-using TwitchDungeon.Services;
-using TwitchDungeon.Services.DataStorage;
-using TwitchDungeon.Services.Irc;
+using HotBot.Core.Services;
+using HotBot.Core.Services.DataStorage;
+using HotBot.Core.Services.Irc;
 
-namespace TwitchDungeon.Plugins.Lottery
+namespace HotBot.Core.Plugins.Lottery
 {
 	public class LotteryController : MessageHandler<LotteryWinnerFound>
 	{

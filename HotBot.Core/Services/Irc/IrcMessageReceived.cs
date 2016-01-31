@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TwitchDungeon.Services.Irc
+namespace HotBot.Core.Services.Irc
 {
 	public class IrcMessageReceived
 	{

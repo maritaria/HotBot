@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using TwitchDungeon.Services.Commands;
+using HotBot.Core.Services.Commands;
 
-namespace TwitchDungeon.Plugins.Lottery
+namespace HotBot.Core.Plugins.Lottery
 {
 	public abstract class LotteryCommandListener : CommandListener
 	{

@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwitchDungeon.Services.Commands
+namespace HotBot.Core.Services.Commands
 {
 	public sealed class InvalidCommandNameException : Exception
 	{

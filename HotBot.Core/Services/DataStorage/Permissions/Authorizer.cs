@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwitchDungeon.DataStorage.Permissions
+namespace HotBot.Core.DataStorage.Permissions
 {
 	public interface Authorizer
 	{

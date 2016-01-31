@@ -2,11 +2,11 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Timers;
-using TwitchDungeon.Services;
-using TwitchDungeon.Services.DataStorage;
-using TwitchDungeon.Services.Irc;
+using HotBot.Core.Services;
+using HotBot.Core.Services.DataStorage;
+using HotBot.Core.Services.Irc;
 
-namespace TwitchDungeon.Plugins.Lottery
+namespace HotBot.Core.Plugins.Lottery
 {
 	public sealed class Lottery
 	{

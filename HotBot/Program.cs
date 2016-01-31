@@ -1,22 +1,26 @@
-﻿using Microsoft.Practices.Unity;
+﻿using HotBot.Core;
+using HotBot.Core.Plugins.Lottery;
+using HotBot.Core.Services;
+using HotBot.Core.Services.Commands;
+using HotBot.Core.Services.DataStorage;
+using HotBot.Core.Services.Irc;
+using Microsoft.Practices.Unity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using TwitchDungeon.Plugins.Lottery;
-using TwitchDungeon.Services;
-using TwitchDungeon.Services.Commands;
-using TwitchDungeon.Services.DataStorage;
-using TwitchDungeon.Services.Irc;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace TwitchDungeon
+namespace HotBot
 {
-	internal class Program
+	class Program
 	{
-		private static void Main(string[] args)
+		static void Main(string[] args)
 		{
 			var container = new UnityContainer();
 
 			container.RegisterInstance(typeof(IUnityContainer), container);
-			
+
 			container.RegisterType<CommandEncoder, CommandEncoder>(new ContainerControlledLifetimeManager());
 			container.RegisterType<DataStore, DbContextDataStore>(new ContainerControlledLifetimeManager());
 			container.RegisterType<IrcClient, IrcClient>(new ContainerControlledLifetimeManager());
@@ -34,6 +38,7 @@ namespace TwitchDungeon
 			container.Resolve<LotteryController>();
 			container.Resolve<StartLotteryListener>();
 			container.Resolve<JoinLotteryListener>();
+
 			container.Resolve<TwitchBot>();
 		}
 	}

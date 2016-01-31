@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using TwitchDungeon.Services.Irc;
-using TwitchDungeon.Services.Util;
+using HotBot.Core.Services.Irc;
+using HotBot.Core.Services.Util;
 
-namespace TwitchDungeon.Services.Commands
+namespace HotBot.Core.Services.Commands
 {
 	public class CommandEncoder : MessageHandler<IrcMessageEnhanced>
 	{

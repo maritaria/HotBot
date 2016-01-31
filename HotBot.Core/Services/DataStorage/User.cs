@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
-using TwitchDungeon.DataStorage.Permissions;
+using HotBot.Core.DataStorage.Permissions;
 
-namespace TwitchDungeon.Services.DataStorage
+namespace HotBot.Core.Services.DataStorage
 {
 	public class User : Authorizer
 	{

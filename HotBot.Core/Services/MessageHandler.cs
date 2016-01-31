@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwitchDungeon.Services
+namespace HotBot.Core.Services
 {
 	public interface MessageHandler<T>
 	{

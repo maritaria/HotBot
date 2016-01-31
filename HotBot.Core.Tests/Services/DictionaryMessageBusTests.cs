@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using Moq;
 
-namespace TwitchDungeon.Services.Tests
+namespace HotBot.Core.Services.Tests
 {
 	[TestClass()]
 	public class DictionaryMessageBusTests

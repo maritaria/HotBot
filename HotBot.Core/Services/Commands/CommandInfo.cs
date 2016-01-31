@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using TwitchDungeon.DataStorage.Permissions;
-using TwitchDungeon.Services.DataStorage;
+using HotBot.Core.DataStorage.Permissions;
+using HotBot.Core.Services.DataStorage;
 
-namespace TwitchDungeon.Services.Commands
+namespace HotBot.Core.Services.Commands
 {
 	public sealed class CommandInfo
 	{

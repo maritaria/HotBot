@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace TwitchDungeon.Services.Util.Tests
+namespace HotBot.Core.Services.Util.Tests
 {
 	[TestClass()]
 	public class StringExtensionsTests

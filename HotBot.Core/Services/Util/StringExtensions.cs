@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace TwitchDungeon.Services.Util
+namespace HotBot.Core.Services.Util
 {
 	public static class StringExtensions
 	{

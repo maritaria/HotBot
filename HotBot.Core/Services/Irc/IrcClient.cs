@@ -3,9 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
-using TwitchDungeon.Services.DataStorage;
+using HotBot.Core.Services.DataStorage;
 
-namespace TwitchDungeon.Services.Irc
+namespace HotBot.Core.Services.Irc
 {
 	public class IrcClient : IDisposable, MessageHandler<SendIrcMessage>, MessageHandler<SendChatMessage>
 	{

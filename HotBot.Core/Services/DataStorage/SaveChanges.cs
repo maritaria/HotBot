@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwitchDungeon.Services.DataStorage
+namespace HotBot.Core.Services.DataStorage
 {
 	public sealed class SaveChanges
 	{

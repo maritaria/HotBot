@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AFD7D526-9449-4EC9-834B-A2E1DBFE00F3}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{B77B54F8-F5C6-4C2D-8911-D26CFCF3B588}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HotBot.Core</RootNamespace>
-    <AssemblyName>HotBot.Core</AssemblyName>
+    <RootNamespace>HotBot</RootNamespace>
+    <AssemblyName>HotBot</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -31,9 +31,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -71,48 +68,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Plugins\Lottery\JoinLotteryListener.cs" />
-    <Compile Include="Plugins\Lottery\Lottery.cs" />
-    <Compile Include="Plugins\Lottery\LotteryCommandListener.cs" />
-    <Compile Include="Plugins\Lottery\LotteryController.cs" />
-    <Compile Include="Plugins\Lottery\LotteryException.cs" />
-    <Compile Include="Plugins\Lottery\LotteryState.cs" />
-    <Compile Include="Plugins\Lottery\LotteryWinnerFound.cs" />
-    <Compile Include="Plugins\Lottery\StartLotteryListener.cs" />
-    <Compile Include="Services\Commands\CommandRedirecter.cs" />
-    <Compile Include="Services\Commands\InvalidCommandNameException.cs" />
-    <Compile Include="Services\DataStorage\Channel.cs" />
-    <Compile Include="Services\DataStorage\DbContextDataStore.cs" />
-    <Compile Include="Services\DataStorage\Permissions\Authorizer.cs" />
-    <Compile Include="Services\DataStorage\Permissions\PermissionNode.cs" />
-    <Compile Include="Services\DataStorage\Permissions\PermissionType.cs" />
-    <Compile Include="Services\DataStorage\Permissions\UserRole.cs" />
-    <Compile Include="Services\Commands\CommandListener.cs" />
-    <Compile Include="Services\Commands\CommandEncoder.cs" />
-    <Compile Include="Services\Commands\CommandInfo.cs" />
-    <Compile Include="Services\Commands\SimpleCommandHandler.cs" />
-    <Compile Include="Services\DataStorage\DataStore.cs" />
-    <Compile Include="Services\DataStorage\SaveChanges.cs" />
-    <Compile Include="Services\Irc\IrcLogger.cs" />
-    <Compile Include="Services\Irc\IrcMessageEnhanced.cs" />
-    <Compile Include="Services\Irc\IrcClient.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Irc\IrcMessageReceived.cs" />
-    <Compile Include="Services\Irc\PipelineInitializer.cs" />
-    <Compile Include="Services\Irc\PrivateMessageDecoder.cs" />
-    <Compile Include="Services\Irc\SendChatMessage.cs" />
-    <Compile Include="Services\Irc\SendIrcMessage.cs" />
-    <Compile Include="Services\MessageHandler.cs" />
-    <Compile Include="Services\DictionaryMessageBus.cs" />
-    <Compile Include="Services\MessageBus.cs" />
-    <Compile Include="Services\Util\StringExtensions.cs" />
-    <Compile Include="ThrottleController.cs" />
-    <Compile Include="TwitchBot.cs" />
-    <Compile Include="Services\DataStorage\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HotBot.Core\HotBot.Core.csproj">
+      <Project>{afd7d526-9449-4ec9-834b-a2e1dbfe00f3}</Project>
+      <Name>HotBot.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

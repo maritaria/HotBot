@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TwitchDungeon.Services
+namespace HotBot.Core.Services
 {
 	public sealed class DictionaryMessageBus : MessageBus
 	{

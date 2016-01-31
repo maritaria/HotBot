@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TwitchDungeon.Services.Commands
+namespace HotBot.Core.Services.Commands
 {
 	public interface CommandListener
 	{

@@ -2,9 +2,9 @@
 using Moq;
 using System;
 using System.Linq;
-using TwitchDungeon.Services.DataStorage;
+using HotBot.Core.Services.DataStorage;
 
-namespace TwitchDungeon.Services.Commands.Tests
+namespace HotBot.Core.Services.Commands.Tests
 {
 	[TestClass()]
 	public class CommandRedirecterTests

@@ -2,10 +2,10 @@
 using Moq;
 using System;
 using System.Linq;
-using TwitchDungeon.Services.DataStorage;
-using TwitchDungeon.Services.Irc;
+using HotBot.Core.Services.DataStorage;
+using HotBot.Core.Services.Irc;
 
-namespace TwitchDungeon.Services.Commands.Tests
+namespace HotBot.Core.Services.Commands.Tests
 {
 	[TestClass()]
 	public class CommandEncoderTests

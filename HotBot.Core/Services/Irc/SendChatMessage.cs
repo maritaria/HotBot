@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using TwitchDungeon.Services.DataStorage;
+using HotBot.Core.Services.DataStorage;
 
-namespace TwitchDungeon.Services.Irc
+namespace HotBot.Core.Services.Irc
 {
 	public class SendChatMessage : SendIrcMessage
 	{

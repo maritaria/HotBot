@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using TwitchDungeon.Services;
-using TwitchDungeon.Services.Commands;
-using TwitchDungeon.Services.Irc;
+using HotBot.Core.Services;
+using HotBot.Core.Services.Commands;
+using HotBot.Core.Services.Irc;
 
-namespace TwitchDungeon
+namespace HotBot.Core
 {
 	//http://tmi.twitch.tv/group/user/maritaria/chatters
 	public class TwitchBot

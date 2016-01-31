@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwitchDungeon.Services.Irc
+namespace HotBot.Core.Services.Irc
 {
 	public class IrcLogger : MessageHandler<IrcMessageReceived>
 	{
