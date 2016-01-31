@@ -92,7 +92,11 @@
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
   -->
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <PluginFiles Include="$(OutputPath)\$(SolutionName).Plugin.*" />
+    </ItemGroup>
+    <Move SourceFiles="@(PluginFiles)" DestinationFiles="@(PluginFiles->'$(OutputPath)\Plugins\%(Filename)%(Extension)')"/>
+  </Target>
 </Project>
