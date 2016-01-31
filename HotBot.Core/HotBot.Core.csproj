@@ -71,14 +71,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Plugins\Lottery\JoinLotteryListener.cs" />
-    <Compile Include="Plugins\Lottery\Lottery.cs" />
-    <Compile Include="Plugins\Lottery\LotteryCommandListener.cs" />
-    <Compile Include="Plugins\Lottery\LotteryController.cs" />
-    <Compile Include="Plugins\Lottery\LotteryException.cs" />
-    <Compile Include="Plugins\Lottery\LotteryState.cs" />
-    <Compile Include="Plugins\Lottery\LotteryWinnerFound.cs" />
-    <Compile Include="Plugins\Lottery\StartLotteryListener.cs" />
     <Compile Include="Services\Commands\CommandRedirecter.cs" />
     <Compile Include="Services\Commands\InvalidCommandNameException.cs" />
     <Compile Include="Services\DataStorage\Channel.cs" />
@@ -107,7 +99,6 @@
     <Compile Include="Services\MessageBus.cs" />
     <Compile Include="Services\Util\StringExtensions.cs" />
     <Compile Include="ThrottleController.cs" />
-    <Compile Include="TwitchBot.cs" />
     <Compile Include="Services\DataStorage\User.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@ using HotBot.Core.Services;
 using HotBot.Core.Services.DataStorage;
 using HotBot.Core.Services.Irc;
 
-namespace HotBot.Core.Plugins.Lottery
+namespace HotBot.Plugin.Lottery
 {
 	public sealed class Lottery
 	{

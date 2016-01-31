@@ -2,7 +2,7 @@
 using System.Linq;
 using HotBot.Core.Services.Commands;
 
-namespace HotBot.Core.Plugins.Lottery
+namespace HotBot.Plugin.Lottery
 {
 	public abstract class LotteryCommandListener : CommandListener
 	{

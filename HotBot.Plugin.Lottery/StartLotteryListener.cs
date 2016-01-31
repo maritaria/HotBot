@@ -4,7 +4,7 @@ using HotBot.Core.Services;
 using HotBot.Core.Services.Commands;
 using HotBot.Core.Services.Irc;
 
-namespace HotBot.Core.Plugins.Lottery
+namespace HotBot.Plugin.Lottery
 {
 	public class StartLotteryListener : LotteryCommandListener
 	{

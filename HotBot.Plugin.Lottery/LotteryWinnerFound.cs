@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotBot.Core.Plugins.Lottery
+namespace HotBot.Plugin.Lottery
 {
 	public sealed class LotteryWinnerFound
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace HotBot.Core.Plugins.Lottery
+namespace HotBot.Plugin.Lottery
 {
 	public enum LotteryState
 	{

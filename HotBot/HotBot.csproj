@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TwitchBot.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -79,6 +80,10 @@
     <ProjectReference Include="..\HotBot.Core\HotBot.Core.csproj">
       <Project>{afd7d526-9449-4ec9-834b-a2e1dbfe00f3}</Project>
       <Name>HotBot.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HotBot.Plugin.Lottery\HotBot.Plugin.Lottery.csproj">
+      <Project>{53f07df6-6860-480f-a8ef-778f62d7aca4}</Project>
+      <Name>HotBot.Plugin.Lottery</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,7 +4,7 @@ using HotBot.Core.Services;
 using HotBot.Core.Services.Commands;
 using HotBot.Core.Services.Irc;
 
-namespace HotBot.Core
+namespace HotBot
 {
 	//http://tmi.twitch.tv/group/user/maritaria/chatters
 	public class TwitchBot
