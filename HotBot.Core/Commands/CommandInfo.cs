@@ -93,5 +93,16 @@ namespace HotBot.Core.Commands
 				throw new InvalidCommandNameException("Command name cannot contain whitespace");
 			}
 		}
+
+		public sealed class InvalidCommandNameException : Exception
+		{
+			public InvalidCommandNameException(string message) : base(message)
+			{
+			}
+
+			public InvalidCommandNameException(string message, Exception innerException) : base(message, innerException)
+			{
+			}
+		}
 	}
 }

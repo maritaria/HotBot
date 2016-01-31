@@ -6,7 +6,7 @@ namespace HotBot.Core
 {
 	public interface MessageBus
 	{
-		//TODO: Refactor away the MessageBus argument; it's useless
+		//TODO: make TData inherit from EventArgs
 		void Subscribe<TData>(MessageHandler<TData> handler);
 		bool IsSubscribed<TData>(MessageHandler<TData> handler);
 		void Unsubscribe<TData>(MessageHandler<TData> handler);

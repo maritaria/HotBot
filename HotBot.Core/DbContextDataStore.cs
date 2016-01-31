@@ -31,11 +31,7 @@ namespace HotBot.Core
 
 		public void Initialize()
 		{
-			//TODO: do the heavy lifting
 			Database.Connection.Open();
-			if (!Database.CompatibleWithModel(false))
-			{
-			}
 		}
 
 		void MessageHandler<SaveChanges>.HandleMessage(SaveChanges message)
