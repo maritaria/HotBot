@@ -1,29 +1,38 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
-using HotBot.Core;
 
 namespace HotBot.Core.Irc
 {
 	public class IrcClient : IDisposable, MessageHandler<IrcTransmitEvent>, MessageHandler<ChatTransmitEvent>
 	{
+		//https://github.com/SirCmpwn/ChatSharp
 		private object _tcpClientLock = new object();
+
+		private object _writerLock = new object();
+		private object _stateLock = new object();
+
 		private TcpClient _tcpClient;
 		private NetworkStream _stream;
 		private Thread _readerThread;
 		private StreamReader _reader;
 		private StreamWriter _writer;
-		private CancellationToken _cancelReader = new CancellationToken(false);
+		private CancellationTokenSource _readerCancellation = new CancellationTokenSource();
+		private Dictionary<string, Channel> _joinedChannels = new Dictionary<string, Channel>();
 
-		public string Hostname { get; private set; }
-		public int Port { get; private set; }
-		public string Username { get; private set; }
-		public DataStore DataStore { get; }
+		public IReadOnlyDictionary<string, Channel> JoinedChannels { get; }
+
 		public MessageBus Bus { get; }
+		public DataStore DataStore { get; }
+		public IrcClientConfig Config { get; }
 
-		public IrcClient(MessageBus bus, DataStore dataStore)
+		public bool IsConnected => _tcpClient != null && _tcpClient.Connected;
+
+		public IrcClient(MessageBus bus, DataStore dataStore, IrcClientConfig config)
 		{
 			if (bus == null)
 			{
@@ -33,58 +42,64 @@ namespace HotBot.Core.Irc
 			{
 				throw new ArgumentNullException("dataStore");
 			}
+			if (config == null)
+			{
+				throw new ArgumentNullException("config");
+			}
+			JoinedChannels = new ReadOnlyDictionary<string, Channel>(_joinedChannels);
 			Bus = bus;
 			Bus.Subscribe<IrcTransmitEvent>(this);
 			Bus.Subscribe<ChatTransmitEvent>(this);
 			DataStore = dataStore;
+			Config = config;
+			Connect();
 		}
 
-		public void Connect(string hostname, UInt16 port)
+		public void Connect()
 		{
-			Hostname = hostname;
-			Port = port;
-			//TODO: Cleanup
 			lock (_tcpClientLock)
 			{
-				if (_tcpClient != null && _tcpClient.Connected)
+				if (IsConnected)
 				{
-					throw new InvalidOperationException("IrcClient already connected");
+					throw new InvalidOperationException("IrcClient already connected to a server");
 				}
-				try
-				{
-					_tcpClient = new TcpClient();
-					_tcpClient.Connect(Hostname, Port);
-					_stream = _tcpClient.GetStream();
-					_reader = new StreamReader(_stream);
-					_writer = new StreamWriter(_stream);
-					_readerThread = new Thread(ReaderMethod);
-					_readerThread.Name = "IrcClient.ReaderThread";
-					_readerThread.Start();
-				}
-				catch
-				{
-					_tcpClient = null;
-					_stream = null;
-					_reader = null;
-					_writer = null;
-					_readerThread = null;
-
-					throw;
-				}
+				InitializeConnection();
+				StartReaderThread();
 			}
+			Login();
+		}
+
+		private void InitializeConnection()
+		{
+			_tcpClient = new TcpClient();
+			_tcpClient.Connect(Config.Hostname, Config.Port);
+			_stream = _tcpClient.GetStream();
+			_reader = new StreamReader(_stream);
+			_writer = new StreamWriter(_stream);
 		}
 
 		public void SendMessage(string channelName, string format, params object[] args)
 		{
 			string message = string.Format(format, args);
-			string command = string.Format(":{2}!{2}@{2}.tmi.twitch.tv PRIVMSG #{0} :{1}", channelName, message, Username);
-			SendCommands(command);
+			string command = string.Format(":{2}!{2}@{2}.tmi.twitch.tv PRIVMSG #{0} :{1}", channelName, message, Config.Username);
+			SendCommand(command);
 		}
 
-		public void JoinChannel(string channelName)
+		public Channel JoinChannel(string channelName)
 		{
-			EnsureChannel(channelName);
-			SendCommands(string.Format("JOIN #{0}", channelName));
+			Channel channel = GetChannel(channelName);
+			JoinChannel(channel);
+			return channel;
+		}
+
+		public void JoinChannel(Channel channel)
+		{
+			SendCommand($"JOIN {channel}");
+		}
+
+		public void LeaveChannel(Channel channel)
+		{
+			SendCommand($"PART {channel}");
 		}
 
 		private void EnsureChannel(string channelName)
@@ -101,24 +116,80 @@ namespace HotBot.Core.Irc
 				DataStore.Channels.Add(channel);
 				DataStore.SaveChanges();
 			}
-			else
-			{
-			}
 			return channel;
 		}
 
-		public void Login(string username, string authKey)
+		public void Login()
 		{
-			Login(username, authKey, "*", "*");
+			string authKey = Config.AuthKey;
+			string username = Config.Username;
+			SendBatch($"PASS {authKey}", $"USER {username} * *: {username}", $"NICK {username}");
 		}
 
-		public void Login(string username, string authKey, string hostname, string servername)
+		public void Logout()
 		{
-			string passwordCommand = string.Format("PASS {0}", authKey);
-			string userCommand = string.Format("USER {0} {1} {2}: {0}", username, hostname, servername);
-			string nickCommand = string.Format("NICK {0}", username);
-			SendCommands(passwordCommand, userCommand, nickCommand);
-			Username = username;
+		}
+
+		public void SendCommand(string command)
+		{
+			lock (_writerLock)
+			{
+				_writer.WriteLine(command);
+				_writer.Flush();
+			}
+		}
+
+		public void SendBatch(params string[] commands)
+		{
+			lock (_writerLock)
+			{
+				foreach (string command in commands)
+				{
+					_writer.WriteLine(command);
+				}
+				_writer.Flush();
+			}
+		}
+
+		private void StartReaderThread()
+		{
+			_readerThread = new Thread(ReaderMethod);
+			_readerThread.Name = "IrcClient.ReaderThread";
+			_readerThread.Start();
+			_readerCancellation = new CancellationTokenSource();
+		}
+
+		private void StopReaderThread()
+		{
+			_readerCancellation.Cancel();
+		}
+
+		private void ReaderMethod()
+		{
+			var token = _readerCancellation.Token;
+			while (true)
+			{
+				//TODO: Make this async and allow for cancel mechanism for dispose pattern
+				var readTask = _reader.ReadLineAsync();
+				try
+				{
+					readTask.Wait(token);
+				}
+				catch (OperationCanceledException)
+				{
+					return;
+				}
+				string message = readTask.Result;
+				if (message != null)
+				{
+					Bus.Publish(new IrcReceivedEvent(message));
+				}
+				else
+				{
+					Bus.Publish(new ConnectionLostEvent(this));
+					break;
+				}
+			}
 		}
 
 		#region IDisposable Support
@@ -170,46 +241,13 @@ namespace HotBot.Core.Irc
 
 		#endregion IDisposable Support
 
-		private void SendCommands(params string[] commands)
-		{
-			foreach (string line in commands)
-			{
-				_writer.WriteLine(line);
-			}
-			_writer.Flush();
-		}
-
-		private void ReaderMethod()
-		{
-			while (true)
-			{
-				//TODO: Make this async and allow for cancel mechanism for dispose pattern
-				var readTask = _reader.ReadLineAsync();
-				readTask.Wait(_cancelReader);
-				string message = readTask.Result;
-				if (_cancelReader.IsCancellationRequested)
-				{
-					break;
-				}
-				if (message != null)
-				{
-					Bus.Publish(new IrcReceivedEvent(message));
-				}
-				else
-				{
-					Bus.Publish(new ConnectionLostEvent(this));
-					break;
-				}
-			}
-		}
-
 		void MessageHandler<IrcTransmitEvent>.HandleMessage(IrcTransmitEvent message)
 		{
 			if (message == null)
 			{
 				throw new ArgumentNullException("message");
 			}
-			SendCommands(message.IrcCommand);
+			SendCommand(message.IrcCommand);
 		}
 
 		void MessageHandler<ChatTransmitEvent>.HandleMessage(ChatTransmitEvent message)

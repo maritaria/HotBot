@@ -7,8 +7,39 @@ namespace HotBot.Core.Util.Tests
 	[TestClass()]
 	public class StringExtensionsTests
 	{
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void SplitOnce_Single_Source_Null()
+		{
+			string source = null;
+			source.SplitOnce("asdf");
+		}
+
+		[TestMethod]
+		public void SplitOnce_Single_Source_Empty()
+		{
+			string source = string.Empty;
+			source.SplitOnce("asdf");
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void SplitOnce_Single_Splitter_Null()
+		{
+			string source = "asdf";
+			string splitter = null;
+			source.SplitOnce(splitter);
+		}
+		//TODO: Copy these tests for SplitOnce_Multi
+		[TestMethod]
+		public void SplitOnce_Single_Splitter_Empty()
+		{
+			string source = "asdf";
+			source.SplitOnce(string.Empty);
+		}
+
 		[TestMethod()]
-		public void SplitOnce_Single()
+		public void SplitOnce_Single_ContainsSplitterMulitpleTimes()
 		{
 			string source = "Hello world :D";
 			string[] result = source.SplitOnce(" ");
@@ -78,5 +109,6 @@ namespace HotBot.Core.Util.Tests
 			Assert.AreEqual("Hello world :D", result[0]);
 			Assert.AreEqual("", result[1]);
 		}
+		
 	}
 }

@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MasterConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TwitchBot.cs" />
@@ -97,6 +98,6 @@
     <ItemGroup>
       <PluginFiles Include="$(OutputPath)\$(SolutionName).Plugin.*" />
     </ItemGroup>
-    <Move SourceFiles="@(PluginFiles)" DestinationFiles="@(PluginFiles->'$(OutputPath)\Plugins\%(Filename)%(Extension)')"/>
+    <Move SourceFiles="@(PluginFiles)" DestinationFiles="@(PluginFiles->'$(OutputPath)\Plugins\%(Filename)%(Extension)')" />
   </Target>
 </Project>
