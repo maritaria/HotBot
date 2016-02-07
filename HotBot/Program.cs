@@ -54,6 +54,7 @@ namespace HotBot
 			MasterConfig config = new MasterConfig();
 			container.RegisterInstance(config, new ContainerControlledLifetimeManager());
 			container.RegisterInstance<IrcClientConfig>(config, new ExternallyControlledLifetimeManager());
+			container.RegisterInstance<CommandConfig>(config, new ExternallyControlledLifetimeManager());
 		}
 
 		private static void InitializeInstances(UnityContainer container)

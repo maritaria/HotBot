@@ -1,11 +1,14 @@
-﻿using HotBot.Core.Irc;
+﻿using HotBot.Core.Commands;
+using HotBot.Core.Irc;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 
 namespace HotBot
 {
-	public class MasterConfig : ApplicationSettingsBase, IrcClientConfig
+	public class MasterConfig : ApplicationSettingsBase, IrcClientConfig, CommandConfig
 	{
 		[UserScopedSetting]
 		[DefaultSettingValue("irc.twitch.tv")]
@@ -37,6 +40,37 @@ namespace HotBot
 		{
 			get { return (string)this["AuthKey"]; }
 			set { this["AuthKey"] = value; }
+		}
+
+		private IEnumerable<string> _cachedPrefixes;
+
+		public IEnumerable<string> Prefixes
+		{
+			get
+			{
+				if (_cachedPrefixes == null)
+				{
+					_cachedPrefixes = PrefixesSerialized.Split(' ');
+				}
+				return _cachedPrefixes;
+			}
+			set
+			{
+				PrefixesSerialized = string.Join(" ", Prefixes);
+				_cachedPrefixes = null;
+			}
+		}
+
+		[DebuggerHidden]
+		[UserScopedSetting]
+		public string PrefixesSerialized
+		{
+			get { return (string)this["PrefixesSerialized"]; }
+			set
+			{
+				this["PrefixesSerialized"] = value.Split(' ');
+				_cachedPrefixes = null;
+			}
 		}
 	}
 }

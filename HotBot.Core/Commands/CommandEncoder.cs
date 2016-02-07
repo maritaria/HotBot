@@ -8,20 +8,22 @@ namespace HotBot.Core.Commands
 {
 	public class CommandEncoder : MessageHandler<ChatReceivedEvent>
 	{
-		public Collection<string> Prefixes { get; set; } = new Collection<string>();
-
 		public MessageBus Bus { get; }
+		public CommandConfig Config { get; }
 
-		public CommandEncoder(MessageBus bus)
+		public CommandEncoder(MessageBus bus, CommandConfig config)
 		{
 			if (bus == null)
 			{
 				throw new ArgumentNullException("bus");
 			}
-			//TODO: Read prefixes from configuration
-			Prefixes.Add("!");
+			if (config == null)
+			{
+				throw new ArgumentNullException("config");
+			}
 			Bus = bus;
 			Bus.Subscribe(this);
+			Config = config;
 		}
 
 		public void HandleMessage(ChatReceivedEvent message)
@@ -41,7 +43,7 @@ namespace HotBot.Core.Commands
 		{
 			if (message.Message.Length > 0)
 			{
-				foreach (string prefix in Prefixes)
+				foreach (string prefix in Config.Prefixes)
 				{
 					if (message.Message.StartsWith(prefix))
 					{
@@ -65,7 +67,7 @@ namespace HotBot.Core.Commands
 
 		private string RemovePrefix(string text)
 		{
-			foreach(string prefix in Prefixes)
+			foreach(string prefix in Config.Prefixes)
 			{
 				if (text.StartsWith(prefix))
 				{

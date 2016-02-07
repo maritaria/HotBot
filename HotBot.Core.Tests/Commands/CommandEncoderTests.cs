@@ -11,39 +11,33 @@ namespace HotBot.Core.Commands.Tests
 	public class CommandEncoderTests
 	{
 		[TestMethod()]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void CommandEncoder_Constructor_Null()
+		public void CommandEncoder()
 		{
-			var encoder = new CommandEncoder(null);
+			var bus = new Mock<MessageBus>();
+			var config = new Mock<CommandConfig>();
+			//Invalid calls
+			TestUtils.AssertArgumentException(() => new CommandEncoder(null, config.Object));
+			TestUtils.AssertArgumentException(() => new CommandEncoder(bus.Object, null));
+			//Valid calls
+			var encoder = new CommandEncoder(bus.Object, config.Object);
+			bus.Verify(m => m.Subscribe<ChatReceivedEvent>(encoder), Times.Once(), "Not subscribed to IrcMessageEnhanced");
+			Assert.AreEqual(bus.Object, encoder.Bus, "Bus property not correct");
 		}
 
 		[TestMethod()]
-		public void CommandEncoder_Constructor_Valid()
+		public void HandleMessage_SingleCharPrefix()
 		{
 			var mockBus = new Mock<MessageBus>();
-			var encoder = new CommandEncoder(mockBus.Object) { Prefixes = { "!", "#" } };
-			mockBus.Verify(m => m.Subscribe<ChatReceivedEvent>(encoder), Times.Once(), "Not subscribed to IrcMessageEnhanced");
-			Assert.AreEqual(mockBus.Object, encoder.Bus, "Bus property not correct");
-		}
+			var config = new Mock<CommandConfig>();
+			config.SetupGet(c => new string[] { "!", "#" });
+			var encoder = new CommandEncoder(mockBus.Object, config.Object);
 
-		[TestMethod()]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void HandleMessage_Null()
-		{
-			var mockBus = new Mock<MessageBus>();
-			var encoder = new CommandEncoder(mockBus.Object) { Prefixes = { "!", "#" } };
-			encoder.HandleMessage(null);
-		}
+			TestUtils.AssertArgumentException(() => encoder.HandleMessage(null));
 
-		[TestMethod()]
-		public void HandleMessage_Valid()
-		{
-			var mockBus = new Mock<MessageBus>();
-			var encoder = new CommandEncoder(mockBus.Object) { Prefixes = { "!", "#" } };
 			var channel = new Mock<Channel>("TestChannel");
 			var user = new Mock<User>("TestUser");
 			var message = new ChatReceivedEvent(channel.Object, user.Object, "#command argument1 argument2");
-
+			
 			encoder.HandleMessage(message);
 
 			mockBus.Verify(b => b.Publish(It.Is<CommandEvent>(info =>
@@ -55,10 +49,12 @@ namespace HotBot.Core.Commands.Tests
 		}
 
 		[TestMethod()]
-		public void HandleMessage_Valid_MultiCharPrefix()
+		public void HandleMessage_MultiCharPrefix()
 		{
 			var mockBus = new Mock<MessageBus>();
-			var encoder = new CommandEncoder(mockBus.Object) { Prefixes = { "QQ", "#" } };
+			var config = new Mock<CommandConfig>();
+			config.SetupGet(c => new string[] { "!", "#" });
+			var encoder = new CommandEncoder(mockBus.Object, config.Object);
 			var channel = new Mock<Channel>("TestChannel");
 			var user = new Mock<User>("TestUser");
 			var message = new ChatReceivedEvent(channel.Object, user.Object, "QQcommand argument1 argument2");

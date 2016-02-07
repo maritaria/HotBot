@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Commands\CommandRedirecter.cs" />
     <Compile Include="Channel.cs" />
+    <Compile Include="Commands\CommandConfig.cs" />
     <Compile Include="DbContextDataStore.cs" />
     <Compile Include="Irc\HostMask.cs" />
     <Compile Include="Irc\ChannelJoinRequest.cs" />
@@ -85,7 +86,6 @@
     <Compile Include="Irc\ReplyCode.cs" />
     <Compile Include="Irc\WhisperKnownUserRequest.cs" />
     <Compile Include="Irc\WhisperUserRequest.cs" />
-    <Compile Include="MasterConfig.cs" />
     <Compile Include="Irc\IrcClientConfig.cs" />
     <Compile Include="Permissions\Authorizer.cs" />
     <Compile Include="Permissions\PermissionNode.cs" />
