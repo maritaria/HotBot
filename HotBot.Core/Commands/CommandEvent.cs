@@ -34,7 +34,6 @@ namespace HotBot.Core.Commands
 
 		public CommandEvent(Channel channel, User sender, string commandName, string argumentText) : this(channel, sender, sender, commandName, argumentText)
 		{
-			//TODO: Expand unit tests
 		}
 
 		public CommandEvent(Channel channel, User sender, User authorizer, string commandName, string argumentText)
@@ -62,19 +61,6 @@ namespace HotBot.Core.Commands
 			Authorizer = authorizer;
 			CommandName = commandName;
 			ArgumentText = argumentText;
-		}
-
-		public static bool IsValidCommandName(string commandName)
-		{
-			try
-			{
-				VerifyCommandName(commandName);
-			}
-			catch(InvalidCommandNameException)
-			{
-				return false;
-			}
-			return true;
 		}
 		
 		//TODO: Create new type to encapsulate commandname behaviour

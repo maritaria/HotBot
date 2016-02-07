@@ -2,7 +2,7 @@
 {
 	public enum PluginManagerState
 	{
-		Active,
-		Inactive,
+		Loaded,
+		Unloaded,
 	}
 }

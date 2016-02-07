@@ -54,8 +54,9 @@ namespace HotBot.Plugin.Lottery
 		void MessageHandler<LotteryWinnerEvent>.HandleMessage(LotteryWinnerEvent message)
 		{
 			CurrentLottery = null;
-			Bus.Publish(new ChatTransmitEvent(message.Lottery.Channel, $"Lottery finished, the winner is {message.Lottery.Winner.Name}!"));
+			Bus.Publish(new ChatTransmitRequest(message.Lottery.Channel, $"Lottery finished, the winner is {message.Lottery.Winner.Name}!"));
 			message.Lottery.Winner.Money += message.Lottery.Pot;
+			Bus.Publish(new ChatTransmitRequest(message.Lottery.Channel, $"{User.HandlePrefix}{message.Lottery.Winner.Name} Congrats, you have won {message.Lottery.Pot} blorps"));
 			Bus.Publish(new SaveChangesNotificationArgs());
 		}
 	}

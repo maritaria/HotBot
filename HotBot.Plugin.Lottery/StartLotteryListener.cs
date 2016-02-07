@@ -30,13 +30,13 @@ namespace HotBot.Plugin.Lottery
 			{
 				Controller.CreateLottery();
 				Controller.CurrentLottery.Pot = 1000;
-				Controller.CurrentLottery.Duration = TimeSpan.FromSeconds(30);
+				Controller.CurrentLottery.Duration = TimeSpan.FromMinutes(2);
 				Controller.CurrentLottery.Start(info.Channel);
-				Bus.Publish(new ChatTransmitEvent(info.Channel, "A new lottery has been started. Type !joinlottery to participate :D"));
+				Bus.Publish(new ChatTransmitRequest(info.Channel, "A new lottery has been started. Type !joinlottery to participate :D"));
 			}
 			else
 			{
-				Bus.Publish(new ChatTransmitEvent(info.Channel, "A lottery is already running"));
+				Bus.Publish(new ChatTransmitRequest(info.Channel, "A lottery is already running"));
 			}
 		}
 	}

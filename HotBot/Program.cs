@@ -2,6 +2,7 @@
 using HotBot.Core.Commands;
 using HotBot.Core.Irc;
 using HotBot.Core.Plugins;
+using HotBot.Plugin.Lottery;
 using Microsoft.Practices.Unity;
 using System;
 using System.Linq;
@@ -15,6 +16,17 @@ namespace HotBot
 			UnityContainer container = CreateContainer();
 			InitializeTypes(container);
 			InitializeConfig(container);
+
+			container.RegisterType<Lottery, Lottery>(new PerResolveLifetimeManager());
+			container.RegisterType<LotteryController, LotteryController>(new ContainerControlledLifetimeManager());
+			container.RegisterType<JoinLotteryListener, JoinLotteryListener>(new ContainerControlledLifetimeManager());
+			container.RegisterType<StartLotteryListener, StartLotteryListener>(new ContainerControlledLifetimeManager());
+			
+			container.Resolve<LotteryController>();
+			container.Resolve<StartLotteryListener>();
+			container.Resolve<JoinLotteryListener>();
+			container.Resolve<GetBalanceListener>();
+
 			InitializeInstances(container);
 		}
 

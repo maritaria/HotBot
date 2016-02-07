@@ -14,21 +14,20 @@ namespace HotBot
 		public static readonly UInt16 Port = 6667;
 
 		private object _consoleLock = new object();
-		public IrcClient IrcClient { get; }
+		public MessageBus Bus { get; }
 
-		public string PrimaryChannel { get; } = "maritaria";
+		public Channel PrimaryChannel { get; } = new Channel("maritaria");
 
-		public TwitchBot(IrcClient ircClient)
+		public TwitchBot(MessageBus bus)
 		{
-			IrcClient = ircClient;
-			WriterMethod();
+			Bus = bus;
+			JoinPrimaryChannel();
 		}
 		
-		private void WriterMethod()
+		private void JoinPrimaryChannel()
 		{
-			IrcClient.JoinChannel(PrimaryChannel);
-			IrcClient.SendMessage(PrimaryChannel, "Hello World! I'm a bot :)");
-			IrcClient.SendMessage(PrimaryChannel, "/mods");
+			Bus.Publish(new ChannelJoinRequest(PrimaryChannel));
+			Bus.Publish(new ChannelNotificationRequest(PrimaryChannel, "is now online"));
 		}
 	}
 }

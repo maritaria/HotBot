@@ -19,6 +19,14 @@ namespace HotBot.Core.Util
 		/// </returns>
 		public static string[] SplitOnce(this string source, string splitter)
 		{
+			if (source == null)
+			{
+				throw new ArgumentNullException("source");
+			}
+			if (splitter == null)
+			{
+				throw new ArgumentNullException("splitter");
+			}
 			string[] parts = source.Split(new string[] { splitter }, StringSplitOptions.None);
 			string remainder = string.Join(splitter, parts.Skip(1));
 			return new string[] { parts[0], remainder };
@@ -36,6 +44,10 @@ namespace HotBot.Core.Util
 		/// </returns>
 		public static string[] SplitOnce(this string source, params string[] splitters)
 		{
+			if (source == null)
+			{
+				throw new ArgumentNullException("source");
+			}
 			string[] parts = source.Split(splitters, StringSplitOptions.None);
 			string remainder = source.Substring(parts[0].Length);
 			foreach (string splitter in splitters)

@@ -18,7 +18,7 @@ namespace HotBot.Core.Plugins
 		/// Gets the description data of the plugin
 		/// </summary>
 		PluginDescription Description { get; }
-		
+
 		/// <summary>
 		/// Loads the plugin
 		/// </summary>

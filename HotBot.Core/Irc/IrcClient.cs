@@ -8,7 +8,11 @@ using System.Threading;
 
 namespace HotBot.Core.Irc
 {
-	public class IrcClient : IDisposable, MessageHandler<IrcTransmitEvent>, MessageHandler<ChatTransmitEvent>
+	//TODO: create smaller classes that handle these messages? or keep growing the irc client class which will result in mammoth classes.
+	public class IrcClient : IDisposable,
+		MessageHandler<IrcTransmitRequest>,
+		MessageHandler<ChatTransmitRequest>,
+		MessageHandler<ChannelJoinRequest>
 	{
 		//https://github.com/SirCmpwn/ChatSharp
 		private object _tcpClientLock = new object();
@@ -48,8 +52,9 @@ namespace HotBot.Core.Irc
 			}
 			JoinedChannels = new ReadOnlyDictionary<string, Channel>(_joinedChannels);
 			Bus = bus;
-			Bus.Subscribe<IrcTransmitEvent>(this);
-			Bus.Subscribe<ChatTransmitEvent>(this);
+			Bus.Subscribe<IrcTransmitRequest>(this);
+			Bus.Subscribe<ChatTransmitRequest>(this);
+			Bus.Subscribe<ChannelJoinRequest>(this);
 			DataStore = dataStore;
 			Config = config;
 			Connect();
@@ -78,11 +83,30 @@ namespace HotBot.Core.Irc
 			_writer = new StreamWriter(_stream);
 		}
 
-		public void SendMessage(string channelName, string format, params object[] args)
+		[Obsolete("Use MessageBus.Publish(new ChatMessageEvent()) instead")]
+		public void SendMessage(string channelName, string message)
 		{
-			string message = string.Format(format, args);
 			string command = string.Format(":{2}!{2}@{2}.tmi.twitch.tv PRIVMSG #{0} :{1}", channelName, message, Config.Username);
 			SendCommand(command);
+		}
+
+		[Obsolete("Use MessageBus.Publish(new ChatMessageEvent()) instead")]
+		public void SendMessage(string channelName, string format, params object[] args)
+		{
+			SendMessage(channelName, string.Format(format, args));
+		}
+
+		[Obsolete("Use MessageBus.Publish(new ChannelNotificationEvent()) instead")]
+		public void SendNotification(string channelName, string notification)
+		{
+			string command = string.Format(":{2}!{2}@{2}.tmi.twitch.tv PRIVMSG #{0} :{1}", channelName, "/me " + notification, Config.Username);
+			SendCommand(command);
+		}
+
+		[Obsolete("Use MessageBus.Publish(new ChannelNotificationEvent()) instead")]
+		public void SendNotification(string channelName, string format, params object[] args)
+		{
+			SendNotification(channelName, string.Format(format, args));
 		}
 
 		public Channel JoinChannel(string channelName)
@@ -169,7 +193,6 @@ namespace HotBot.Core.Irc
 			var token = _readerCancellation.Token;
 			while (true)
 			{
-				//TODO: Make this async and allow for cancel mechanism for dispose pattern
 				var readTask = _reader.ReadLineAsync();
 				try
 				{
@@ -241,7 +264,7 @@ namespace HotBot.Core.Irc
 
 		#endregion IDisposable Support
 
-		void MessageHandler<IrcTransmitEvent>.HandleMessage(IrcTransmitEvent message)
+		void MessageHandler<IrcTransmitRequest>.HandleMessage(IrcTransmitRequest message)
 		{
 			if (message == null)
 			{
@@ -250,9 +273,22 @@ namespace HotBot.Core.Irc
 			SendCommand(message.IrcCommand);
 		}
 
-		void MessageHandler<ChatTransmitEvent>.HandleMessage(ChatTransmitEvent message)
+		void MessageHandler<ChatTransmitRequest>.HandleMessage(ChatTransmitRequest message)
 		{
-			(this as MessageHandler<IrcTransmitEvent>).HandleMessage(message);
+			if (message == null)
+			{
+				throw new ArgumentNullException("message");
+			}
+			(this as MessageHandler<IrcTransmitRequest>).HandleMessage(message);
+		}
+
+		void MessageHandler<ChannelJoinRequest>.HandleMessage(ChannelJoinRequest message)
+		{
+			if (message == null)
+			{
+				throw new ArgumentNullException("message");
+			}
+			JoinChannel(message.Channel);
 		}
 	}
 }

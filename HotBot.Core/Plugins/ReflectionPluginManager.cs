@@ -11,7 +11,7 @@ namespace HotBot.Core.Plugins
 		private Dictionary<Type, Plugin> _typedPlugins = new Dictionary<Type, Plugin>();
 		private object _stateLock = new object();
 
-		public PluginManagerState State { get; private set; } = PluginManagerState.Inactive;
+		public PluginManagerState State { get; private set; } = PluginManagerState.Unloaded;
 		public IUnityContainer Container { get; private set; }
 
 		public ReflectionPluginManager(IUnityContainer container)
@@ -35,13 +35,18 @@ namespace HotBot.Core.Plugins
 			}
 			Type pluginType = plugin.GetType();
 			string pluginName = plugin.Description.Name;
-			if (!_typedPlugins.ContainsKey(pluginType))
+			if (_typedPlugins.ContainsKey(pluginType))
 			{
-				_typedPlugins.Add(pluginType, plugin);
-				_namedPlugins.Add(pluginName, plugin);
+				throw new InvalidOperationException($"A plugin by the type '{pluginType.FullName}' has already been added");
 			}
+			if (_namedPlugins.ContainsKey(pluginName))
+			{
+				throw new InvalidOperationException($"Another plugin by the name '{pluginName}' has already been added. It is of the type '{pluginType.FullName}");
+			}
+			_typedPlugins.Add(pluginType, plugin);
+			_namedPlugins.Add(pluginName, plugin);
 		}
-
+		
 		public void RemovePlugin(Plugin plugin)
 		{
 			if (plugin == null)
@@ -94,53 +99,48 @@ namespace HotBot.Core.Plugins
 			}
 			return _typedPlugins[type];
 		}
-
-		public TPlugin GetPlugin<TPlugin>() where TPlugin : Plugin
-		{
-			return (TPlugin)GetPlugin(typeof(TPlugin));
-		}
-
-		public void Startup()
+		
+		public void LoadAll()
 		{
 			lock (_stateLock)
 			{
-				if (State == PluginManagerState.Active)
+				if (State == PluginManagerState.Loaded)
 				{
 					throw new InvalidOperationException("PluginManager is currently active");
 				}
 				foreach (Plugin pl in _typedPlugins.Values)
 				{
-					pl.Load(Container);//TODO: try-catch
+					pl.Load(Container);//TODO: try-catch loading of plugins
 				}
-				State = PluginManagerState.Active;
+				State = PluginManagerState.Loaded;
 			}
 		}
 
-		public void Shutdown()
+		public void UnloadAll()
 		{
 			lock (_stateLock)
 			{
-				if (State == PluginManagerState.Inactive)
+				if (State == PluginManagerState.Unloaded)
 				{
 					throw new InvalidOperationException("PluginManager is currently inactive");
 				}
 				foreach (Plugin pl in _typedPlugins.Values)
 				{
-					pl.Unload();//TODO: try-catch
+					pl.Unload();//TODO: try-catch unloading of plugins
 				}
-				State = PluginManagerState.Inactive;
+				State = PluginManagerState.Unloaded;
 			}
 		}
 
-		public void Restart()
+		public void Reload()
 		{
-			if (State == PluginManagerState.Active)
+			if (State == PluginManagerState.Loaded)
 			{
-				Shutdown();
+				UnloadAll();
 			}
 			else
 			{
-				Startup();
+				LoadAll();
 			}
 		}
 	}

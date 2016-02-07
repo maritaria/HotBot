@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetBalanceListener.cs" />
     <Compile Include="JoinLotteryListener.cs" />
     <Compile Include="Lottery.cs" />
     <Compile Include="LotteryCommandListener.cs" />

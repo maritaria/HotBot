@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotBot.Core.Plugins
 {
@@ -10,15 +7,48 @@ namespace HotBot.Core.Plugins
 	{
 		PluginManagerState State { get; }
 
+		/// <summary>
+		/// Registers a plugin to be managed by the current PluginManager.
+		/// The plugin does not get automatically loaded.
+		/// </summary>
+		/// <param name="plugin">The plugin to be managed by the PluginManager</param>
+		/// <exception cref="InvalidOperationException">Thrown if the plugin is already being managed by the current PluginManager</exception>
 		void AddPlugin(Plugin plugin);
+
+		/// <summary>
+		/// Unregisters a plugin to be managed by the current PluginManager.
+		/// The plugin is not automatically unloaded.
+		/// </summary>
+		/// <param name="plugin">The plugin to be managed by the PluginManager</param>
+		/// <exception cref="InvalidOperationException">Thrown if the plugin isn't being managed by the current PluginManager</exception>
 		void RemovePlugin(Plugin plugin);
 
+		/// <summary>
+		/// Gets a plugin instance by it's name.
+		/// </summary>
+		/// <param name="name">The name of the plugin to be found.</param>
+		/// <returns>The plugin with the specified name. Null if none were found.</returns>
 		Plugin GetPlugin(string name);
+		/// <summary>
+		/// Gets a plugin instance by it's type.
+		/// The type is compared to the type of the instance, not by baseclasses or interfaces.
+		/// </summary>
+		/// <param name="type">The type of the plugin instance to find.</param>
+		/// <returns>The plugin of the specified type. Null if none were found.</returns>
 		Plugin GetPlugin(Type type);
-		TPlugin GetPlugin<TPlugin>() where TPlugin : Plugin;
 
-		void Startup();
-		void Shutdown();
+		/// <summary>
+		/// Loads all not-loaded plugins.
+		/// </summary>
+		void LoadAll();//TODO: update unit test to reflect this
+		/// <summary>
+		/// Unloads all loaded plugins.
+		/// </summary>
+		void UnloadAll();
+		/// <summary>
+		/// Unloads all loaded plugins and then loads them again.
+		/// Does not load perviously unloaded plugins.
+		/// </summary>
 		void Restart();
 	}
 }

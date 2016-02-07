@@ -81,7 +81,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Plugin\ReflectionPluginManagerTests.cs" />
+    <Compile Include="Irc\HostMaskTests.cs" />
+    <Compile Include="Irc\ChannelJoinRequestTests.cs" />
+    <Compile Include="Irc\WhisperUserEventTests.cs" />
+    <Compile Include="Plugins\PluginLoadEventTests.cs" />
+    <Compile Include="Plugins\PluginDescriptionTests.cs" />
+    <Compile Include="Plugins\ReflectionPluginManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\CommandEncoderTests.cs" />
     <Compile Include="Commands\CommandInfoTests.cs" />
@@ -90,6 +95,7 @@
     <Compile Include="DataStorage\UserTests.cs" />
     <Compile Include="Irc\ChatTransmitEventTests.cs" />
     <Compile Include="DictionaryMessageBusTests.cs" />
+    <Compile Include="TestUtils.cs" />
     <Compile Include="Util\StringExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>

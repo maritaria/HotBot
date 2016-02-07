@@ -50,7 +50,7 @@ namespace HotBot.Core
 				throw new InvalidNameException($"Username cannot be longer than {MaximumNameLength} characters");
 			}
 		}
-
+		//TODO: reconsidder the use of these nested classes
 		public sealed class InvalidNameException : Exception
 		{
 			public InvalidNameException()

@@ -28,13 +28,13 @@ namespace HotBot.Plugin.Lottery
 		{
 			if (Controller.CurrentLottery == null)
 			{
-				Bus.Publish(new ChatTransmitEvent(info.Channel, $"@{info.User.Name}, there is no lottery right now :("));
+				Bus.Publish(new ChatTransmitRequest(info.Channel, $"@{info.User.Name}, there is no lottery right now :("));
 			}
 			else
 			{
 				if (Controller.CurrentLottery.Participants.Contains(info.User))
 				{
-					Bus.Publish(new ChatTransmitEvent(info.Channel, $""));
+					Bus.Publish(new ChatTransmitRequest(info.Channel, $""));
 				}
 				else
 				{
@@ -46,12 +46,12 @@ namespace HotBot.Plugin.Lottery
 					catch (LotteryException ex)
 					{
 						success = false;
-						Bus.Publish(new ChatTransmitEvent(info.Channel, $"@{info.User.Name} ERROR: {ex.Message}"));
+						Bus.Publish(new ChatTransmitRequest(info.Channel, $"@{info.User.Name} ERROR: {ex.Message}"));
 						return;
 					}
 					if (success)
 					{
-						Bus.Publish(new ChatTransmitEvent(info.Channel, $"New lottery participant: (@{info.User.Name})"));
+						Bus.Publish(new ChatTransmitRequest(info.Channel, $"New lottery participant: (@{info.User.Name})"));
 					}
 				}
 			}

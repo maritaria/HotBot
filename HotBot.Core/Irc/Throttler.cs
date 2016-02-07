@@ -11,7 +11,6 @@ namespace HotBot.Core.Irc
 	{
 		//TODO: Implement this class
 		List<int> _history = new List<int>();
-		int _pressure = 0;
 
 		public int Limit { get; set; } = 20;
 		public TimeSpan LimitCooldown { get; set; } = TimeSpan.FromSeconds(25);

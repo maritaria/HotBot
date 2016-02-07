@@ -23,7 +23,14 @@ namespace HotBot.Core.Commands
 
 		public void AddListener(string commandName, CommandListener listener)
 		{
-			CommandEvent.VerifyCommandName(commandName);
+			try
+			{
+				CommandEvent.VerifyCommandName(commandName);
+			}
+			catch (Exception ex)
+			{
+				throw new ArgumentException(ex.Message, "commandName", ex);
+			}
 			if (listener == null)
 			{
 				throw new ArgumentNullException("listener");
@@ -45,7 +52,14 @@ namespace HotBot.Core.Commands
 
 		public void RemoveListener(string commandName, CommandListener listener)
 		{
-			CommandEvent.VerifyCommandName(commandName);
+			try
+			{
+				CommandEvent.VerifyCommandName(commandName);
+			}
+			catch (Exception ex)
+			{
+				throw new ArgumentException(ex.Message, "commandName", ex);
+			}
 			if (listener == null)
 			{
 				throw new ArgumentNullException("listener");

@@ -2,7 +2,6 @@
 using Moq;
 using System;
 using System.Linq;
-using HotBot.Core;
 
 namespace HotBot.Core.Commands.Tests
 {
@@ -10,14 +9,13 @@ namespace HotBot.Core.Commands.Tests
 	public class CommandRedirecterTests
 	{
 		[TestMethod()]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void Constructor_Null()
+		public void Constructor_InvalidArguments()
 		{
-			new CommandRedirecter(null);
+			TestUtils.AssertArgumentException(() => new CommandRedirecter(null), "bus");
 		}
 
 		[TestMethod()]
-		public void Constructor_Valid()
+		public void Constructor_ValidArguments()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
@@ -26,26 +24,19 @@ namespace HotBot.Core.Commands.Tests
 		}
 
 		[TestMethod()]
-		[ExpectedException(typeof(CommandEvent.InvalidCommandNameException))]
-		public void AddListener_Null_CommandName()
+		public void AddListener_InvalidArguments()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
 			var commandListener = new Mock<CommandListener>();
-			redirecter.AddListener(null, commandListener.Object);
+
+			TestUtils.AssertArgumentException(() => redirecter.AddListener(null, commandListener.Object));
+			TestUtils.AssertArgumentException(() => redirecter.AddListener("", commandListener.Object));
+			TestUtils.AssertArgumentException(() => redirecter.AddListener("command", null));
 		}
 
 		[TestMethod()]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void AddListener_Null_Listener()
-		{
-			var mockBus = new Mock<MessageBus>();
-			var redirecter = new CommandRedirecter(mockBus.Object);
-			redirecter.AddListener("command", null);
-		}
-
-		[TestMethod()]
-		public void AddListener_Valid()
+		public void AddListener_ValidArguments()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
@@ -54,23 +45,14 @@ namespace HotBot.Core.Commands.Tests
 		}
 
 		[TestMethod()]
-		[ExpectedException(typeof(CommandEvent.InvalidCommandNameException))]
-		public void RemoveListener_Null_CommandName()
+		public void RemoveListener_InvalidArguments()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var commandListener = new Mock<CommandListener>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
-			redirecter.RemoveListener(null, commandListener.Object);
-		}
-
-		[TestMethod()]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void RemoveListener_Null_Listener()
-		{
-			var mockBus = new Mock<MessageBus>();
-			var commandListener = new Mock<CommandListener>();
-			var redirecter = new CommandRedirecter(mockBus.Object);
-			redirecter.RemoveListener("command", null);
+			TestUtils.AssertArgumentException(() => redirecter.RemoveListener(null, commandListener.Object));
+			TestUtils.AssertArgumentException(() => redirecter.RemoveListener("", commandListener.Object));
+			TestUtils.AssertArgumentException(() => redirecter.RemoveListener("command", null));
 		}
 
 		[TestMethod()]
@@ -94,12 +76,11 @@ namespace HotBot.Core.Commands.Tests
 		}
 
 		[TestMethod()]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void ExecuteCommand_Null()
+		public void ExecuteCommand_InvalidArguments()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
-			redirecter.ExecuteCommand(null);
+			TestUtils.AssertArgumentException(() => redirecter.ExecuteCommand(null));
 		}
 
 		[TestMethod()]
@@ -114,7 +95,7 @@ namespace HotBot.Core.Commands.Tests
 		}
 
 		[TestMethod()]
-		public void ExecuteCommand_RunOnce()
+		public void ExecuteCommand_RunOnlyOnce()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
@@ -147,16 +128,15 @@ namespace HotBot.Core.Commands.Tests
 		}
 
 		[TestMethod()]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void HandleCommand_CommandInfo_Null()
+		public void HandleCommand_InvalidArguments()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var redirecter = new CommandRedirecter(mockBus.Object);
-			(redirecter as MessageHandler<CommandEvent>).HandleMessage(null);
+			TestUtils.AssertArgumentException(() => (redirecter as MessageHandler<CommandEvent>).HandleMessage(null));
 		}
 
 		[TestMethod()]
-		public void HandleCommand_CommandInfo_RunOnce()
+		public void HandleCommand_RunOnlyOnce()
 		{
 			var mockBus = new Mock<MessageBus>();
 			var redirecter = new CommandRedirecter(mockBus.Object);

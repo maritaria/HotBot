@@ -13,7 +13,7 @@ namespace HotBot.Core.Irc.Tests
 		public void Constructor_Channel_Null()
 		{
 			string chatMessage = "ChatMessage";
-			ChatTransmitEvent command = new ChatTransmitEvent(null, chatMessage);
+			ChatTransmitRequest command = new ChatTransmitRequest(null, chatMessage);
 		}
 
 		[TestMethod]
@@ -22,7 +22,7 @@ namespace HotBot.Core.Irc.Tests
 		{
 			string channelName = "TestChannel";
 			Channel channel = new Channel(channelName);
-			ChatTransmitEvent command = new ChatTransmitEvent(channel, null);
+			ChatTransmitRequest command = new ChatTransmitRequest(channel, null);
 		}
 
 		[TestMethod]
@@ -31,7 +31,7 @@ namespace HotBot.Core.Irc.Tests
 			string channelName = "TestChannel";
 			string chatMessage = "ChatMessage";
 			Channel channel = new Channel(channelName);
-			ChatTransmitEvent command = new ChatTransmitEvent(channel, chatMessage);
+			ChatTransmitRequest command = new ChatTransmitRequest(channel, chatMessage);
 
 			Assert.AreEqual(channel, command.Channel);
 			Assert.AreEqual(chatMessage, command.Text);
