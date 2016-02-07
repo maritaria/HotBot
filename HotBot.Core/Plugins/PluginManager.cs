@@ -49,6 +49,6 @@ namespace HotBot.Core.Plugins
 		/// Unloads all loaded plugins and then loads them again.
 		/// Does not load perviously unloaded plugins.
 		/// </summary>
-		void Restart();
+		void Reload();//TODO: Reconsidder implementation details
 	}
 }
