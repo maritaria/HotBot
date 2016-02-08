@@ -7,7 +7,7 @@ namespace HotBot.Core.Plugins
 	/// <summary>
 	/// Defines a plugin for HotBot which can be loaded and unloaded at will.
 	/// </summary>
-	public interface Plugin
+	public interface LoadablePlugin
 	{
 		/// <summary>
 		/// Gets the manager controlling the plugin
@@ -22,8 +22,7 @@ namespace HotBot.Core.Plugins
 		/// <summary>
 		/// Loads the plugin
 		/// </summary>
-		/// <param name="container">An IUnityContainer that can be used to spawn & register types</param>
-		void Load(IUnityContainer container);//TODO: Create 2 interfaces; one for registering types and one for spawning them
+		void Load();
 
 		/// <summary>
 		/// Unloads the plugin, releases all managed and unmanaged resources

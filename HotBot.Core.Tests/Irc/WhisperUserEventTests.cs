@@ -6,7 +6,6 @@ using System.Linq;
 
 namespace HotBot.Core.Irc.Tests
 {
-	//Todo; collapse all constructor tests into 1 test; requires custom assert util class
 	[TestClass()]
 	public class WhisperUserEventTests
 	{

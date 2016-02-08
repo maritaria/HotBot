@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace HotBot.Testing
 {
-	//TODO: create seperate project HotBot.Testing that contains general testing code
 	public static class TestUtils
 	{
 		public static void AssertException<TException>(Action callback) where TException : Exception

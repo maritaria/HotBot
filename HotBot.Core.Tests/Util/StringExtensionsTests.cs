@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using HotBot.Testing;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
@@ -11,24 +12,9 @@ namespace HotBot.Core.Util.Tests
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void SplitOnce_Single_Source_Null()
 		{
-			string source = null;
-			source.SplitOnce("asdf");
-		}
-
-		[TestMethod]
-		public void SplitOnce_Single_Source_Empty()
-		{
-			string source = string.Empty;
-			source.SplitOnce("asdf");
-		}
-
-		[TestMethod]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void SplitOnce_Single_Splitter_Null()
-		{
-			string source = "asdf";
-			string splitter = null;
-			source.SplitOnce(splitter);
+			TestUtils.AssertArgumentException(() => ((string)null).SplitOnce("asdf"));
+			TestUtils.AssertArgumentException(() => (string.Empty).SplitOnce("asdf"));
+			TestUtils.AssertArgumentException(() => ("asdf").SplitOnce((string)null));
 		}
 		//TODO: Copy these tests for SplitOnce_Multi
 		[TestMethod]

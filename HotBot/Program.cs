@@ -16,19 +16,6 @@ namespace HotBot
 		{
 			UnityContainer container = CreateContainer();
 			InitializeConfig(container);
-
-			//TODO: merge this from a plugins
-			container.RegisterType<Lottery, Lottery>(new PerResolveLifetimeManager());
-			container.RegisterType<LotteryController, LotteryController>(new ContainerControlledLifetimeManager());
-			container.RegisterType<JoinLotteryListener, JoinLotteryListener>(new ContainerControlledLifetimeManager());
-			container.RegisterType<StartLotteryListener, StartLotteryListener>(new ContainerControlledLifetimeManager());
-			
-			//TODO: load lottery using the plugin system
-			container.Resolve<LotteryController>();
-			container.Resolve<StartLotteryListener>();
-			container.Resolve<JoinLotteryListener>();
-			container.Resolve<GetBalanceListener>();
-			
 			InitializeInstances(container);
 		}
 
@@ -55,7 +42,6 @@ namespace HotBot
 			container.Resolve<IrcLogger>();
 			container.Resolve<CommandEncoder>();
 			container.Resolve<PluginManager>();
-			container.Resolve<IrcClient>();
 			container.Resolve<TwitchBot>();
 		}
 	}

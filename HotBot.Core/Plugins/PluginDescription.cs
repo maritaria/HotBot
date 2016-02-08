@@ -25,7 +25,7 @@ namespace HotBot.Core.Plugins
 		/// <summary>
 		/// Gets the dependencies of the plugin.
 		/// </summary>
-		public IReadOnlyCollection<Dependency> Dependencies { get; }//TODO: Separate class for this?
+		public IReadOnlyCollection<Dependency> Dependencies { get; }//TODO: Separate class for dependencies
 
 		public PluginDescription(string name, string description, params Dependency[] dependencies)
 		{

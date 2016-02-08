@@ -1,38 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HotBot.Core.Plugins
+﻿namespace HotBot.Core.Plugins
 {
-	public class PluginLoader
+	/// <summary>
+	/// Declares an interface for loading plugins by name.
+	/// </summary>
+	public interface PluginLoader
 	{
-		private AssemblyLoader AssemblyLoader { get; }
+		/// <summary>
+		/// Gets the directory the plugins are loaded from.
+		/// </summary>
+		string PluginDirectory { get; }
 
-		public string PluginDirectory { get; }
-
-		public PluginLoader(AssemblyLoader assemblyLoader)
-		{
-			if (assemblyLoader == null)
-			{
-				throw new ArgumentNullException("assemblyLoader");
-			}
-			AssemblyLoader = assemblyLoader;
-		}
-
-		public void LoadPlugins()
-		{
-			foreach(PluginAssembly assembly in FindPluginAssemblies())
-			{
-
-			}
-		}
-
-		private IEnumerable<PluginAssembly> FindPluginAssemblies()
-		{
-			return null;
-		}
+		/// <summary>
+		/// Loads all plugins from the plugin directory.
+		/// </summary>
+		void LoadPlugins();
 	}
 }

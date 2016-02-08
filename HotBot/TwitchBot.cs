@@ -4,6 +4,7 @@ using HotBot.Core;
 using HotBot.Core.Commands;
 using HotBot.Core.Irc;
 using System.Configuration;
+using HotBot.Core.Plugins;
 
 namespace HotBot
 {
@@ -17,10 +18,26 @@ namespace HotBot
 		public MessageBus Bus { get; }
 
 		public Channel PrimaryChannel { get; } = new Channel("maritaria");
+		public PluginManager PluginManager { get; }
+		public IrcClient IrcClient { get; }
 
-		public TwitchBot(MessageBus bus)
+		public TwitchBot(MessageBus bus, PluginManager pluginManager, IrcClient ircClient)
 		{
+			if (bus == null)
+			{
+				throw new ArgumentNullException("bus");
+			}
+			if (pluginManager == null)
+			{
+				throw new ArgumentNullException("pluginManager");
+			}
+			if (ircClient == null)
+			{
+				throw new ArgumentNullException("ircClient");
+			}
 			Bus = bus;
+			PluginManager = pluginManager;
+			IrcClient = ircClient;
 			JoinPrimaryChannel();
 		}
 		

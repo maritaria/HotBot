@@ -71,6 +71,7 @@
     <Compile Include="LotteryCommandListener.cs" />
     <Compile Include="LotteryController.cs" />
     <Compile Include="LotteryException.cs" />
+    <Compile Include="LotteryPlugin.cs" />
     <Compile Include="LotteryState.cs" />
     <Compile Include="LotteryWinnerEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

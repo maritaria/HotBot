@@ -12,7 +12,7 @@ namespace HotBot.Core.Plugins.Tests
 		[TestMethod()]
 		public void PluginLoadEvent_Constructor()
 		{
-			var plugin = new Mock<Plugin>();
+			var plugin = new Mock<LoadablePlugin>();
 			var pluginLoadEvent = new PluginLoadEvent(plugin.Object);
 
 			TestUtils.AssertArgumentException(() => new PluginLoadEvent(null));

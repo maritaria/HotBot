@@ -14,19 +14,19 @@ namespace HotBot.Core.Plugins.Tests
 		public void ReflectionPluginManager_Constructor()
 		{
 			var container = new Mock<IUnityContainer>();
-			var manager = new ReflectionPluginManager(container.Object);
+			var loader = new Mock<PluginLoader>();
+			var manager = CreatePluginManager();
 
 			TestUtils.AssertArgumentException(() => new ReflectionPluginManager(null));
 
-			Assert.AreEqual(container.Object, manager.Container, "Container property invalid");
+			Assert.AreEqual(loader.Object, manager.Loader);
 		}
 
 		[TestMethod()]
 		public void AddPlugin()
 		{
-			var container = new Mock<IUnityContainer>();
-			var manager = new ReflectionPluginManager(container.Object);
-			var plugin = CreatePlugin<Plugin>("test");
+			var manager = CreatePluginManager();
+			var plugin = CreatePlugin<LoadablePlugin>("test");
 			var invalidPlugin = CreateInvalidPlugin();
 
 			TestUtils.AssertArgumentException(() => manager.AddPlugin(null));
@@ -38,9 +38,8 @@ namespace HotBot.Core.Plugins.Tests
 		[TestMethod()]
 		public void AddPlugin_AddTwice()
 		{
-			var container = new Mock<IUnityContainer>();
-			var manager = new ReflectionPluginManager(container.Object);
-			var plugin = CreatePlugin<Plugin>("test");
+			var manager = CreatePluginManager();
+			var plugin = CreatePlugin<LoadablePlugin>("test");
 			manager.AddPlugin(plugin.Object);
 			TestUtils.AssertException<InvalidOperationException>(() => manager.AddPlugin(plugin.Object));
 		}
@@ -48,8 +47,7 @@ namespace HotBot.Core.Plugins.Tests
 		[TestMethod()]
 		public void AddPlugin_NameCollision()
 		{
-			var container = new Mock<IUnityContainer>();
-			var manager = new ReflectionPluginManager(container.Object);
+			var manager = CreatePluginManager();
 			var plugin1 = CreatePlugin<UniquePluginType1>("test");
 			var plugin2 = CreatePlugin<UniquePluginType2>("test");
 			manager.AddPlugin(plugin1.Object);
@@ -59,25 +57,23 @@ namespace HotBot.Core.Plugins.Tests
 		[TestMethod()]
 		public void AddPlugin_DontAutostart()
 		{
-			var container = new Mock<IUnityContainer>();
-			var manager = new ReflectionPluginManager(container.Object);
+			var manager = CreatePluginManager();
 			manager.LoadAll();
-			var plugin = CreatePlugin<Plugin>("test");
-			plugin.Setup(p => p.Load(null)).Callback(Assert.Fail);
+			var plugin = CreatePlugin<LoadablePlugin>("test");
+			plugin.Setup(p => p.Load()).Callback(Assert.Fail);
 			manager.AddPlugin(plugin.Object);
 		}
 
-		public interface UniquePluginType1 : Plugin { }
+		public interface UniquePluginType1 : LoadablePlugin { }
 
-		public interface UniquePluginType2 : Plugin { }
+		public interface UniquePluginType2 : LoadablePlugin { }
 
 		[TestMethod()]
 		public void RemovePlugin()
 		{
-			var container = new Mock<IUnityContainer>();
-			var manager = new ReflectionPluginManager(container.Object);
+			var manager = CreatePluginManager();
 			var invalidPlugin = CreateInvalidPlugin();
-			var plugin = CreatePlugin<Plugin>("test");
+			var plugin = CreatePlugin<LoadablePlugin>("test");
 			manager.AddPlugin(plugin.Object);
 
 			TestUtils.AssertArgumentException(() => manager.RemovePlugin(null));
@@ -89,9 +85,8 @@ namespace HotBot.Core.Plugins.Tests
 		[TestMethod()]
 		public void GetPlugin_Named()
 		{
-			var container = new Mock<IUnityContainer>();
-			var manager = new ReflectionPluginManager(container.Object);
-			var plugin = CreatePlugin<Plugin>("test");
+			var manager = CreatePluginManager();
+			var plugin = CreatePlugin<LoadablePlugin>("test");
 			manager.AddPlugin(plugin.Object);
 
 			TestUtils.AssertArgumentException(() => manager.GetPlugin((string)null));
@@ -104,19 +99,18 @@ namespace HotBot.Core.Plugins.Tests
 		[TestMethod()]
 		public void GetPlugin_Typed()
 		{
-			var container = new Mock<IUnityContainer>();
-			var manager = new ReflectionPluginManager(container.Object);
+			var manager = CreatePluginManager();
 			var plugin = CreatePlugin<UniquePluginType1>("test");
 			manager.AddPlugin(plugin.Object);
 
 			TestUtils.AssertArgumentException(() => manager.GetPlugin((Type)null));
 
 			Assert.AreEqual(plugin.Object, manager.GetPlugin(plugin.Object.GetType()));
-			Assert.IsNull(manager.GetPlugin(typeof(Plugin)));
+			Assert.IsNull(manager.GetPlugin(typeof(LoadablePlugin)));
 			Assert.IsNull(manager.GetPlugin(typeof(UniquePluginType2)));
 		}
 
-		private class PluginImpl : Plugin
+		private class PluginImpl : LoadablePlugin
 		{
 			public PluginDescription Description { get; set; }
 
@@ -125,7 +119,7 @@ namespace HotBot.Core.Plugins.Tests
 			public int Loads = 0;
 			public int Unloads = 0;
 
-			public void Load(IUnityContainer container)
+			public void Load()
 			{
 				Loads++;
 			}
@@ -139,29 +133,27 @@ namespace HotBot.Core.Plugins.Tests
 		[TestMethod()]
 		public void LoadAll_CallOnce()
 		{
-			var container = new Mock<IUnityContainer>();
-			var manager = new ReflectionPluginManager(container.Object);
-			var plugin = CreatePlugin<Plugin>("test");
+			var manager = CreatePluginManager();
+			var plugin = CreatePlugin<LoadablePlugin>("test");
 			var newPlugin = CreatePlugin<UniquePluginType1>("test2");
 
 			manager.AddPlugin(plugin.Object);
 			manager.LoadAll();
 
-			plugin.Verify(p => p.Load(It.Is<IUnityContainer>(c => true)), Times.Once());
+			plugin.Verify(p => p.Load(), Times.Once());
 
 			manager.AddPlugin(newPlugin.Object);
 			manager.LoadAll();
 
-			plugin.Verify(p => p.Load(It.Is<IUnityContainer>(c => true)), Times.Once());
-			newPlugin.Verify(p => p.Load(It.Is<IUnityContainer>(c => true)), Times.Once());
+			plugin.Verify(p => p.Load(), Times.Once());
+			newPlugin.Verify(p => p.Load(), Times.Once());
 		}
 
 		[TestMethod()]
 		public void UnloadAll_CallOnce()
 		{
-			var container = new Mock<IUnityContainer>();
-			var manager = new ReflectionPluginManager(container.Object);
-			var plugin = CreatePlugin<Plugin>("test");
+			var manager = CreatePluginManager();
+			var plugin = CreatePlugin<LoadablePlugin>("test");
 			manager.AddPlugin(plugin.Object);
 			manager.LoadAll();
 			manager.UnloadAll();
@@ -178,14 +170,13 @@ namespace HotBot.Core.Plugins.Tests
 		[TestMethod()]
 		public void Reload_LoadAndOnloadOnce()
 		{
-			var container = new Mock<IUnityContainer>();
-			var manager = new ReflectionPluginManager(container.Object);
+			var manager = CreatePluginManager();
 			manager.LoadAll();
-			var plugin = CreatePlugin<Plugin>("test");
+			var plugin = CreatePlugin<LoadablePlugin>("test");
 			bool loaded = false;
 			bool unloaded = false;
 
-			plugin.Setup(p => p.Load(container.Object)).Callback(() =>
+			plugin.Setup(p => p.Load()).Callback(() =>
 			{
 				Assert.IsTrue(unloaded, "Load() called before Unload()");
 				Assert.IsFalse(loaded, "Load() called multiple times");
@@ -203,16 +194,23 @@ namespace HotBot.Core.Plugins.Tests
 		[TestMethod()]
 		public void Reload_DontLoadUnloadedPlugins()
 		{
-			var container = new Mock<IUnityContainer>();
-			var manager = new ReflectionPluginManager(container.Object);
-			var plugin = CreatePlugin<Plugin>("test");
+			var manager = CreatePluginManager();
+			var plugin = CreatePlugin<LoadablePlugin>("test");
 			manager.LoadAll();
 			manager.AddPlugin(plugin.Object);
 			manager.Reload();
-			plugin.Verify(p => p.Load(container.Object), Times.Never());
+			plugin.Verify(p => p.Load(), Times.Never());
 		}
 
-		private static Mock<TPlugin> CreatePlugin<TPlugin>(string name) where TPlugin : class, Plugin
+		private static ReflectionPluginManager CreatePluginManager()
+		{
+			var container = new Mock<IUnityContainer>();
+			var loader = new Mock<PluginLoader>();
+			var manager = new ReflectionPluginManager(loader.Object);
+			return manager;
+		}
+
+		private static Mock<TPlugin> CreatePlugin<TPlugin>(string name) where TPlugin : class, LoadablePlugin
 		{
 			var description = new PluginDescription(name, "");
 			var plugin = new Mock<TPlugin>();
@@ -220,9 +218,9 @@ namespace HotBot.Core.Plugins.Tests
 			return plugin;
 		}
 
-		private static Mock<Plugin> CreateInvalidPlugin()
+		private static Mock<LoadablePlugin> CreateInvalidPlugin()
 		{
-			return new Mock<Plugin>();
+			return new Mock<LoadablePlugin>();
 		}
 	}
 }

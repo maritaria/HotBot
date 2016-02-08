@@ -12,7 +12,8 @@ namespace HotBot.Core.Irc
 	public class IrcClient : IDisposable,
 		MessageHandler<IrcTransmitRequest>,
 		MessageHandler<ChatTransmitRequest>,
-		MessageHandler<ChannelJoinRequest>
+		MessageHandler<ChannelJoinRequest>,
+		MessageHandler<ChannelNotificationRequest>
 	{
 		//https://github.com/SirCmpwn/ChatSharp
 		private object _tcpClientLock = new object();
@@ -52,9 +53,11 @@ namespace HotBot.Core.Irc
 			}
 			JoinedChannels = new ReadOnlyDictionary<string, Channel>(_joinedChannels);
 			Bus = bus;
+			//TODO: Generalize this, maybe something with attributed methods
 			Bus.Subscribe<IrcTransmitRequest>(this);
 			Bus.Subscribe<ChatTransmitRequest>(this);
 			Bus.Subscribe<ChannelJoinRequest>(this);
+			Bus.Subscribe<ChannelNotificationRequest>(this);
 			DataStore = dataStore;
 			Config = config;
 			Connect();
@@ -289,6 +292,15 @@ namespace HotBot.Core.Irc
 				throw new ArgumentNullException("message");
 			}
 			JoinChannel(message.Channel);
+		}
+
+		void MessageHandler<ChannelNotificationRequest>.HandleMessage(ChannelNotificationRequest message)
+		{
+			if (message == null)
+			{
+				throw new ArgumentNullException("message");
+			}
+			(this as MessageHandler<IrcTransmitRequest>).HandleMessage(message);
 		}
 	}
 }

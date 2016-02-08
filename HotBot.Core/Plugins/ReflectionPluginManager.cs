@@ -7,22 +7,21 @@ namespace HotBot.Core.Plugins
 {
 	public class ReflectionPluginManager : PluginManager
 	{
-		private Dictionary<string, Plugin> _namedPlugins = new Dictionary<string, Plugin>();
-		private Dictionary<Type, Plugin> _typedPlugins = new Dictionary<Type, Plugin>();
-		private object _stateLock = new object();
+		private Dictionary<string, LoadablePlugin> _namedPlugins = new Dictionary<string, LoadablePlugin>();
+		private Dictionary<Type, LoadablePlugin> _typedPlugins = new Dictionary<Type, LoadablePlugin>();
+		
+		public PluginLoader Loader { get; }
 
-		public IUnityContainer Container { get; private set; }
-
-		public ReflectionPluginManager(IUnityContainer container)
+		public ReflectionPluginManager(PluginLoader loader)
 		{
-			if (container == null)
+			if (loader == null)
 			{
-				throw new ArgumentNullException("container");
+				throw new ArgumentNullException("loader");
 			}
-			Container = container;
+			Loader = loader;
 		}
 
-		public void AddPlugin(Plugin plugin)
+		public void AddPlugin(LoadablePlugin plugin)
 		{
 			if (plugin == null)
 			{
@@ -46,7 +45,7 @@ namespace HotBot.Core.Plugins
 			_namedPlugins.Add(pluginName, plugin);
 		}
 
-		public void RemovePlugin(Plugin plugin)
+		public void RemovePlugin(LoadablePlugin plugin)
 		{
 			if (plugin == null)
 			{
@@ -65,7 +64,7 @@ namespace HotBot.Core.Plugins
 			}
 		}
 
-		public Plugin GetPlugin(string name)
+		public LoadablePlugin GetPlugin(string name)
 		{
 			if (name == null)
 			{
@@ -82,7 +81,7 @@ namespace HotBot.Core.Plugins
 			return _namedPlugins[name];
 		}
 
-		public Plugin GetPlugin(Type type)
+		public LoadablePlugin GetPlugin(Type type)
 		{
 			if (type == null)
 			{
@@ -97,17 +96,31 @@ namespace HotBot.Core.Plugins
 
 		public void LoadAll()
 		{
-			foreach (Plugin pl in _typedPlugins.Values)
+			foreach (LoadablePlugin pl in _typedPlugins.Values)
 			{
-				pl.Load(Container);//TODO: try-catch loading of plugins
+				try
+				{
+					pl.Load();//TODO: try-catch loading of plugins
+				}
+				catch (Exception ex)
+				{
+					//TODO: throw new PluginException();
+				}
 			}
 		}
 
 		public void UnloadAll()
 		{
-			foreach (Plugin pl in _typedPlugins.Values)
+			foreach (LoadablePlugin pl in _typedPlugins.Values)
 			{
-				pl.Unload();//TODO: try-catch unloading of plugins
+				try
+				{
+					pl.Unload();//TODO: try-catch unloading of plugins
+				}
+				catch (Exception ex)
+				{
+					//TODO: throw new PluginException();
+				}
 			}
 		}
 
