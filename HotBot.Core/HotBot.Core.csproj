@@ -80,7 +80,10 @@
     <Compile Include="Irc\ChannelJoinRequest.cs" />
     <Compile Include="Irc\ChannelNotificationRequest.cs" />
     <Compile Include="Irc\ConnectionLostEvent.cs" />
+    <Compile Include="Plugins\PluginAssembly.cs" />
+    <Compile Include="Plugins\PluginLoader.cs" />
     <Compile Include="Plugins\PluginLoadEvent.cs" />
+    <Compile Include="Plugins\SimplePluginAssembly.cs" />
     <Compile Include="Util\TwitchEmotes.cs" />
     <Compile Include="Irc\IrcProtocolDecoder.cs" />
     <Compile Include="Irc\ReplyCode.cs" />
