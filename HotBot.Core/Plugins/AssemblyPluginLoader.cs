@@ -13,7 +13,6 @@ namespace HotBot.Core.Plugins
 		public const string PluginAssemblyNamePattern = "HotBot.Plugin.*.dll";
 
 		public string PluginDirectory { get; } = "Plugins";
-
 		public IUnityContainer DependencyContainer { get; }
 		public MessageBus Bus { get; }
 
@@ -31,23 +30,30 @@ namespace HotBot.Core.Plugins
 			Bus = bus;
 		}
 
-		public void LoadPlugins()
+		public IEnumerable<LoadablePlugin> LoadPlugins()
 		{
 			foreach (string assemblyFilename in FindPluginAssemblyFilenames())
 			{
+				LoadablePlugin plugin = null;
 				try
 				{
 					Assembly asm = LoadAssembly(assemblyFilename);
-					LoadablePlugin plugin = CreatePluginFromAssembly(asm);
+					plugin = CreatePluginFromAssembly(asm);
 					BootstrapPlugin(plugin);
 				}
 				catch (PluginLoadException ex)
 				{
 					Bus.Publish(ex);
+					plugin = null;
 				}
 				catch (Exception ex)
 				{
 					Bus.Publish(new PluginLoadException(assemblyFilename, ex.Message, ex));
+					plugin = null;
+				}
+				if (plugin != null)
+				{
+					yield return plugin;
 				}
 			}
 		}
@@ -74,7 +80,8 @@ namespace HotBot.Core.Plugins
 			{
 				throw new ArgumentException($"Assembly '{assembly.FullName}' doesn't have a PluginAssemblyAttribute", "assembly");
 			}
-			return (LoadablePlugin)DependencyContainer.BuildUp(attr.PluginClass, (object)null);
+			DependencyContainer.RegisterType(attr.PluginClass, new ContainerControlledLifetimeManager());
+			return (LoadablePlugin)DependencyContainer.Resolve(attr.PluginClass);
 		}
 
 		private IEnumerable<string> FindPluginAssemblyFilenames()

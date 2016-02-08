@@ -1,4 +1,6 @@
-﻿namespace HotBot.Core.Plugins
+﻿using System.Collections.Generic;
+
+namespace HotBot.Core.Plugins
 {
 	/// <summary>
 	/// Declares an interface for loading plugins by name.
@@ -12,7 +14,8 @@
 
 		/// <summary>
 		/// Loads all plugins from the plugin directory.
+		/// Yield returns the plugins that are successfully loaded.
 		/// </summary>
-		void LoadPlugins();
+		IEnumerable<LoadablePlugin> LoadPlugins();
 	}
 }

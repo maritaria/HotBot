@@ -83,6 +83,7 @@
     <Compile Include="Plugins\AssemblyLoadedEvent.cs" />
     <Compile Include="Plugins\AssemblyPluginAttribute.cs" />
     <Compile Include="Plugins\BootstrappedPlugin.cs" />
+    <Compile Include="Plugins\PluginInstanceCreatedEvent.cs" />
     <Compile Include="Plugins\PluginLoadedEvent.cs" />
     <Compile Include="Plugins\PluginLoader.cs" />
     <Compile Include="Plugins\AssemblyPluginLoader.cs" />

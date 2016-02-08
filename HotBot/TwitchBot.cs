@@ -39,6 +39,7 @@ namespace HotBot
 			PluginManager = pluginManager;
 			IrcClient = ircClient;
 			JoinPrimaryChannel();
+			PluginManager.LoadAll();
 		}
 		
 		private void JoinPrimaryChannel()
