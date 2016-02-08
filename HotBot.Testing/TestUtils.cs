@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace HotBot.Core
+namespace HotBot.Testing
 {
 	//TODO: create seperate project HotBot.Testing that contains general testing code
 	public static class TestUtils

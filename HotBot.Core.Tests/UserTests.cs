@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using HotBot.Core.Permissions;
+using HotBot.Testing;
 
 namespace HotBot.Core.Tests
 {

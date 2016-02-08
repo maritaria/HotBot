@@ -3,6 +3,7 @@ using Moq;
 using System;
 using System.Linq;
 using HotBot.Core;
+using HotBot.Testing;
 
 namespace HotBot.Core.Commands.Tests
 {

@@ -95,13 +95,16 @@
     <Compile Include="UserTests.cs" />
     <Compile Include="Irc\ChatTransmitEventTests.cs" />
     <Compile Include="DictionaryMessageBusTests.cs" />
-    <Compile Include="TestUtils.cs" />
     <Compile Include="Util\StringExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotBot.Core\HotBot.Core.csproj">
       <Project>{AFD7D526-9449-4EC9-834B-A2E1DBFE00F3}</Project>
       <Name>TwitchDungeon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HotBot.Testing\HotBot.Testing.csproj">
+      <Project>{7ee69935-9d44-4f7c-b9e2-d83b6d2801d3}</Project>
+      <Name>HotBot.Testing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
+using HotBot.Testing;
 
 namespace HotBot.Core.Plugins.Tests
 {

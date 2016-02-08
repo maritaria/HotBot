@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using HotBot.Testing;
+using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
