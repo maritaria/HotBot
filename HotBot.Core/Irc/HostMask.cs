@@ -37,7 +37,6 @@ namespace HotBot.Core.Irc
 			}
 			string[] parts = source.SplitMultiple("!", "@").ToArray();
 			//TODO: More validation
-			//TODO: Create new IRC related project
 			Nickname = parts[0];
 			Username = parts[1];
 			Hostname = parts[2];

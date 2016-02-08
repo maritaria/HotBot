@@ -68,8 +68,7 @@ namespace HotBot.Core.Commands
 			CommandName = commandName;
 			ArgumentText = argumentText;
 		}
-
-		//TODO: Create new type to encapsulate commandname behaviour
+		
 		public static void VerifyCommandName(string commandName)
 		{
 			if (commandName == null)

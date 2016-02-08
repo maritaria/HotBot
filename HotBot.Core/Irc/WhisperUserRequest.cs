@@ -21,13 +21,13 @@ namespace HotBot.Core.Irc
 				try
 				{
 					User.VerifyName(value);
-
 				}
 				catch(Exception ex)
 				{
 					throw new ArgumentException(ex.Message, "value", ex);
 				}
 				_targetUsername = value;
+				InvalidateIrcCommand();
 			}
 		}
 

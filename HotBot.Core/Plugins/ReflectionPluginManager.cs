@@ -11,7 +11,6 @@ namespace HotBot.Core.Plugins
 		private Dictionary<Type, Plugin> _typedPlugins = new Dictionary<Type, Plugin>();
 		private object _stateLock = new object();
 
-		public PluginManagerState State { get; private set; } = PluginManagerState.Unloaded;
 		public IUnityContainer Container { get; private set; }
 
 		public ReflectionPluginManager(IUnityContainer container)
@@ -46,7 +45,7 @@ namespace HotBot.Core.Plugins
 			_typedPlugins.Add(pluginType, plugin);
 			_namedPlugins.Add(pluginName, plugin);
 		}
-		
+
 		public void RemovePlugin(Plugin plugin)
 		{
 			if (plugin == null)
@@ -61,12 +60,8 @@ namespace HotBot.Core.Plugins
 			string pluginName = plugin.Description.Name;
 			if (_typedPlugins.ContainsKey(pluginType))
 			{
-				if (_namedPlugins.ContainsKey(pluginName))
-				{
-					throw new ArgumentException($"There already is a plugin by the name of '{pluginName}'");
-				}
-				_typedPlugins.Add(pluginType, plugin);
-				_namedPlugins.Add(pluginName, plugin);
+				_typedPlugins.Remove(pluginType);
+				_namedPlugins.Remove(pluginName);
 			}
 		}
 
@@ -99,49 +94,27 @@ namespace HotBot.Core.Plugins
 			}
 			return _typedPlugins[type];
 		}
-		
+
 		public void LoadAll()
 		{
-			lock (_stateLock)
+			foreach (Plugin pl in _typedPlugins.Values)
 			{
-				if (State == PluginManagerState.Loaded)
-				{
-					throw new InvalidOperationException("PluginManager is currently active");
-				}
-				foreach (Plugin pl in _typedPlugins.Values)
-				{
-					pl.Load(Container);//TODO: try-catch loading of plugins
-				}
-				State = PluginManagerState.Loaded;
+				pl.Load(Container);//TODO: try-catch loading of plugins
 			}
 		}
 
 		public void UnloadAll()
 		{
-			lock (_stateLock)
+			foreach (Plugin pl in _typedPlugins.Values)
 			{
-				if (State == PluginManagerState.Unloaded)
-				{
-					throw new InvalidOperationException("PluginManager is currently inactive");
-				}
-				foreach (Plugin pl in _typedPlugins.Values)
-				{
-					pl.Unload();//TODO: try-catch unloading of plugins
-				}
-				State = PluginManagerState.Unloaded;
+				pl.Unload();//TODO: try-catch unloading of plugins
 			}
 		}
 
 		public void Reload()
 		{
-			if (State == PluginManagerState.Loaded)
-			{
-				UnloadAll();
-			}
-			else
-			{
-				LoadAll();
-			}
+			LoadAll();
+			UnloadAll();
 		}
 	}
 }

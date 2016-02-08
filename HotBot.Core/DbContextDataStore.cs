@@ -25,8 +25,6 @@ namespace HotBot.Core
 			}
 			Bus = bus;
 			Bus.Subscribe(this);
-
-			//TODO: read config for database clear instructions
 		}
 
 		public void Initialize()

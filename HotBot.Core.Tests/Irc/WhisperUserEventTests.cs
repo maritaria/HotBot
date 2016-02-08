@@ -13,9 +13,10 @@ namespace HotBot.Core.Irc.Tests
 		public void WhisperUserEvent_Constructor()
 		{
 			var username = "testUser";
-			var message = "test message";
-			var channel = new Mock<Channel>("test");
-			var expectedIrcCommand = $"PRIVMSG :/w testUser test message";
+			var message = "testMessage";
+			var channel = new Mock<Channel>("testChannel");
+			channel.CallBase = true;
+			var expectedIrcCommand = $"PRIVMSG #testChannel :/w testUser testMessage";
 
 			var whisperUserRequest = new WhisperUserRequest(channel.Object, username, message);
 

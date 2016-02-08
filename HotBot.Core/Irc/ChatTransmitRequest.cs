@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace HotBot.Core.Irc
 {
+	//TODO: Move this up to HotBot.Core or a different namespace at least (HotBot.Core.Irc is getting crowded)
 	public class ChatTransmitRequest : IrcTransmitRequest
 	{
 		public const string IrcMessageCommand = "PRIVMSG";
@@ -15,7 +16,7 @@ namespace HotBot.Core.Irc
 			protected set
 			{
 				_text = value;
-				_ircCommand = GenerateIrcCommand(value);
+				InvalidateIrcCommand();
 			}
 		}
 
@@ -43,6 +44,11 @@ namespace HotBot.Core.Irc
 		protected virtual string GenerateIrcCommand(string text)
 		{
 			return $"{IrcMessageCommand} {Channel.ToString()} :{text}";
+		}
+
+		protected void InvalidateIrcCommand()
+		{
+			_ircCommand = GenerateIrcCommand(Text);
 		}
 	}
 }

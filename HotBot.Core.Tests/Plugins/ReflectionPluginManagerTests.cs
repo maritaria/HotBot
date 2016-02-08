@@ -76,9 +76,13 @@ namespace HotBot.Core.Plugins.Tests
 			var container = new Mock<IUnityContainer>();
 			var manager = new ReflectionPluginManager(container.Object);
 			var invalidPlugin = CreateInvalidPlugin();
+			var plugin = CreatePlugin<Plugin>("test");
+			manager.AddPlugin(plugin.Object);
 
 			TestUtils.AssertArgumentException(() => manager.RemovePlugin(null));
 			TestUtils.AssertArgumentException(() => manager.RemovePlugin(invalidPlugin.Object));
+
+			manager.RemovePlugin(plugin.Object);
 		}
 
 		[TestMethod()]
@@ -132,30 +136,27 @@ namespace HotBot.Core.Plugins.Tests
 		}
 
 		[TestMethod()]
-		public void Startup_CallLoadOnce()
+		public void LoadAll_CallOnce()
 		{
 			var container = new Mock<IUnityContainer>();
 			var manager = new ReflectionPluginManager(container.Object);
 			var plugin = CreatePlugin<Plugin>("test");
+			var newPlugin = CreatePlugin<UniquePluginType1>("test2");
+
 			manager.AddPlugin(plugin.Object);
 			manager.LoadAll();
+
 			plugin.Verify(p => p.Load(It.Is<IUnityContainer>(c => true)), Times.Once());
+
+			manager.AddPlugin(newPlugin.Object);
+			manager.LoadAll();
+
+			plugin.Verify(p => p.Load(It.Is<IUnityContainer>(c => true)), Times.Once());
+			newPlugin.Verify(p => p.Load(It.Is<IUnityContainer>(c => true)), Times.Once());
 		}
 
 		[TestMethod()]
-		[ExpectedException(typeof(InvalidOperationException))]
-		public void Startup_ErrorWhenActive()
-		{
-			var container = new Mock<IUnityContainer>();
-			var manager = new ReflectionPluginManager(container.Object);
-			var plugin = CreatePlugin<Plugin>("test");
-			manager.AddPlugin(plugin.Object);
-			manager.LoadAll();
-			manager.LoadAll();
-		}
-
-		[TestMethod()]
-		public void Shutdown_CallLoadOnce()
+		public void UnloadAll_CallOnce()
 		{
 			var container = new Mock<IUnityContainer>();
 			var manager = new ReflectionPluginManager(container.Object);
@@ -163,23 +164,18 @@ namespace HotBot.Core.Plugins.Tests
 			manager.AddPlugin(plugin.Object);
 			manager.LoadAll();
 			manager.UnloadAll();
+
+			plugin.Verify(p => p.Unload(), Times.Once());
+
+			manager.LoadAll();
+			manager.RemovePlugin(plugin.Object);
+			manager.UnloadAll();
+
 			plugin.Verify(p => p.Unload(), Times.Once());
 		}
 
 		[TestMethod()]
-		public void Shutdown_ErrorWhenInactive()
-		{
-			var container = new Mock<IUnityContainer>();
-			var manager = new ReflectionPluginManager(container.Object);
-
-			TestUtils.AssertException<InvalidOperationException>(() => manager.UnloadAll());
-			manager.LoadAll();
-			manager.UnloadAll();
-			TestUtils.AssertException<InvalidOperationException>(() => manager.UnloadAll());
-		}
-
-		[TestMethod()]
-		public void Restart_LoadAndOnloadOnce()
+		public void Reload_LoadAndOnloadOnce()
 		{
 			var container = new Mock<IUnityContainer>();
 			var manager = new ReflectionPluginManager(container.Object);
@@ -188,7 +184,7 @@ namespace HotBot.Core.Plugins.Tests
 			bool loaded = false;
 			bool unloaded = false;
 
-			plugin.Setup(p => p.Load(null)).Callback(() =>
+			plugin.Setup(p => p.Load(container.Object)).Callback(() =>
 			{
 				Assert.IsTrue(unloaded, "Load() called before Unload()");
 				Assert.IsFalse(loaded, "Load() called multiple times");
@@ -200,18 +196,19 @@ namespace HotBot.Core.Plugins.Tests
 				unloaded = true;
 			});
 			manager.AddPlugin(plugin.Object);
-
 			manager.Reload();
 		}
 
 		[TestMethod()]
-		public void Restart_RestartTwice()
+		public void Reload_DontLoadUnloadedPlugins()
 		{
 			var container = new Mock<IUnityContainer>();
 			var manager = new ReflectionPluginManager(container.Object);
+			var plugin = CreatePlugin<Plugin>("test");
 			manager.LoadAll();
+			manager.AddPlugin(plugin.Object);
 			manager.Reload();
-			manager.Reload();
+			plugin.Verify(p => p.Load(container.Object), Times.Never());
 		}
 
 		private static Mock<TPlugin> CreatePlugin<TPlugin>(string name) where TPlugin : class, Plugin

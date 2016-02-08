@@ -5,8 +5,6 @@ namespace HotBot.Core.Plugins
 {
 	public interface PluginManager
 	{
-		PluginManagerState State { get; }
-
 		/// <summary>
 		/// Registers a plugin to be managed by the current PluginManager.
 		/// The plugin does not get automatically loaded.
@@ -40,7 +38,7 @@ namespace HotBot.Core.Plugins
 		/// <summary>
 		/// Loads all not-loaded plugins.
 		/// </summary>
-		void LoadAll();//TODO: update unit test to reflect this
+		void LoadAll();
 		/// <summary>
 		/// Unloads all loaded plugins.
 		/// </summary>
@@ -49,6 +47,6 @@ namespace HotBot.Core.Plugins
 		/// Unloads all loaded plugins and then loads them again.
 		/// Does not load perviously unloaded plugins.
 		/// </summary>
-		void Reload();//TODO: Reconsidder implementation details
+		void Reload();
 	}
 }

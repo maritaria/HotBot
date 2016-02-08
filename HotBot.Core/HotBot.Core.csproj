@@ -103,7 +103,6 @@
     <Compile Include="Plugins\Dependency.cs" />
     <Compile Include="Plugins\PluginDescription.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
-    <Compile Include="Plugins\PluginManagerState.cs" />
     <Compile Include="Plugins\ReflectionPluginManager.cs" />
     <Compile Include="SaveChangesNotificationArgs.cs" />
     <Compile Include="Irc\IrcLogger.cs" />

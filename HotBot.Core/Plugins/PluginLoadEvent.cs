@@ -3,7 +3,6 @@ using System.Linq;
 
 namespace HotBot.Core.Plugins
 {
-	//TODO: Split events into some categories: Event, Request, Query
 	/// <summary>
 	/// Published when a plugin instance has been loaded and is ready for use
 	/// </summary>
