@@ -10,7 +10,7 @@ namespace HotBot.Core.Commands.Tests
 	public class CommandInfoTests
 	{
 		[TestMethod()]
-		public void CommandInfo()
+		public void CommandInfo_Constructor()
 		{
 			var channel = new Mock<Channel>("TestChannel");
 			var user = new Mock<User>("TestChannel");
@@ -19,19 +19,19 @@ namespace HotBot.Core.Commands.Tests
 			var args = "args";
 			var info1 = new CommandEvent(channel.Object, user.Object, command, args);
 
-			Assert.AreEqual(channel.Object, info1.Channel, "Channel not equal");
-			Assert.AreEqual(user.Object, info1.User, "User not equal");
-			Assert.AreEqual(user.Object, info1.Authorizer, "Authorizer not equal to user");
-			Assert.AreEqual(command, info1.CommandName, "CommandName not equal");
-			Assert.AreEqual(args, info1.ArgumentText, "ArgumentText not equal");
+			Assert.AreEqual(channel.Object, info1.Channel);
+			Assert.AreEqual(user.Object, info1.User);
+			Assert.AreEqual(user.Object, info1.Authorizer);
+			Assert.AreEqual(command, info1.CommandName);
+			Assert.AreEqual(args, info1.ArgumentText);
 
 			var info2 = new CommandEvent(channel.Object, user.Object, authorizer.Object, command, args);
 
-			Assert.AreEqual(channel.Object, info2.Channel, "Channel not equal");
-			Assert.AreEqual(user.Object, info2.User, "User not equal");
-			Assert.AreEqual(authorizer.Object, info2.Authorizer, "Authorizer not equal to user");
-			Assert.AreEqual(command, info2.CommandName, "CommandName not equal");
-			Assert.AreEqual(args, info2.ArgumentText, "ArgumentText not equal");
+			Assert.AreEqual(channel.Object, info2.Channel);
+			Assert.AreEqual(user.Object, info2.User);
+			Assert.AreEqual(authorizer.Object, info2.Authorizer);
+			Assert.AreEqual(command, info2.CommandName);
+			Assert.AreEqual(args, info2.ArgumentText);
 		}
 
 		[TestMethod]

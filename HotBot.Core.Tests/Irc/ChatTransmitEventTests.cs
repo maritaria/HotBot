@@ -9,30 +9,16 @@ namespace HotBot.Core.Irc.Tests
 	public class ChatTransmitEventTests
 	{
 		[TestMethod]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void Constructor_Channel_Null()
-		{
-			string chatMessage = "ChatMessage";
-			ChatTransmitRequest command = new ChatTransmitRequest(null, chatMessage);
-		}
-
-		[TestMethod]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void Constructor_Message_Null()
-		{
-			string channelName = "TestChannel";
-			Channel channel = new Channel(channelName);
-			ChatTransmitRequest command = new ChatTransmitRequest(channel, null);
-		}
-
-		[TestMethod]
-		public void Constructor_Valid()
+		public void ChatTransmitEvent_Constructor()
 		{
 			string channelName = "TestChannel";
 			string chatMessage = "ChatMessage";
 			Channel channel = new Channel(channelName);
 			ChatTransmitRequest command = new ChatTransmitRequest(channel, chatMessage);
 
+			TestUtils.AssertArgumentException(() => new ChatTransmitRequest(null, chatMessage));
+			TestUtils.AssertArgumentException(() => new ChatTransmitRequest(channel, null));
+			
 			Assert.AreEqual(channel, command.Channel);
 			Assert.AreEqual(chatMessage, command.Text);
 			Assert.AreEqual("PRIVMSG #TestChannel :ChatMessage", command.IrcCommand);

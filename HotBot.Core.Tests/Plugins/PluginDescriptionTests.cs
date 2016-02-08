@@ -13,56 +13,43 @@ namespace HotBot.Core.Plugins.Tests
 	public class PluginDescriptionTests
 	{
 		[TestMethod()]
-		public void Constructor_InvalidArguments()
-		{
-			TestUtils.AssertArgumentException(() => new PluginDescription(null, ""));
-			TestUtils.AssertArgumentException(() => new PluginDescription("", ""));
-			TestUtils.AssertArgumentException(() => new PluginDescription("!!!", ""));
-			TestUtils.AssertArgumentException(() => new PluginDescription("A!0", ""));
-			TestUtils.AssertArgumentException(() => new PluginDescription("ABC", null));
-		}
-
-		[TestMethod()]
-		public void Constructor_ValidArguments()
+		public void PluginDescription_Constructor()
 		{
 			var name = "HelloWorld1";
 			var desc = "Description test!";
 			var dependency = new Dependency();
 			var pluginDescription = new PluginDescription(name, desc, dependency);
 
+			TestUtils.AssertArgumentException(() => new PluginDescription(null, ""));
+			TestUtils.AssertArgumentException(() => new PluginDescription("", ""));
+			TestUtils.AssertArgumentException(() => new PluginDescription("!!!", ""));
+			TestUtils.AssertArgumentException(() => new PluginDescription("A!0", ""));
+			TestUtils.AssertArgumentException(() => new PluginDescription("ABC", null));
+
 			Assert.AreEqual(name, pluginDescription.Name);
 			Assert.AreEqual(desc, pluginDescription.Description);
 			Assert.AreEqual(dependency, pluginDescription.Dependencies.First());
 			Assert.AreEqual(1, pluginDescription.Dependencies.Count);
 		}
-
+		
 		[TestMethod()]
-		public void VerifyName_InvalidArguments()
+		public void VerifyName()
 		{
 			TestUtils.AssertArgumentException(() => PluginDescription.VerifyName(null));
 			TestUtils.AssertArgumentException(() => PluginDescription.VerifyName(""));
 			TestUtils.AssertArgumentException(() => PluginDescription.VerifyName("!"));
 			TestUtils.AssertArgumentException(() => PluginDescription.VerifyName("a!a"));
 			TestUtils.AssertArgumentException(() => PluginDescription.VerifyName("a 0a"));
-		}
-
-		[TestMethod()]
-		public void VerifyName_ValidArguments()
-		{
 			PluginDescription.VerifyName("a");
 			PluginDescription.VerifyName("0");
 			PluginDescription.VerifyName("a00aa0");
 		}
 
 		[TestMethod()]
-		public void VerifyDescription_InvalidArguments()
+		public void VerifyDescription()
 		{
 			TestUtils.AssertArgumentException(() => PluginDescription.VerifyDescription(null));
-		}
 
-		[TestMethod()]
-		public void VerifyDescription_ValidArguments()
-		{
 			PluginDescription.VerifyDescription("");
 			PluginDescription.VerifyDescription("a");
 			PluginDescription.VerifyDescription("0");

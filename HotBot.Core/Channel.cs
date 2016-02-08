@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotBot.Core
 {
@@ -24,7 +20,14 @@ namespace HotBot.Core
 
 		public Channel(string name) : this()
 		{
-			VerifyName(name);
+			try
+			{
+				VerifyName(name);
+			}
+			catch (Exception ex)
+			{
+				throw new ArgumentException(ex.Message, "name", ex);
+			}
 			Name = name;
 		}
 
@@ -37,39 +40,20 @@ namespace HotBot.Core
 		{
 			return ChannelPrefix + Name;
 		}
-		
+
 		public static void VerifyName(string channelName)
 		{
 			if (channelName == null)
 			{
-				throw new InvalidNameException("Channelname cannot be null");
+				throw new ArgumentNullException("channelName");
 			}
 			if (channelName.Length < MinimumNameLength)
 			{
-				throw new InvalidNameException($"Channelname must be at least {MinimumNameLength} characters");
+				throw new ArgumentException($"A channel name must be at least {MinimumNameLength} characters", "channelName");
 			}
 			if (channelName.Length > MaximumNameLength)
 			{
-				throw new InvalidNameException($"Channelname cannot be longer than {MaximumNameLength} characters");
-			}
-		}
-
-		public sealed class InvalidNameException : Exception
-		{
-			public InvalidNameException()
-			{
-			}
-
-			public InvalidNameException(string message) : base(message)
-			{
-			}
-
-			public InvalidNameException(string message, Exception innerException) : base(message, innerException)
-			{
-			}
-
-			private InvalidNameException(SerializationInfo info, StreamingContext context) : base(info, context)
-			{
+				throw new ArgumentException($"A channel name cannot be longer than {MaximumNameLength} characters", "channelName");
 			}
 		}
 	}

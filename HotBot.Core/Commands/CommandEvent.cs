@@ -1,7 +1,6 @@
-﻿using System;
+﻿using HotBot.Core.Permissions;
+using System;
 using System.Linq;
-using HotBot.Core.Permissions;
-using HotBot.Core;
 
 namespace HotBot.Core.Commands
 {
@@ -50,7 +49,14 @@ namespace HotBot.Core.Commands
 			{
 				throw new ArgumentNullException("authorizer");
 			}
-			VerifyCommandName(commandName);
+			try
+			{
+				VerifyCommandName(commandName);
+			}
+			catch (Exception ex)
+			{
+				throw new ArgumentException(ex.Message, "commandName", ex);
+			}
 			if (argumentText == null)
 			{
 				throw new ArgumentNullException("argumentText");
@@ -62,32 +68,21 @@ namespace HotBot.Core.Commands
 			CommandName = commandName;
 			ArgumentText = argumentText;
 		}
-		
+
 		//TODO: Create new type to encapsulate commandname behaviour
 		public static void VerifyCommandName(string commandName)
 		{
 			if (commandName == null)
 			{
-				throw new InvalidCommandNameException("Command name cannot be null");
+				throw new ArgumentNullException("commandName");
 			}
 			if (commandName == string.Empty)
 			{
-				throw new InvalidCommandNameException("Command name cannot be empty");
+				throw new ArgumentException("cannot be empty", "commandName");
 			}
 			if (commandName.Any(char.IsWhiteSpace))
 			{
-				throw new InvalidCommandNameException("Command name cannot contain whitespace");
-			}
-		}
-
-		public sealed class InvalidCommandNameException : Exception
-		{
-			public InvalidCommandNameException(string message) : base(message)
-			{
-			}
-
-			public InvalidCommandNameException(string message, Exception innerException) : base(message, innerException)
-			{
+				throw new ArgumentException("cannot contain whitespace(s)", "commandName");
 			}
 		}
 	}

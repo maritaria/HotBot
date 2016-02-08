@@ -9,16 +9,13 @@ namespace HotBot.Core.Plugins.Tests
 	public class PluginLoadEventTests
 	{
 		[TestMethod()]
-		public void Constructor_InvalidArguments()
-		{
-			TestUtils.AssertArgumentException(() => new PluginLoadEvent(null));
-		}
-
-		[TestMethod()]
-		public void Constructor_ValidArguments()
+		public void PluginLoadEvent_Constructor()
 		{
 			var plugin = new Mock<Plugin>();
 			var pluginLoadEvent = new PluginLoadEvent(plugin.Object);
+
+			TestUtils.AssertArgumentException(() => new PluginLoadEvent(null));
+
 			Assert.AreEqual(plugin.Object, pluginLoadEvent.Plugin);
 		}
 	}

@@ -1,9 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using HotBot.Core.Irc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Linq;
-using HotBot.Core;
-using HotBot.Core.Irc;
 
 namespace HotBot.Core.Commands.Tests
 {
@@ -11,7 +10,7 @@ namespace HotBot.Core.Commands.Tests
 	public class CommandEncoderTests
 	{
 		[TestMethod()]
-		public void CommandEncoder()
+		public void CommandEncoder_Constructor()
 		{
 			var bus = new Mock<MessageBus>();
 			var config = new Mock<CommandConfig>();
@@ -29,7 +28,7 @@ namespace HotBot.Core.Commands.Tests
 		{
 			var mockBus = new Mock<MessageBus>();
 			var config = new Mock<CommandConfig>();
-			config.SetupGet(c => new string[] { "!", "#" });
+			config.SetupGet(c => c.Prefixes).Returns(() => new string[] { "!", "#" });
 			var encoder = new CommandEncoder(mockBus.Object, config.Object);
 
 			TestUtils.AssertArgumentException(() => encoder.HandleMessage(null));
@@ -37,7 +36,7 @@ namespace HotBot.Core.Commands.Tests
 			var channel = new Mock<Channel>("TestChannel");
 			var user = new Mock<User>("TestUser");
 			var message = new ChatReceivedEvent(channel.Object, user.Object, "#command argument1 argument2");
-			
+
 			encoder.HandleMessage(message);
 
 			mockBus.Verify(b => b.Publish(It.Is<CommandEvent>(info =>
@@ -51,17 +50,17 @@ namespace HotBot.Core.Commands.Tests
 		[TestMethod()]
 		public void HandleMessage_MultiCharPrefix()
 		{
-			var mockBus = new Mock<MessageBus>();
+			var bus = new Mock<MessageBus>();
 			var config = new Mock<CommandConfig>();
-			config.SetupGet(c => new string[] { "!", "#" });
-			var encoder = new CommandEncoder(mockBus.Object, config.Object);
+			config.SetupGet(c => c.Prefixes).Returns(() => new string[] { "QQ", "#" });
+			var encoder = new CommandEncoder(bus.Object, config.Object);
 			var channel = new Mock<Channel>("TestChannel");
 			var user = new Mock<User>("TestUser");
 			var message = new ChatReceivedEvent(channel.Object, user.Object, "QQcommand argument1 argument2");
 
 			encoder.HandleMessage(message);
 
-			mockBus.Verify(b => b.Publish(It.Is<CommandEvent>(info =>
+			bus.Verify(b => b.Publish(It.Is<CommandEvent>(info =>
 				info.User == user.Object &&
 				info.Channel == channel.Object &&
 				info.CommandName == "command" &&

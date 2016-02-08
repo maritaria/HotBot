@@ -39,34 +39,15 @@ namespace HotBot.Core
 		{
 			if (username == null)
 			{
-				throw new InvalidNameException("Username cannot be null");
+				throw new ArgumentNullException("username");
 			}
 			if (username.Length < MinimumNameLength)
 			{
-				throw new InvalidNameException($"Username must be at least {MinimumNameLength} characters");
+				throw new ArgumentException($"A username must be at least {MinimumNameLength} characters", "username");
 			}
 			if (username.Length > MaximumNameLength)
 			{
-				throw new InvalidNameException($"Username cannot be longer than {MaximumNameLength} characters");
-			}
-		}
-		//TODO: reconsidder the use of these nested classes
-		public sealed class InvalidNameException : Exception
-		{
-			public InvalidNameException()
-			{
-			}
-
-			public InvalidNameException(string message) : base(message)
-			{
-			}
-
-			public InvalidNameException(string message, Exception innerException) : base(message, innerException)
-			{
-			}
-
-			private InvalidNameException(SerializationInfo info, StreamingContext context) : base(info, context)
-			{
+				throw new ArgumentException($"A username cannot be longer than {MaximumNameLength} characters", "username");
 			}
 		}
 

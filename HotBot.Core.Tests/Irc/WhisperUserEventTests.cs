@@ -1,10 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HotBot.Core.Irc;
+using Moq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc.Tests
 {
@@ -13,20 +10,26 @@ namespace HotBot.Core.Irc.Tests
 	public class WhisperUserEventTests
 	{
 		[TestMethod()]
-		public void Constructor_InvalidArguments()
+		public void WhisperUserEvent_Constructor()
 		{
-			TestUtils.AssertArgumentException(() => new WhisperUserRequest(null, "test", "test"));
-			TestUtils.AssertArgumentException(() => new WhisperUserRequest(new Channel("test"), null, "test"));
-			TestUtils.AssertArgumentException(() => new WhisperUserRequest(new Channel("test"), "", "test"));
-			TestUtils.AssertArgumentException(() => new WhisperUserRequest(new Channel("test"), "t", "test"));
-			TestUtils.AssertArgumentException(() => new WhisperUserRequest(new Channel("test"), "123456789012345678901234567890", "test"));
-			TestUtils.AssertArgumentException(() => new WhisperUserRequest(new Channel("test"), "test", null));
-		}
-		
-		[TestMethod()]
-		public void Constructor_Valid()
-		{
-			new WhisperUserRequest(new Channel("test"), "test", "test");
+			var username = "testUser";
+			var message = "test message";
+			var channel = new Mock<Channel>("test");
+			var expectedIrcCommand = $"PRIVMSG :/w testUser test message";
+
+			var whisperUserRequest = new WhisperUserRequest(channel.Object, username, message);
+
+			TestUtils.AssertArgumentException(() => new WhisperUserRequest(null, username, message));
+			TestUtils.AssertArgumentException(() => new WhisperUserRequest(channel.Object, null, message));
+			TestUtils.AssertArgumentException(() => new WhisperUserRequest(channel.Object, "", message));
+			TestUtils.AssertArgumentException(() => new WhisperUserRequest(channel.Object, "t", message));
+			TestUtils.AssertArgumentException(() => new WhisperUserRequest(channel.Object, "123456789012345678901234567890", message));
+			TestUtils.AssertArgumentException(() => new WhisperUserRequest(channel.Object, username, null));
+
+			Assert.AreEqual(channel.Object, whisperUserRequest.Channel);
+			Assert.AreEqual(username, whisperUserRequest.TargetUsername);
+			Assert.AreEqual(message, whisperUserRequest.Text);
+			Assert.AreEqual(expectedIrcCommand, whisperUserRequest.IrcCommand);
 		}
 	}
 }

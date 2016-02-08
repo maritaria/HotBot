@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Linq;
 
@@ -8,15 +9,14 @@ namespace HotBot.Core.Irc.Tests
 	public class ChannelJoinRequestTests
 	{
 		[TestMethod()]
-		public void Constructor_InvalidArguments()
+		public void ChannelJoinRequest_Constructor()
 		{
-			Assert.Fail();
-		}
+			var channel = new Mock<Channel>("test");
+			var channelJoinRequest = new ChannelJoinRequest(channel.Object);
 
-		[TestMethod()]
-		public void Constructor_ValidArguments()
-		{
-			Assert.Fail();
+			TestUtils.AssertArgumentException(() => new ChannelJoinRequest(null));
+			
+			Assert.AreEqual(channel.Object, channelJoinRequest.Channel);
 		}
 	}
 }

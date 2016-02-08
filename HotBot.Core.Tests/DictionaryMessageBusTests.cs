@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Linq;
-using Moq;
 
 namespace HotBot.Core.Tests
 {
@@ -9,43 +9,30 @@ namespace HotBot.Core.Tests
 	public class DictionaryMessageBusTests
 	{
 		[TestMethod()]
-		public void Constructor_Valid()
+		public void DictionaryMessageBus_Constructor()
 		{
 			var bus = new DictionaryMessageBus();
 		}
 
 		[TestMethod()]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void Subscribe_Null()
-		{
-			var bus = new DictionaryMessageBus();
-			MessageHandler<object> handler = null;
-			bus.Subscribe(handler);
-		}
-
-		[TestMethod()]
-		public void Subscribe_Valid()
+		public void Subscribe()
 		{
 			var bus = new DictionaryMessageBus();
 			var handler = new Mock<MessageHandler<object>>();
+			TestUtils.AssertArgumentException(() => bus.Subscribe((MessageHandler<object>)null));
 			bus.Subscribe(handler.Object);
-		}
-		
-		[TestMethod()]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void Publish_Null()
-		{
-			var bus = new DictionaryMessageBus();
-			bus.Publish<object>(null);
 		}
 
 		[TestMethod()]
-		public void Publish_Valid()
+		public void Publish()
 		{
 			var bus = new DictionaryMessageBus();
 			var handler = new Mock<MessageHandler<object>>();
 			var data = new object();
 			bus.Subscribe(handler.Object);
+
+			TestUtils.AssertArgumentException(() => bus.Publish<object>(null));
+
 			bus.Publish(data);
 			handler.Verify(h => h.HandleMessage(data), Times.Once());
 		}
@@ -82,40 +69,29 @@ namespace HotBot.Core.Tests
 		}
 
 		[TestMethod()]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void IsSubscribed_Null()
-		{
-			var bus = new DictionaryMessageBus();
-			bus.IsSubscribed<object>(null);
-		}
-
-		[TestMethod()]
-		public void IsSubscribed_Valid()
+		public void IsSubscribed()
 		{
 			var bus = new DictionaryMessageBus();
 			var handler = new Mock<MessageHandler<string>>();
+
+			TestUtils.AssertArgumentException(() => bus.IsSubscribed<object>(null));
+
 			Assert.AreEqual(false, bus.IsSubscribed(handler.Object));
-			bus.Subscribe<string>(handler.Object);
+			bus.Subscribe(handler.Object);
 			Assert.AreEqual(true, bus.IsSubscribed(handler.Object));
 		}
 
 		[TestMethod()]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void Unsubscribe_Null()
-		{
-			var bus = new DictionaryMessageBus();
-			MessageHandler<object> handler = null;
-			bus.Unsubscribe(handler);
-		}
-
-		[TestMethod()]
-		public void Unsubscribe_Valid()
+		public void Unsubscribe()
 		{
 			var bus = new DictionaryMessageBus();
 			var handler = new Mock<MessageHandler<object>>();
 			object data = new object();
 			bus.Subscribe(handler.Object);
 			bus.Unsubscribe(handler.Object);
+
+			TestUtils.AssertArgumentException(() => bus.Unsubscribe((MessageHandler<object>)null));
+
 			bus.Publish(data);
 			handler.Verify(h => h.HandleMessage(data), Times.Never(), "Handler called after unsubscribe");
 		}
