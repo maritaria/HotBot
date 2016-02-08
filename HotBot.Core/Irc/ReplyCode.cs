@@ -160,13 +160,14 @@ namespace HotBot.Core.Irc
 			}
 			return (ReplyCode)value;
 		}
+
 		public static ReplyCode ToReplyCode(this string value)
 		{
 			if (!Enum.IsDefined(typeof(ReplyCode), value))
 			{
 				throw new ArgumentException($"No ReplyCode by the name '{value}'");
 			}
-			return(ReplyCode) Enum.Parse(typeof(ReplyCode), value);
+			return (ReplyCode)Enum.Parse(typeof(ReplyCode), value);
 		}
 	}
 }
