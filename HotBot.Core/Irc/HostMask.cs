@@ -36,6 +36,10 @@ namespace HotBot.Core.Irc
 				throw new ArgumentNullException("source");
 			}
 			string[] parts = source.SplitMultiple("!", "@").ToArray();
+			if (parts.Length != 3)
+			{
+				throw new ArgumentException($"Invalid number of sections; expected 3 but got {parts.Length}.", "source");
+			}
 			//TODO: More validation
 			Nickname = parts[0];
 			Username = parts[1];
