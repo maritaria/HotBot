@@ -8,12 +8,11 @@ namespace HotBot.Core.Util.Tests
 	[TestClass()]
 	public class StringExtensionsTests
 	{
+		//TODO: better test for splitmultiple
 		[TestMethod]
-		[ExpectedException(typeof(ArgumentNullException))]
 		public void SplitOnce_Single_Source_Null()
 		{
 			TestUtils.AssertArgumentException(() => ((string)null).SplitOnce("asdf"));
-			TestUtils.AssertArgumentException(() => (string.Empty).SplitOnce("asdf"));
 			TestUtils.AssertArgumentException(() => ("asdf").SplitOnce((string)null));
 		}
 		//TODO: Copy these tests for SplitOnce_Multi

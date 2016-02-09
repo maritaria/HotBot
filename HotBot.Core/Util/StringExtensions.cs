@@ -77,8 +77,8 @@ namespace HotBot.Core.Util
 			foreach (string splitter in orderedSplitters)
 			{
 				string[] parts = remaining.SplitOnce(splitter);
-				remaining = parts[0];
-				yield return parts[1];
+				remaining = parts[1];
+				yield return parts[0];
 			}
 			yield return remaining;
 		}
