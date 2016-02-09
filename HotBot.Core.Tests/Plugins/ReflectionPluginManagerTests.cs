@@ -26,7 +26,7 @@ namespace HotBot.Core.Plugins.Tests
 		public void AddPlugin()
 		{
 			var manager = CreatePluginManager();
-			var plugin = CreatePlugin<LoadablePlugin>("test");
+			var plugin = CreatePlugin<Plugin>("test");
 			var invalidPlugin = CreateInvalidPlugin();
 
 			TestUtils.AssertArgumentException(() => manager.AddPlugin(null));
@@ -39,7 +39,7 @@ namespace HotBot.Core.Plugins.Tests
 		public void AddPlugin_AddTwice()
 		{
 			var manager = CreatePluginManager();
-			var plugin = CreatePlugin<LoadablePlugin>("test");
+			var plugin = CreatePlugin<Plugin>("test");
 			manager.AddPlugin(plugin.Object);
 			TestUtils.AssertException<InvalidOperationException>(() => manager.AddPlugin(plugin.Object));
 		}
@@ -59,21 +59,21 @@ namespace HotBot.Core.Plugins.Tests
 		{
 			var manager = CreatePluginManager();
 			manager.LoadAll();
-			var plugin = CreatePlugin<LoadablePlugin>("test");
+			var plugin = CreatePlugin<Plugin>("test");
 			plugin.Setup(p => p.Load()).Callback(Assert.Fail);
 			manager.AddPlugin(plugin.Object);
 		}
 
-		public interface UniquePluginType1 : LoadablePlugin { }
+		public interface UniquePluginType1 : Plugin { }
 
-		public interface UniquePluginType2 : LoadablePlugin { }
+		public interface UniquePluginType2 : Plugin { }
 
 		[TestMethod()]
 		public void RemovePlugin()
 		{
 			var manager = CreatePluginManager();
 			var invalidPlugin = CreateInvalidPlugin();
-			var plugin = CreatePlugin<LoadablePlugin>("test");
+			var plugin = CreatePlugin<Plugin>("test");
 			manager.AddPlugin(plugin.Object);
 
 			TestUtils.AssertArgumentException(() => manager.RemovePlugin(null));
@@ -86,7 +86,7 @@ namespace HotBot.Core.Plugins.Tests
 		public void GetPlugin_Named()
 		{
 			var manager = CreatePluginManager();
-			var plugin = CreatePlugin<LoadablePlugin>("test");
+			var plugin = CreatePlugin<Plugin>("test");
 			manager.AddPlugin(plugin.Object);
 
 			TestUtils.AssertArgumentException(() => manager.GetPlugin((string)null));
@@ -106,11 +106,11 @@ namespace HotBot.Core.Plugins.Tests
 			TestUtils.AssertArgumentException(() => manager.GetPlugin((Type)null));
 
 			Assert.AreEqual(plugin.Object, manager.GetPlugin(plugin.Object.GetType()));
-			Assert.IsNull(manager.GetPlugin(typeof(LoadablePlugin)));
+			Assert.IsNull(manager.GetPlugin(typeof(Plugin)));
 			Assert.IsNull(manager.GetPlugin(typeof(UniquePluginType2)));
 		}
 
-		private class PluginImpl : LoadablePlugin
+		private class PluginImpl : Plugin
 		{
 			public PluginDescription Description { get; set; }
 
@@ -134,7 +134,7 @@ namespace HotBot.Core.Plugins.Tests
 		public void LoadAll_CallOnce()
 		{
 			var manager = CreatePluginManager();
-			var plugin = CreatePlugin<LoadablePlugin>("test");
+			var plugin = CreatePlugin<Plugin>("test");
 			var newPlugin = CreatePlugin<UniquePluginType1>("test2");
 
 			manager.AddPlugin(plugin.Object);
@@ -153,7 +153,7 @@ namespace HotBot.Core.Plugins.Tests
 		public void UnloadAll_CallOnce()
 		{
 			var manager = CreatePluginManager();
-			var plugin = CreatePlugin<LoadablePlugin>("test");
+			var plugin = CreatePlugin<Plugin>("test");
 			manager.AddPlugin(plugin.Object);
 			manager.LoadAll();
 			manager.UnloadAll();
@@ -172,7 +172,7 @@ namespace HotBot.Core.Plugins.Tests
 		{
 			var manager = CreatePluginManager();
 			manager.LoadAll();
-			var plugin = CreatePlugin<LoadablePlugin>("test");
+			var plugin = CreatePlugin<Plugin>("test");
 			bool loaded = false;
 			bool unloaded = false;
 
@@ -195,7 +195,7 @@ namespace HotBot.Core.Plugins.Tests
 		public void Reload_DontLoadUnloadedPlugins()
 		{
 			var manager = CreatePluginManager();
-			var plugin = CreatePlugin<LoadablePlugin>("test");
+			var plugin = CreatePlugin<Plugin>("test");
 			manager.LoadAll();
 			manager.AddPlugin(plugin.Object);
 			manager.Reload();
@@ -210,7 +210,7 @@ namespace HotBot.Core.Plugins.Tests
 			return manager;
 		}
 
-		private static Mock<TPlugin> CreatePlugin<TPlugin>(string name) where TPlugin : class, LoadablePlugin
+		private static Mock<TPlugin> CreatePlugin<TPlugin>(string name) where TPlugin : class, Plugin
 		{
 			var description = new PluginDescription(name, "");
 			var plugin = new Mock<TPlugin>();
@@ -218,9 +218,9 @@ namespace HotBot.Core.Plugins.Tests
 			return plugin;
 		}
 
-		private static Mock<LoadablePlugin> CreateInvalidPlugin()
+		private static Mock<Plugin> CreateInvalidPlugin()
 		{
-			return new Mock<LoadablePlugin>();
+			return new Mock<Plugin>();
 		}
 	}
 }

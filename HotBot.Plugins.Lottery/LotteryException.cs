@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotBot.Plugin.Lottery
+namespace HotBot.Plugins.Lottery
 {
 	public sealed class LotteryException : Exception
 	{

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HotBot.Core.Plugins
 {
-	public interface BootstrappedPlugin : LoadablePlugin
+	public interface BootstrappedPlugin : Plugin
 	{
 		void Bootstrap(IUnityContainer container);//TODO: Use UnityContainerExtensions instead
 	}

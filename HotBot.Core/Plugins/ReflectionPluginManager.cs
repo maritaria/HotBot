@@ -7,8 +7,8 @@ namespace HotBot.Core.Plugins
 {
 	public class ReflectionPluginManager : PluginManager
 	{
-		private Dictionary<string, LoadablePlugin> _namedPlugins = new Dictionary<string, LoadablePlugin>();
-		private Dictionary<Type, LoadablePlugin> _typedPlugins = new Dictionary<Type, LoadablePlugin>();
+		private Dictionary<string, Plugin> _namedPlugins = new Dictionary<string, Plugin>();
+		private Dictionary<Type, Plugin> _typedPlugins = new Dictionary<Type, Plugin>();
 		
 		public PluginLoader Loader { get; }
 
@@ -21,7 +21,7 @@ namespace HotBot.Core.Plugins
 			Loader = loader;
 		}
 
-		public void AddPlugin(LoadablePlugin plugin)
+		public void AddPlugin(Plugin plugin)
 		{
 			if (plugin == null)
 			{
@@ -45,7 +45,7 @@ namespace HotBot.Core.Plugins
 			_namedPlugins.Add(pluginName, plugin);
 		}
 
-		public void RemovePlugin(LoadablePlugin plugin)
+		public void RemovePlugin(Plugin plugin)
 		{
 			if (plugin == null)
 			{
@@ -64,7 +64,7 @@ namespace HotBot.Core.Plugins
 			}
 		}
 
-		public LoadablePlugin GetPlugin(string name)
+		public Plugin GetPlugin(string name)
 		{
 			if (name == null)
 			{
@@ -81,7 +81,7 @@ namespace HotBot.Core.Plugins
 			return _namedPlugins[name];
 		}
 
-		public LoadablePlugin GetPlugin(Type type)
+		public Plugin GetPlugin(Type type)
 		{
 			if (type == null)
 			{
@@ -96,11 +96,11 @@ namespace HotBot.Core.Plugins
 
 		public void LoadAll()
 		{
-			foreach(LoadablePlugin plugin in Loader.LoadPlugins())
+			foreach(Plugin plugin in Loader.LoadPlugins())
 			{
 				AddPlugin(plugin);
 			}
-			foreach (LoadablePlugin pl in _typedPlugins.Values)
+			foreach (Plugin pl in _typedPlugins.Values)
 			{
 				try
 				{
@@ -115,7 +115,7 @@ namespace HotBot.Core.Plugins
 
 		public void UnloadAll()
 		{
-			foreach (LoadablePlugin pl in _typedPlugins.Values)
+			foreach (Plugin pl in _typedPlugins.Values)
 			{
 				try
 				{

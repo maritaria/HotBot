@@ -118,7 +118,7 @@ namespace HotBot.Core.Commands
 			RegisterAllCommandsForPlugin(message.Plugin);
 		}
 
-		private void RegisterAllCommandsForPlugin(LoadablePlugin plugin)
+		private void RegisterAllCommandsForPlugin(Plugin plugin)
 		{
 			foreach(MethodInfo method in plugin.GetType().GetMethods())
 			{
@@ -135,7 +135,7 @@ namespace HotBot.Core.Commands
 			AddListener(listener.Command, listener);
 		}
 
-		private void UnregisterAllCommandsForPlugin(LoadablePlugin plugin)
+		private void UnregisterAllCommandsForPlugin(Plugin plugin)
 		{
 			List<PluginCommandListener> removalQueue = new List<PluginCommandListener>();
 			foreach (CommandListener listener in _listeners.Values)
@@ -158,10 +158,10 @@ namespace HotBot.Core.Commands
 		private class PluginCommandListener : CommandListener
 		{
 			public MethodInfo CallbackMethod { get; }
-			public LoadablePlugin Plugin { get; }
+			public Plugin Plugin { get; }
 			public string Command { get; }
 
-			public PluginCommandListener(LoadablePlugin plugin, string command, MethodInfo callback)
+			public PluginCommandListener(Plugin plugin, string command, MethodInfo callback)
 			{
 				Plugin = plugin;
 				CallbackMethod = callback;

@@ -10,7 +10,7 @@ namespace HotBot.Core.Plugins
 {
 	internal sealed class AssemblyPluginLoader : PluginLoader
 	{
-		public const string PluginAssemblyNamePattern = "HotBot.Plugin.*.dll";
+		public const string PluginAssemblyNamePattern = "HotBot.Plugins.*.dll";
 
 		public string PluginDirectory { get; } = "Plugins";
 		public IUnityContainer DependencyContainer { get; }
@@ -30,11 +30,11 @@ namespace HotBot.Core.Plugins
 			Bus = bus;
 		}
 
-		public IEnumerable<LoadablePlugin> LoadPlugins()
+		public IEnumerable<Plugin> LoadPlugins()
 		{
 			foreach (string assemblyFilename in FindPluginAssemblyFilenames())
 			{
-				LoadablePlugin plugin = null;
+				Plugin plugin = null;
 				try
 				{
 					Assembly asm = LoadAssembly(assemblyFilename);
@@ -58,7 +58,7 @@ namespace HotBot.Core.Plugins
 			}
 		}
 
-		private void BootstrapPlugin(LoadablePlugin plugin)
+		private void BootstrapPlugin(Plugin plugin)
 		{
 			if (plugin is BootstrappedPlugin)
 			{
@@ -73,7 +73,7 @@ namespace HotBot.Core.Plugins
 			return assembly;
 		}
 
-		private LoadablePlugin CreatePluginFromAssembly(Assembly assembly)
+		private Plugin CreatePluginFromAssembly(Assembly assembly)
 		{
 			AssemblyPluginAttribute attr = assembly.GetCustomAttribute<AssemblyPluginAttribute>();
 			if (attr == null)
@@ -81,7 +81,7 @@ namespace HotBot.Core.Plugins
 				throw new ArgumentException($"Assembly '{assembly.FullName}' doesn't have a PluginAssemblyAttribute", "assembly");
 			}
 			DependencyContainer.RegisterType(attr.PluginClass, new ContainerControlledLifetimeManager());
-			return (LoadablePlugin)DependencyContainer.Resolve(attr.PluginClass);
+			return (Plugin)DependencyContainer.Resolve(attr.PluginClass);
 		}
 
 		private IEnumerable<string> FindPluginAssemblyFilenames()

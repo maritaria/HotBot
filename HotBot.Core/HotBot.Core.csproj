@@ -114,7 +114,7 @@
     <Compile Include="Commands\SimpleCommandHandler.cs" />
     <Compile Include="DataStore.cs" />
     <Compile Include="Plugins\DependencyType.cs" />
-    <Compile Include="Plugins\LoadablePlugin.cs" />
+    <Compile Include="Plugins\Plugin.cs" />
     <Compile Include="Plugins\Dependency.cs" />
     <Compile Include="Plugins\PluginDescription.cs" />
     <Compile Include="Plugins\PluginManager.cs" />

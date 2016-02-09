@@ -16,6 +16,6 @@ namespace HotBot.Core.Plugins
 		/// Loads all plugins from the plugin directory.
 		/// Yield returns the plugins that are successfully loaded.
 		/// </summary>
-		IEnumerable<LoadablePlugin> LoadPlugins();
+		IEnumerable<Plugin> LoadPlugins();
 	}
 }

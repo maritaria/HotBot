@@ -5,7 +5,7 @@ using System.Timers;
 using HotBot.Core;
 using HotBot.Core.Irc;
 
-namespace HotBot.Plugin.Lottery
+namespace HotBot.Plugins.Lottery
 {
 	public sealed class Lottery
 	{

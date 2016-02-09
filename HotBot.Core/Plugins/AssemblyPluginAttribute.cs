@@ -8,7 +8,7 @@ namespace HotBot.Core.Plugins
 {
 	/// <summary>
 	/// Attribute attached to an assembly to indicate the main plugin type.
-	/// The type being indicated must implement <see cref="HotBot.Core.Plugins.LoadablePlugin"/>.
+	/// The type being indicated must implement <see cref="HotBot.Core.Plugins.Plugin"/>.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
 	public sealed class AssemblyPluginAttribute : Attribute
@@ -33,9 +33,9 @@ namespace HotBot.Core.Plugins
 			{
 				throw new ArgumentException("Type cannot be an array", "pluginClass");
 			}
-			if (!pluginClass.GetInterfaces().Contains(typeof(LoadablePlugin)))
+			if (!pluginClass.GetInterfaces().Contains(typeof(Plugin)))
 			{
-				throw new ArgumentException($"Type does not implement {typeof(LoadablePlugin).FullName} interface");
+				throw new ArgumentException($"Type does not implement {typeof(Plugin).FullName} interface");
 			}
 			PluginClass = pluginClass;
 		}

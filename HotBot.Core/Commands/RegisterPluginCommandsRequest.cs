@@ -9,9 +9,9 @@ namespace HotBot.Core.Commands
 {
 	public sealed class RegisterPluginCommandsRequest
 	{
-		public LoadablePlugin Plugin { get; }
+		public Plugin Plugin { get; }
 
-		public RegisterPluginCommandsRequest(LoadablePlugin plugin)
+		public RegisterPluginCommandsRequest(Plugin plugin)
 		{
 			if (plugin == null)
 			{

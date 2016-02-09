@@ -83,9 +83,9 @@
       <Project>{afd7d526-9449-4ec9-834b-a2e1dbfe00f3}</Project>
       <Name>HotBot.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HotBot.Plugin.Lottery\HotBot.Plugin.Lottery.csproj">
+    <ProjectReference Include="..\HotBot.Plugin.Lottery\HotBot.Plugins.Lottery.csproj">
       <Project>{53f07df6-6860-480f-a8ef-778f62d7aca4}</Project>
-      <Name>HotBot.Plugin.Lottery</Name>
+      <Name>HotBot.Plugins.Lottery</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

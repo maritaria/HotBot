@@ -6,7 +6,7 @@ using Microsoft.Practices.Unity;
 using System;
 using System.Linq;
 
-namespace HotBot.Plugin.Lottery
+namespace HotBot.Plugins.Lottery
 {
 	//TODO: public static bootstrapper class, maybe something with attributes again
 	public sealed class LotteryPlugin : BootstrappedPlugin
@@ -18,11 +18,11 @@ namespace HotBot.Plugin.Lottery
 		public IUnityContainer DependencyContainer { get; }
 		public Lottery CurrentLottery { get; private set; }
 
-		public LotteryPlugin(PluginManager manager, MessageBus bus, CommandRedirecter commandRedirecter, IUnityContainer container)
+		public LotteryPlugin(PluginManager pluginManager, MessageBus bus, CommandRedirecter commandRedirecter, IUnityContainer container)
 		{
-			if (manager == null)
+			if (pluginManager == null)
 			{
-				throw new ArgumentNullException("manager");
+				throw new ArgumentNullException("pluginManager");
 			}
 			if (bus == null)
 			{
@@ -36,7 +36,7 @@ namespace HotBot.Plugin.Lottery
 			{
 				throw new ArgumentNullException("container");
 			}
-			Manager = manager;
+			Manager = pluginManager;
 			Bus = bus;
 			Description = new PluginDescription("Lottery", "Hosts lotteries and rewards money to winners");
 			Redirecter = commandRedirecter;

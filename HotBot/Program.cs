@@ -2,7 +2,7 @@
 using HotBot.Core.Commands;
 using HotBot.Core.Irc;
 using HotBot.Core.Plugins;
-using HotBot.Plugin.Lottery;
+using HotBot.Plugins.Lottery;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using System;

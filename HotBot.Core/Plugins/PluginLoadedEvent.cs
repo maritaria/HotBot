@@ -8,9 +8,9 @@ namespace HotBot.Core.Plugins
 {
 	public sealed class PluginLoadedEvent
 	{
-		public LoadablePlugin Plugin { get; }
+		public Plugin Plugin { get; }
 
-		public PluginLoadedEvent(LoadablePlugin plugin)
+		public PluginLoadedEvent(Plugin plugin)
 		{
 			if (plugin == null)
 			{

@@ -11,9 +11,9 @@ namespace HotBot.Core.Plugins
 		/// <summary>
 		/// The plugin that has loaded
 		/// </summary>
-		public LoadablePlugin Plugin { get; }
+		public Plugin Plugin { get; }
 
-		public PluginLoadEvent(LoadablePlugin plugin)
+		public PluginLoadEvent(Plugin plugin)
 		{
 			if (plugin == null)
 			{

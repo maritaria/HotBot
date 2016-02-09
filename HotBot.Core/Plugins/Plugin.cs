@@ -7,7 +7,7 @@ namespace HotBot.Core.Plugins
 	/// <summary>
 	/// Defines a plugin for HotBot which can be loaded and unloaded at will.
 	/// </summary>
-	public interface LoadablePlugin
+	public interface Plugin
 	{
 		/// <summary>
 		/// Gets the manager controlling the plugin
