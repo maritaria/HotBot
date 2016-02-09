@@ -43,12 +43,12 @@ namespace HotBot.Core.Plugins
 				}
 				catch (PluginLoadException ex)
 				{
-					Bus.Publish(ex);
+					Bus.PublishSpecific(ex);
 					plugin = null;
 				}
 				catch (Exception ex)
 				{
-					Bus.Publish(new PluginLoadException(assemblyFilename, ex.Message, ex));
+					Bus.PublishSpecific(new PluginLoadException(assemblyFilename, ex.Message, ex));
 					plugin = null;
 				}
 				if (plugin != null)

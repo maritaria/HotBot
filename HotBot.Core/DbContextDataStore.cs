@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace HotBot.Core
 {
-	public class DbContextDataStore : DbContext, DataStore, MessageHandler<SaveChangesNotificationArgs>
+	public class DbContextDataStore : DbContext, DataStore
 	{
 		public MessageBus Bus { get; }
 
@@ -35,7 +35,8 @@ namespace HotBot.Core
 			Database.Connection.Open();
 		}
 
-		void MessageHandler<SaveChangesNotificationArgs>.HandleMessage(SaveChangesNotificationArgs message)
+		[Subscribe]
+		public void OnSaveDatabaseChanges(SaveDatabaseChangesRequest message)
 		{
 			SaveChanges();
 		}

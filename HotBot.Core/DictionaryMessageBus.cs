@@ -1,76 +1,119 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace HotBot.Core
 {
 	public sealed class DictionaryMessageBus : MessageBus
 	{
-		private Dictionary<Type, HashSet<object>> _subscribers = new Dictionary<Type, HashSet<object>>();
+		//private Dictionary<Type, HashSet<object>> _subscribers = new Dictionary<Type, HashSet<object>>();
+		private Dictionary<Type, Dictionary<object, MethodInfo>> _subscribers = new Dictionary<Type, Dictionary<object, MethodInfo>>();
 
 		public DictionaryMessageBus()
 		{
 		}
-
-		public void Subscribe<TEvent>(MessageHandler<TEvent> handler)
-		{
-			if (handler == null)
-			{
-				throw new ArgumentNullException("handler");
-			}
-			if (!_subscribers.ContainsKey(typeof(TEvent)))
-			{
-				_subscribers.Add(typeof(TEvent), new HashSet<object>());
-			}
-			HashSet<object> subs = _subscribers[typeof(TEvent)];
-			subs.Add(handler);
-		}
-
-		public bool IsSubscribed<TEvent>(MessageHandler<TEvent> handler)
-		{
-			if (handler == null)
-			{
-				throw new ArgumentNullException("handler");
-			}
-			if (!_subscribers.ContainsKey(typeof(TEvent)))
-			{
-				return false;
-			}
-			HashSet<object> subs = _subscribers[typeof(TEvent)];
-			return subs.Contains(handler);
-		}
-
-		public void Unsubscribe<TEvent>(MessageHandler<TEvent> handler)
-		{
-			if (handler == null)
-			{
-				throw new ArgumentNullException("handler");
-			}
-			if (_subscribers.ContainsKey(typeof(TEvent)))
-			{
-				HashSet<object> subs = _subscribers[typeof(TEvent)];
-				subs.Remove(handler);
-			}
-		}
-
-		public void Publish<TEvent>(TEvent data)
+		
+		public void Publish(object data)
 		{
 			if (data == null)
 			{
 				throw new ArgumentNullException("data");
 			}
-			if (HasSubscribers<TEvent>())
+			Type publishType = GetPublishingType(data.GetType());
+			PublishSpecific(publishType, data);
+		}
+
+		private Type GetPublishingType(Type dataType)
+		{
+			var attr = dataType.GetCustomAttribute<DefaultPublishTypeAttribute>();
+			if (attr != null)
 			{
-				foreach (MessageHandler<TEvent> h in _subscribers[typeof(TEvent)])
+				return attr.PublishType;
+			}
+			return dataType;
+		}
+
+		public void PublishSpecific(Type dataType, object instance)
+		{
+			if (_subscribers.ContainsKey(dataType))
+			{
+				var handlers = _subscribers[dataType];
+				foreach(KeyValuePair<object, MethodInfo> handler in handlers)
 				{
-					h.HandleMessage(data);
+					handler.Value.Invoke(handler.Key, new object[] { instance });
 				}
 			}
 		}
 
-		private bool HasSubscribers<TEvent>()
+		public void Subscribe(object handler)
 		{
-			return _subscribers.ContainsKey(typeof(TEvent));
+			if (handler == null)
+			{
+				throw new ArgumentException("handler");
+			}
+			foreach (MethodInfo handlerMethod in handler.GetType().GetMethods())
+			{
+				Subscribe(handler, handlerMethod);
+			}
+		}
+		
+		private void Subscribe(object handler, MethodInfo handlerMethod)
+		{
+			foreach (SubscribeAttribute attr in handlerMethod.GetCustomAttributes<SubscribeAttribute>())
+			{
+				Subscribe(handler, handlerMethod, attr);
+			}
+		}
+		
+		private void Subscribe(object handler, MethodInfo handlerMethod, SubscribeAttribute attr)
+		{
+			Type publishedType = GetPublishingType(handlerMethod, attr);
+			var subs = EnsureSubscribers(publishedType);
+			subs.Add(handler, handlerMethod);
+		}
+
+		private Type GetPublishingType(MethodInfo handlerMethod, SubscribeAttribute attr)
+		{
+			if (attr.PublishedType != null)
+			{
+				return attr.PublishedType;
+			}
+			else
+			{
+				var paramInfo = handlerMethod.GetParameters();
+				if (paramInfo.Length == 0)
+				{
+					throw new ArgumentException("Method cannot have zero parameters", "handlerMethod");
+				}
+				return paramInfo[0].ParameterType;
+			}
+		}
+
+		private Dictionary<object, MethodInfo> EnsureSubscribers(Type publishedType)
+		{
+			if (!_subscribers.ContainsKey(publishedType))
+			{
+				_subscribers.Add(publishedType, new Dictionary<object, MethodInfo>());
+			}
+			return _subscribers[publishedType];
+		}
+
+		public void Unsubscribe(object handler)
+		{
+			foreach(Dictionary<object, MethodInfo> subs in _subscribers.Values)
+			{
+				subs.Remove(handler);
+			}
+		}
+
+		public bool IsSubscribed(object handler)
+		{
+			if (handler == null)
+			{
+				throw new ArgumentNullException("handler");
+			}
+			return _subscribers.Any(kv => kv.Value.ContainsKey(handler));
 		}
 	}
 }

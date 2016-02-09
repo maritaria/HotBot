@@ -6,8 +6,9 @@ using HotBot.Core.Irc;
 
 namespace HotBot.Plugin.Lottery
 {
-	public class LotteryController : MessageHandler<LotteryWinnerEvent>
+	public class LotteryController
 	{
+		//TODO: put this in the LotteryPlugin class
 		public MessageBus Bus { get; }
 		public Lottery CurrentLottery { get; private set; }
 		public IUnityContainer UnityContainer { get; }
@@ -51,13 +52,14 @@ namespace HotBot.Plugin.Lottery
 			return UnityContainer.Resolve<Lottery>();
 		}
 
-		void MessageHandler<LotteryWinnerEvent>.HandleMessage(LotteryWinnerEvent message)
+		[Subscribe]
+		public void OnLotteryWinner(LotteryWinnerEvent message)
 		{
 			CurrentLottery = null;
-			Bus.Publish(new ChatTransmitRequest(message.Lottery.Channel, $"Lottery finished, the winner is {message.Lottery.Winner.Name}!"));
+			Bus.PublishSpecific(new ChatTransmitRequest(message.Lottery.Channel, $"Lottery finished, the winner is {message.Lottery.Winner.Name}!"));
 			message.Lottery.Winner.Money += message.Lottery.Pot;
-			Bus.Publish(new ChatTransmitRequest(message.Lottery.Channel, $"{User.HandlePrefix}{message.Lottery.Winner.Name} Congrats, you have won {message.Lottery.Pot} blorps"));
-			Bus.Publish(new SaveChangesNotificationArgs());
+			Bus.PublishSpecific(new ChatTransmitRequest(message.Lottery.Channel, $"{User.HandlePrefix}{message.Lottery.Winner.Name} Congrats, you have won {message.Lottery.Pot} blorps"));
+			Bus.PublishSpecific(new SaveDatabaseChangesRequest());
 		}
 	}
 }

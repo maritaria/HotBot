@@ -5,7 +5,8 @@ using HotBot.Core.Util;
 
 namespace HotBot.Core.Irc
 {
-	public class PrivateMessageDecoder : MessageHandler<IrcReceivedEvent>
+	[Obsolete("Finish IrcProtocolDecoder")]
+	public class PrivateMessageDecoder
 	{
 		public DataStore DataStore { get; }
 		public MessageBus Bus { get; }
@@ -25,7 +26,8 @@ namespace HotBot.Core.Irc
 			bus.Subscribe(this);
 		}
 
-		public void HandleMessage(IrcReceivedEvent message)
+		[Subscribe]
+		public void OnIrcReceived(IrcReceivedEvent message)
 		{
 			ChatReceivedEvent enhancedMessage = HandleMessage(message.Message);
 

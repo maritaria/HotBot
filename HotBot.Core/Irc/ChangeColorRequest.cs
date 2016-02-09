@@ -4,7 +4,7 @@ using System.Linq;
 namespace HotBot.Core.Irc
 {
 	//TODO: Unit tests for new classes
-	//TODO: Attribute: [DefaultPublishType(typeof(IrcTransmitRequest))]
+	[DefaultPublishType(typeof(IrcTransmitRequest))]
 	public sealed class ChangeColorRequest : ChatTransmitRequest
 	{
 		private ChatColor _color;

@@ -9,13 +9,7 @@ using System.Threading;
 namespace HotBot.Core.Irc
 {
 	//TODO: create smaller classes that handle these messages? or keep growing the irc client class which will result in mammoth classes.
-	public class IrcClient : IDisposable,
-		MessageHandler<IrcTransmitRequest>,
-		MessageHandler<ChatTransmitRequest>,
-		MessageHandler<ChannelJoinRequest>,
-		MessageHandler<ChannelNotificationRequest>,
-		MessageHandler<RegisterCapabilityRequest>,
-		MessageHandler<ChangeColorRequest>
+	public class IrcClient : IDisposable
 	{
 		//https://github.com/SirCmpwn/ChatSharp
 		private object _tcpClientLock = new object();
@@ -56,12 +50,7 @@ namespace HotBot.Core.Irc
 			JoinedChannels = new ReadOnlyDictionary<string, Channel>(_joinedChannels);
 			Bus = bus;
 			//TODO: Generalize this, maybe something with attributed methods YES MAKE THIS HAPPEN
-			Bus.Subscribe<IrcTransmitRequest>(this);
-			Bus.Subscribe<ChatTransmitRequest>(this);
-			Bus.Subscribe<ChannelJoinRequest>(this);
-			Bus.Subscribe<ChannelNotificationRequest>(this);
-			Bus.Subscribe<RegisterCapabilityRequest>(this);
-			Bus.Subscribe<ChangeColorRequest>(this);
+			Bus.Subscribe(this);
 			DataStore = dataStore;
 			Config = config;
 			Connect();
@@ -186,21 +175,21 @@ namespace HotBot.Core.Irc
 				string message = readTask.Result;
 				if (message != null)
 				{
-					Bus.Publish(new IrcReceivedEvent(message));
+					Bus.PublishSpecific(new IrcReceivedEvent(message));
 				}
 				else
 				{
 					Console.WriteLine("> Connection lost");
-					Bus.Publish(new ConnectionLostEvent(this));
+					Bus.PublishSpecific(new ConnectionLostEvent(this));
 					break;
 				}
 			}
 		}
-		//TODO: [Subscribe]
-		//TODO: [Subscribe(typeof(IrcTransmitRequest))]
+
+		[Subscribe]
 		public void OnIrcTransmitRequest(IrcTransmitRequest request)
 		{
-
+			SendCommand(request.IrcCommand);
 		}
 
 		#region IDisposable Support
@@ -251,59 +240,5 @@ namespace HotBot.Core.Irc
 		}
 
 		#endregion IDisposable Support
-
-		void MessageHandler<IrcTransmitRequest>.HandleMessage(IrcTransmitRequest message)
-		{
-			if (message == null)
-			{
-				throw new ArgumentNullException("message");
-			}
-			SendCommand(message.IrcCommand);
-		}
-
-		void MessageHandler<ChatTransmitRequest>.HandleMessage(ChatTransmitRequest message)
-		{
-			if (message == null)
-			{
-				throw new ArgumentNullException("message");
-			}
-			(this as MessageHandler<IrcTransmitRequest>).HandleMessage(message);
-		}
-
-		void MessageHandler<ChannelJoinRequest>.HandleMessage(ChannelJoinRequest message)
-		{
-			if (message == null)
-			{
-				throw new ArgumentNullException("message");
-			}
-			JoinChannel(message.Channel);
-		}
-
-		void MessageHandler<ChannelNotificationRequest>.HandleMessage(ChannelNotificationRequest message)
-		{
-			if (message == null)
-			{
-				throw new ArgumentNullException("message");
-			}
-			(this as MessageHandler<IrcTransmitRequest>).HandleMessage(message);
-		}
-
-		void MessageHandler<RegisterCapabilityRequest>.HandleMessage(RegisterCapabilityRequest message)
-		{
-			if (message == null)
-			{
-				throw new ArgumentNullException("message");
-			}
-			(this as MessageHandler<IrcTransmitRequest>).HandleMessage(message);
-		}
-
-		void MessageHandler<ChangeColorRequest>.HandleMessage(ChangeColorRequest message)
-		{
-			if (message == null)
-			{
-				throw new ArgumentNullException("message");
-			}
-			(this as MessageHandler<IrcTransmitRequest>).HandleMessage(message);
-		}
 	}
 }

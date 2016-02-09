@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace HotBot.Core.Irc
 {
+	[DefaultPublishType(typeof(IrcTransmitRequest))]
 	public class WhisperKnownUserRequest : WhisperUserRequest
 	{
 		private User _targetUser;

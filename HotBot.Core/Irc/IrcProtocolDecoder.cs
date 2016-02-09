@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc
 {
-	public sealed class IrcProtocolDecoder : MessageHandler<IrcReceivedEvent>
+	public sealed class IrcProtocolDecoder
 	{
 		public const char IrcMessageStart = ':';
 
@@ -23,8 +23,8 @@ namespace HotBot.Core.Irc
 			Bus.Subscribe(this);
 		}
 
-
-		public void HandleIrcMessage(string ircMessage)
+		[Subscribe]
+		public void OnIrcReceived(IrcReceivedEvent ircMessage)
 		{
 			//:USERNAME!USERNAME@USERNAME.tmi.twitch.tv PRIVMSG #CHANNEL :MESSAGE
 
@@ -39,18 +39,13 @@ namespace HotBot.Core.Irc
 
 			//https://github.com/justintv/Twitch-API/blob/master/IRC.md
 
-			string[] parts = ircMessage.SplitOnce(" ");
+			string[] parts = ircMessage.Message.SplitOnce(" ");
 			HostMask hostmask = new HostMask(parts[0]);
 			string remainingText = parts[1];
 
 			parts = remainingText.SplitOnce(" ");
 			string command = parts[0];
 			string args = parts[1];
-		}
-
-		void MessageHandler<IrcReceivedEvent>.HandleMessage(IrcReceivedEvent message)
-		{
-			HandleIrcMessage(message.Message);
 		}
 	}
 }

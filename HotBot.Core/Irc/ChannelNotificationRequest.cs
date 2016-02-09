@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc
 {
+	[DefaultPublishType(typeof(IrcTransmitRequest))]
 	public class ChannelNotificationRequest : ChatTransmitRequest
 	{
 		public const string NotificationCommand = @"/me";

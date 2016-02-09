@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace HotBot.Core.Irc
 {
+	[DefaultPublishType(typeof(IrcTransmitRequest))]
 	public sealed class RegisterCapabilityRequest : IrcTransmitRequest
 	{
 		public static readonly string TwitchMembership = @"twitch.tv/membership";

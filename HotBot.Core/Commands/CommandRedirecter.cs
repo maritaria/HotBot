@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace HotBot.Core.Commands
 {
-	public class CommandRedirecter : MessageHandler<CommandEvent>, MessageHandler<RegisterPluginCommandsRequest>
+	public class CommandRedirecter
 	{
 		private Dictionary<string, HashSet<CommandListener>> _listeners = new Dictionary<string, HashSet<CommandListener>>();
 		private object _listenersLock = new object();
@@ -20,8 +20,7 @@ namespace HotBot.Core.Commands
 				throw new ArgumentNullException("bus");
 			}
 			Bus = bus;
-			Bus.Subscribe<CommandEvent>(this);
-			Bus.Subscribe<RegisterPluginCommandsRequest>(this);
+			Bus.Subscribe(this);
 		}
 
 		public void AddListener(string commandName, CommandListener listener)
@@ -83,7 +82,8 @@ namespace HotBot.Core.Commands
 			}
 		}
 
-		public void ExecuteCommand(CommandEvent command)
+		[Subscribe]
+		public void OnCommand(CommandEvent command)
 		{
 			if (command == null)
 			{
@@ -108,12 +108,8 @@ namespace HotBot.Core.Commands
 			}
 		}
 
-		void MessageHandler<CommandEvent>.HandleMessage(CommandEvent message)
-		{
-			ExecuteCommand(message);
-		}
-
-		void MessageHandler<RegisterPluginCommandsRequest>.HandleMessage(RegisterPluginCommandsRequest message)
+		[Subscribe]
+		public void OnRegisterPluginCommands(RegisterPluginCommandsRequest message)
 		{
 			if (message == null)
 			{

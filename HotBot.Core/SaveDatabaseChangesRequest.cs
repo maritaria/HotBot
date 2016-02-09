@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotBot.Core
 {
-	public sealed class SaveChangesNotificationArgs
+	public sealed class SaveDatabaseChangesRequest
 	{
 	}
 }

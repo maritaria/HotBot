@@ -28,7 +28,7 @@ namespace HotBot.Plugin.Lottery
 			private set
 			{
 				_winner = value;
-				Bus.Publish(new LotteryWinnerEvent(this));
+				Bus.PublishSpecific(new LotteryWinnerEvent(this));
 			}
 		}
 
@@ -115,7 +115,7 @@ namespace HotBot.Plugin.Lottery
 		{
 			if (Participants.Count == 0)
 			{
-				Bus.Publish(new ChatTransmitRequest(Channel, $"The lottery is over, but nobody participated :("));
+				Bus.PublishSpecific(new ChatTransmitRequest(Channel, $"The lottery is over, but nobody participated :("));
 			}
 			else
 			{

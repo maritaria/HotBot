@@ -42,11 +42,11 @@ namespace HotBot
 
 		private void JoinPrimaryChannel()
 		{
-			Bus.Publish(new ChannelJoinRequest(PrimaryChannel));
-			Bus.Publish(new ChannelNotificationRequest(PrimaryChannel, "is now online"));
-			Bus.Publish(new RegisterCapabilityRequest(RegisterCapabilityRequest.TwitchMembership));
-			Bus.Publish(new RegisterCapabilityRequest(RegisterCapabilityRequest.ExtendedCommands));
-			Bus.Publish(new ChangeColorRequest(PrimaryChannel, ChangeColorRequest.ChatColor.DodgerBlue));
+			Bus.PublishSpecific(new ChannelJoinRequest(PrimaryChannel));
+			Bus.PublishSpecific(new ChannelNotificationRequest(PrimaryChannel, "is now online"));
+			Bus.PublishSpecific(new RegisterCapabilityRequest(RegisterCapabilityRequest.TwitchMembership));
+			Bus.PublishSpecific(new RegisterCapabilityRequest(RegisterCapabilityRequest.ExtendedCommands));
+			Bus.PublishSpecific(new ChangeColorRequest(PrimaryChannel, ChangeColorRequest.ChatColor.DodgerBlue));
 		}
 	}
 }

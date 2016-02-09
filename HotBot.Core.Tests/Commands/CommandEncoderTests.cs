@@ -20,7 +20,7 @@ namespace HotBot.Core.Commands.Tests
 			TestUtils.AssertArgumentException(() => new ChatCommandScanner(bus.Object, null));
 			//Valid calls
 			var encoder = new ChatCommandScanner(bus.Object, config.Object);
-			bus.Verify(m => m.Subscribe<ChatReceivedEvent>(encoder), Times.Once(), "Not subscribed to IrcMessageEnhanced");
+			bus.Verify(m => m.Subscribe(encoder), Times.Once(), "Not subscribed to IrcMessageEnhanced");
 			Assert.AreEqual(bus.Object, encoder.Bus, "Bus property not correct");
 		}
 
@@ -40,7 +40,7 @@ namespace HotBot.Core.Commands.Tests
 
 			encoder.HandleMessage(message);
 
-			mockBus.Verify(b => b.Publish(It.Is<CommandEvent>(info =>
+			mockBus.Verify(b => b.PublishSpecific(It.Is<CommandEvent>(info =>
 				info.User == user.Object &&
 				info.Channel == channel.Object &&
 				info.CommandName == "command" &&
@@ -61,7 +61,7 @@ namespace HotBot.Core.Commands.Tests
 
 			encoder.HandleMessage(message);
 
-			bus.Verify(b => b.Publish(It.Is<CommandEvent>(info =>
+			bus.Verify(b => b.PublishSpecific(It.Is<CommandEvent>(info =>
 				info.User == user.Object &&
 				info.Channel == channel.Object &&
 				info.CommandName == "command" &&

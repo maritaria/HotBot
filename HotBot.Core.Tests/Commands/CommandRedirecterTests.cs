@@ -71,7 +71,7 @@ namespace HotBot.Core.Commands.Tests
 		{
 			var bus = new Mock<MessageBus>();
 			var redirecter = new CommandRedirecter(bus.Object);
-			TestUtils.AssertArgumentException(() => redirecter.ExecuteCommand(null));
+			TestUtils.AssertArgumentException(() => redirecter.OnCommand(null));
 		}
 
 		[TestMethod()]
@@ -82,7 +82,7 @@ namespace HotBot.Core.Commands.Tests
 			var user = new Mock<User>();
 			var channel = new Mock<Channel>("test");
 			var commandInfo = new CommandEvent(channel.Object, user.Object, "command", "args");
-			redirecter.ExecuteCommand(commandInfo);
+			redirecter.OnCommand(commandInfo);
 		}
 
 		[TestMethod()]
@@ -96,7 +96,7 @@ namespace HotBot.Core.Commands.Tests
 			var listener = new Mock<CommandListener>();
 
 			redirecter.AddListener("command", listener.Object);
-			redirecter.ExecuteCommand(commandInfo);
+			redirecter.OnCommand(commandInfo);
 
 			listener.Verify(l => l.OnCommand(commandInfo), Times.Once());
 		}
@@ -113,7 +113,7 @@ namespace HotBot.Core.Commands.Tests
 
 			redirecter.AddListener("command", listener.Object);
 			redirecter.RemoveListener("command", listener.Object);
-			redirecter.ExecuteCommand(commandInfo);
+			redirecter.OnCommand(commandInfo);
 
 			listener.Verify(l => l.OnCommand(commandInfo), Times.Never());
 		}
@@ -123,7 +123,7 @@ namespace HotBot.Core.Commands.Tests
 		{
 			var bus = new Mock<MessageBus>();
 			var redirecter = new CommandRedirecter(bus.Object);
-			TestUtils.AssertArgumentException(() => (redirecter as MessageHandler<CommandEvent>).HandleMessage(null));
+			TestUtils.AssertArgumentException(() => redirecter.OnCommand(null));
 		}
 
 		[TestMethod()]
@@ -137,7 +137,7 @@ namespace HotBot.Core.Commands.Tests
 			var listener = new Mock<CommandListener>();
 
 			redirecter.AddListener("command", listener.Object);
-			(redirecter as MessageHandler<CommandEvent>).HandleMessage(commandInfo);
+			redirecter.OnCommand(commandInfo);
 
 			listener.Verify(l => l.OnCommand(commandInfo), Times.Once());
 		}

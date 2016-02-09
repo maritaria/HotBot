@@ -3,7 +3,8 @@ using System.Linq;
 
 namespace HotBot.Core.Irc
 {
-	//TODO: Support receiving whispers (if possible)
+	//TODO: Support receiving whispers https://www.youtube.com/watch?v=IUdL9mtr53E&ab_channel=OldAccount
+	[DefaultPublishType(typeof(IrcTransmitRequest))]
 	public class WhisperUserRequest : ChatTransmitRequest
 	{
 		public const string WhisperCommand = "/w";

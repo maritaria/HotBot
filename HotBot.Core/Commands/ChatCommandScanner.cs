@@ -6,7 +6,7 @@ using HotBot.Core.Util;
 
 namespace HotBot.Core.Commands
 {
-	public class ChatCommandScanner : MessageHandler<ChatReceivedEvent>
+	public class ChatCommandScanner
 	{
 		public MessageBus Bus { get; }
 		public CommandConfig Config { get; }
@@ -26,6 +26,7 @@ namespace HotBot.Core.Commands
 			Config = config;
 		}
 
+		[Subscribe]
 		public void HandleMessage(ChatReceivedEvent message)
 		{
 			if (message == null)
@@ -35,7 +36,7 @@ namespace HotBot.Core.Commands
 			if (ShouldDecode(message))
 			{
 				var commandInfo = Decode(message);
-				Bus.Publish(commandInfo);
+				Bus.PublishSpecific(commandInfo);
 			}
 		}
 

@@ -1,15 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc
 {
-	//TODO: Add support for reading the response of the IRC server and determine whether the channel was joined succesfully
-	/// <summary>
-	/// Publishable request that IrcClients are listening for.
-	/// Causes the IrcClients that receive the request to join the specified channel.
-	/// </summary>
+	//TODO: Create IrcChannelCommandRequest for all request involving a channel
 	[DefaultPublishType(typeof(IrcTransmitRequest))]
-	public sealed class ChannelJoinRequest : IrcTransmitRequest
+	public sealed class ChannelLeaveRequest : IrcTransmitRequest
 	{
 		/// <summary>
 		/// The channel to join on the IRC server.
@@ -18,7 +17,7 @@ namespace HotBot.Core.Irc
 
 		public override string IrcCommand => $"JOIN {Channel.Name}";
 
-		public ChannelJoinRequest(Channel channel)
+		public ChannelLeaveRequest(Channel channel)
 		{
 			if (channel == null)
 			{

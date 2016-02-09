@@ -78,13 +78,16 @@
     <Compile Include="Commands\RegisterPluginCommandsRequest.cs" />
     <Compile Include="Commands\UnregisterPluginCommandsRequest.cs" />
     <Compile Include="DbContextDataStore.cs" />
+    <Compile Include="DefaultPublishTypeAttribute.cs" />
     <Compile Include="Irc\ChangeColorRequest.cs" />
+    <Compile Include="Irc\ChannelLeaveRequest.cs" />
     <Compile Include="Irc\HostMask.cs" />
     <Compile Include="Irc\ChannelJoinRequest.cs" />
     <Compile Include="Irc\ChannelNotificationRequest.cs" />
     <Compile Include="Irc\ConnectionLostEvent.cs" />
     <Compile Include="Irc\RegisterCapabilityRequest.cs" />
-    <Compile Include="Irc\WhisperDecoder.cs" />
+    <Compile Include="MessageBusExtensions.cs" />
+    <Compile Include="SubscribeAttribute.cs" />
     <Compile Include="Plugins\AssemblyLoadedEvent.cs" />
     <Compile Include="Plugins\AssemblyPluginAttribute.cs" />
     <Compile Include="Plugins\BootstrappedPlugin.cs" />
@@ -116,7 +119,7 @@
     <Compile Include="Plugins\PluginDescription.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Plugins\ReflectionPluginManager.cs" />
-    <Compile Include="SaveChangesNotificationArgs.cs" />
+    <Compile Include="SaveDatabaseChangesRequest.cs" />
     <Compile Include="Irc\IrcLogger.cs" />
     <Compile Include="Irc\ChatReceivedEvent.cs" />
     <Compile Include="Irc\IrcClient.cs" />
