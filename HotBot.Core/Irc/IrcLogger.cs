@@ -1,21 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc
 {
-	public class IrcLogger : MessageHandler<IrcReceivedEvent>
+	public class IrcLogger : MessageHandler<IrcReceivedEvent>, MessageHandler<IrcTransmitRequest>
 	{
 		public IrcLogger(MessageBus bus)
 		{
-			bus.Subscribe(this);
+			bus.Subscribe<IrcReceivedEvent>(this);
+			bus.Subscribe<IrcTransmitRequest>(this);
 		}
-		
+
 		public void HandleMessage(IrcReceivedEvent ircMessage)
 		{
-			Console.WriteLine(ircMessage.Message);
+			Console.WriteLine($"> {ircMessage.Message}");
+		}
+
+		public void HandleMessage(IrcTransmitRequest ircMessage)
+		{
+			Console.WriteLine($"< {ircMessage.IrcCommand}");
 		}
 	}
 }
