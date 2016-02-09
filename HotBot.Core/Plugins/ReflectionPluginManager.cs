@@ -96,7 +96,10 @@ namespace HotBot.Core.Plugins
 
 		public void LoadAll()
 		{
-			Loader.LoadPlugins();
+			foreach(LoadablePlugin plugin in Loader.LoadPlugins())
+			{
+				AddPlugin(plugin);
+			}
 			foreach (LoadablePlugin pl in _typedPlugins.Values)
 			{
 				try
