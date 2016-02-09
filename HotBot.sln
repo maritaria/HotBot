@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotBot.Core.Tests", "HotBot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotBot", "HotBot\HotBot.csproj", "{B77B54F8-F5C6-4C2D-8911-D26CFCF3B588}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotBot.Plugins.Lottery", "HotBot.Plugin.Lottery\HotBot.Plugins.Lottery.csproj", "{53F07DF6-6860-480F-A8EF-778F62D7ACA4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotBot.Plugins.Lottery", "HotBot.Plugins.Lottery\HotBot.Plugins.Lottery.csproj", "{53F07DF6-6860-480F-A8EF-778F62D7ACA4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotBot.Testing", "HotBot.Testing\HotBot.Testing.csproj", "{7EE69935-9D44-4F7C-B9E2-D83B6D2801D3}"
 EndProject

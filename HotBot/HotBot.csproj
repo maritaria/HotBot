@@ -83,7 +83,7 @@
       <Project>{afd7d526-9449-4ec9-834b-a2e1dbfe00f3}</Project>
       <Name>HotBot.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HotBot.Plugin.Lottery\HotBot.Plugins.Lottery.csproj">
+    <ProjectReference Include="..\HotBot.Plugins.Lottery\HotBot.Plugins.Lottery.csproj">
       <Project>{53f07df6-6860-480f-a8ef-778f62d7aca4}</Project>
       <Name>HotBot.Plugins.Lottery</Name>
     </ProjectReference>
@@ -96,7 +96,7 @@
   -->
   <Target Name="AfterBuild">
     <ItemGroup>
-      <PluginFiles Include="$(OutputPath)\$(SolutionName).Plugin.*" />
+      <PluginFiles Include="$(OutputPath)\$(SolutionName).Plugins.*" />
     </ItemGroup>
     <Move SourceFiles="@(PluginFiles)" DestinationFiles="@(PluginFiles->'$(OutputPath)\Plugins\%(Filename)%(Extension)')" />
   </Target>
