@@ -14,11 +14,14 @@ namespace HotBot.Core
 
 		static DbContextDataStore()
 		{
-			Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DbContextDataStore>());
+			var strategy = new DropCreateDatabaseIfModelChanges<DbContextDataStore>();
+			Database.SetInitializer(strategy);
 		}
 
 		public DbContextDataStore(MessageBus bus) : base()
 		{
+			//TODO: Do this in a different thread
+			Database.Initialize(false);
 			if (bus == null)
 			{
 				throw new ArgumentNullException("bus");
