@@ -90,32 +90,6 @@ namespace HotBot.Core.Irc
 			_writer = new StreamWriter(_stream);
 		}
 
-		[Obsolete("Use MessageBus.Publish(new ChatMessageEvent()) instead")]
-		public void SendMessage(string channelName, string message)
-		{
-			string command = string.Format(":{2}!{2}@{2}.tmi.twitch.tv PRIVMSG #{0} :{1}", channelName, message, Config.Username);
-			SendCommand(command);
-		}
-
-		[Obsolete("Use MessageBus.Publish(new ChatMessageEvent()) instead")]
-		public void SendMessage(string channelName, string format, params object[] args)
-		{
-			SendMessage(channelName, string.Format(format, args));
-		}
-
-		[Obsolete("Use MessageBus.Publish(new ChannelNotificationEvent()) instead")]
-		public void SendNotification(string channelName, string notification)
-		{
-			string command = string.Format(":{2}!{2}@{2}.tmi.twitch.tv PRIVMSG #{0} :{1}", channelName, "/me " + notification, Config.Username);
-			SendCommand(command);
-		}
-
-		[Obsolete("Use MessageBus.Publish(new ChannelNotificationEvent()) instead")]
-		public void SendNotification(string channelName, string format, params object[] args)
-		{
-			SendNotification(channelName, string.Format(format, args));
-		}
-
 		public Channel JoinChannel(string channelName)
 		{
 			Channel channel = GetChannel(channelName);
