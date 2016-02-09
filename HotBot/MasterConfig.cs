@@ -63,6 +63,7 @@ namespace HotBot
 
 		[DebuggerHidden]
 		[UserScopedSetting]
+		[DefaultSettingValue("!")]
 		public string PrefixesSerialized
 		{
 			get { return (string)this["PrefixesSerialized"]; }
