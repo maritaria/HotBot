@@ -106,7 +106,7 @@ namespace HotBot.Core.Plugins
 				{
 					pl.Load();//TODO: try-catch loading of plugins
 				}
-				catch (Exception ex)
+				catch
 				{
 					//TODO: throw new PluginException();
 				}
@@ -121,7 +121,7 @@ namespace HotBot.Core.Plugins
 				{
 					pl.Unload();//TODO: try-catch unloading of plugins
 				}
-				catch (Exception ex)
+				catch
 				{
 					//TODO: throw new PluginException();
 				}
