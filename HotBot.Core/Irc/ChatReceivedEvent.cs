@@ -7,7 +7,7 @@ using HotBot.Core;
 
 namespace HotBot.Core.Irc
 {
-	public class ChatReceivedEvent
+	public sealed class ChatReceivedEvent
 	{
 		public Channel Channel { get; }
 		public User User { get; }
