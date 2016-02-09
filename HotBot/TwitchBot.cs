@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
-using HotBot.Core;
-using HotBot.Core.Commands;
+﻿using HotBot.Core;
 using HotBot.Core.Irc;
-using System.Configuration;
 using HotBot.Core.Plugins;
+using System;
+using System.Linq;
 
 namespace HotBot
 {
@@ -41,11 +39,14 @@ namespace HotBot
 			JoinPrimaryChannel();
 			PluginManager.LoadAll();
 		}
-		
+
 		private void JoinPrimaryChannel()
 		{
 			Bus.Publish(new ChannelJoinRequest(PrimaryChannel));
 			Bus.Publish(new ChannelNotificationRequest(PrimaryChannel, "is now online"));
+			Bus.Publish(new RegisterCapabilityRequest(RegisterCapabilityRequest.TwitchMembership));
+			Bus.Publish(new RegisterCapabilityRequest(RegisterCapabilityRequest.ExtendedCommands));
+			Bus.Publish(new ChangeColorRequest(PrimaryChannel, ChangeColorRequest.ChatColor.DodgerBlue));
 		}
 	}
 }

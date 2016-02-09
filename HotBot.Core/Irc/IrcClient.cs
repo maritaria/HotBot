@@ -13,7 +13,9 @@ namespace HotBot.Core.Irc
 		MessageHandler<IrcTransmitRequest>,
 		MessageHandler<ChatTransmitRequest>,
 		MessageHandler<ChannelJoinRequest>,
-		MessageHandler<ChannelNotificationRequest>
+		MessageHandler<ChannelNotificationRequest>,
+		MessageHandler<RegisterCapabilityRequest>,
+		MessageHandler<ChangeColorRequest>
 	{
 		//https://github.com/SirCmpwn/ChatSharp
 		private object _tcpClientLock = new object();
@@ -53,11 +55,13 @@ namespace HotBot.Core.Irc
 			}
 			JoinedChannels = new ReadOnlyDictionary<string, Channel>(_joinedChannels);
 			Bus = bus;
-			//TODO: Generalize this, maybe something with attributed methods
+			//TODO: Generalize this, maybe something with attributed methods YES MAKE THIS HAPPEN
 			Bus.Subscribe<IrcTransmitRequest>(this);
 			Bus.Subscribe<ChatTransmitRequest>(this);
 			Bus.Subscribe<ChannelJoinRequest>(this);
 			Bus.Subscribe<ChannelNotificationRequest>(this);
+			Bus.Subscribe<RegisterCapabilityRequest>(this);
+			Bus.Subscribe<ChangeColorRequest>(this);
 			DataStore = dataStore;
 			Config = config;
 			Connect();
@@ -212,10 +216,17 @@ namespace HotBot.Core.Irc
 				}
 				else
 				{
+					Console.WriteLine("> Connection lost");
 					Bus.Publish(new ConnectionLostEvent(this));
 					break;
 				}
 			}
+		}
+		//TODO: [Subscribe]
+		//TODO: [Subscribe(typeof(IrcTransmitRequest))]
+		public void OnIrcTransmitRequest(IrcTransmitRequest request)
+		{
+
 		}
 
 		#region IDisposable Support
@@ -295,6 +306,24 @@ namespace HotBot.Core.Irc
 		}
 
 		void MessageHandler<ChannelNotificationRequest>.HandleMessage(ChannelNotificationRequest message)
+		{
+			if (message == null)
+			{
+				throw new ArgumentNullException("message");
+			}
+			(this as MessageHandler<IrcTransmitRequest>).HandleMessage(message);
+		}
+
+		void MessageHandler<RegisterCapabilityRequest>.HandleMessage(RegisterCapabilityRequest message)
+		{
+			if (message == null)
+			{
+				throw new ArgumentNullException("message");
+			}
+			(this as MessageHandler<IrcTransmitRequest>).HandleMessage(message);
+		}
+
+		void MessageHandler<ChangeColorRequest>.HandleMessage(ChangeColorRequest message)
 		{
 			if (message == null)
 			{

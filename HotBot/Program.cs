@@ -40,8 +40,9 @@ namespace HotBot
 		{
 			container.Resolve<PrivateMessageDecoder>();
 			container.Resolve<IrcLogger>();
-			container.Resolve<CommandEncoder>();
+			container.Resolve<ChatCommandScanner>();
 			container.Resolve<PluginManager>();
+			container.Resolve<IrcProtocolDecoder>();
 			container.Resolve<TwitchBot>();
 		}
 	}

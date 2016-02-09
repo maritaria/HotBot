@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="Irc\HostMaskTests.cs" />
     <Compile Include="Irc\ChannelJoinRequestTests.cs" />
+    <Compile Include="Irc\RegisterCapabilityRequestTests.cs" />
     <Compile Include="Irc\WhisperUserEventTests.cs" />
     <Compile Include="Plugins\PluginLoadEventTests.cs" />
     <Compile Include="Plugins\PluginDescriptionTests.cs" />

@@ -65,17 +65,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GetBalanceListener.cs" />
-    <Compile Include="JoinLotteryListener.cs" />
     <Compile Include="Lottery.cs" />
-    <Compile Include="LotteryCommandListener.cs" />
     <Compile Include="LotteryController.cs" />
     <Compile Include="LotteryException.cs" />
     <Compile Include="LotteryPlugin.cs" />
     <Compile Include="LotteryState.cs" />
     <Compile Include="LotteryWinnerEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StartLotteryListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotBot.Core\HotBot.Core.csproj">

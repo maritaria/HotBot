@@ -16,10 +16,10 @@ namespace HotBot.Core.Commands.Tests
 			var bus = new Mock<MessageBus>();
 			var config = new Mock<CommandConfig>();
 			//Invalid calls
-			TestUtils.AssertArgumentException(() => new CommandEncoder(null, config.Object));
-			TestUtils.AssertArgumentException(() => new CommandEncoder(bus.Object, null));
+			TestUtils.AssertArgumentException(() => new ChatCommandScanner(null, config.Object));
+			TestUtils.AssertArgumentException(() => new ChatCommandScanner(bus.Object, null));
 			//Valid calls
-			var encoder = new CommandEncoder(bus.Object, config.Object);
+			var encoder = new ChatCommandScanner(bus.Object, config.Object);
 			bus.Verify(m => m.Subscribe<ChatReceivedEvent>(encoder), Times.Once(), "Not subscribed to IrcMessageEnhanced");
 			Assert.AreEqual(bus.Object, encoder.Bus, "Bus property not correct");
 		}
@@ -30,7 +30,7 @@ namespace HotBot.Core.Commands.Tests
 			var mockBus = new Mock<MessageBus>();
 			var config = new Mock<CommandConfig>();
 			config.SetupGet(c => c.Prefixes).Returns(() => new string[] { "!", "#" });
-			var encoder = new CommandEncoder(mockBus.Object, config.Object);
+			var encoder = new ChatCommandScanner(mockBus.Object, config.Object);
 
 			TestUtils.AssertArgumentException(() => encoder.HandleMessage(null));
 
@@ -54,7 +54,7 @@ namespace HotBot.Core.Commands.Tests
 			var bus = new Mock<MessageBus>();
 			var config = new Mock<CommandConfig>();
 			config.SetupGet(c => c.Prefixes).Returns(() => new string[] { "QQ", "#" });
-			var encoder = new CommandEncoder(bus.Object, config.Object);
+			var encoder = new ChatCommandScanner(bus.Object, config.Object);
 			var channel = new Mock<Channel>("TestChannel");
 			var user = new Mock<User>("TestUser");
 			var message = new ChatReceivedEvent(channel.Object, user.Object, "QQcommand argument1 argument2");
