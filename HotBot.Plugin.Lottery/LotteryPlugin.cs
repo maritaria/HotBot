@@ -8,15 +8,17 @@ using System.Linq;
 
 namespace HotBot.Plugin.Lottery
 {
+	//TODO: public static bootstrapper class, maybe something with attributes again
 	public sealed class LotteryPlugin : BootstrappedPlugin
 	{
 		public PluginManager Manager { get; }
 		public MessageBus Bus { get; }
 		public PluginDescription Description { get; }
 		public CommandRedirecter Redirecter { get; }
-		public LotteryController Controller { get; }
+		public IUnityContainer DependencyContainer { get; }
+		public Lottery CurrentLottery { get; private set; }
 
-		public LotteryPlugin(PluginManager manager, MessageBus bus, CommandRedirecter commandRedirecter, LotteryController controller)
+		public LotteryPlugin(PluginManager manager, MessageBus bus, CommandRedirecter commandRedirecter, IUnityContainer container)
 		{
 			if (manager == null)
 			{
@@ -30,15 +32,15 @@ namespace HotBot.Plugin.Lottery
 			{
 				throw new ArgumentNullException("commandRedirecter");
 			}
-			if (controller == null)
+			if (container == null)
 			{
-				throw new ArgumentNullException("controller");
+				throw new ArgumentNullException("container");
 			}
 			Manager = manager;
 			Bus = bus;
 			Description = new PluginDescription("Lottery", "Hosts lotteries and rewards money to winners");
 			Redirecter = commandRedirecter;
-			Controller = controller;
+			DependencyContainer = container;
 		}
 
 		public void Load()
@@ -54,20 +56,52 @@ namespace HotBot.Plugin.Lottery
 		public void Bootstrap(IUnityContainer container)
 		{
 			container.RegisterType<Lottery, Lottery>(new PerResolveLifetimeManager());
-			container.RegisterType<LotteryController, LotteryController>(new ContainerControlledLifetimeManager());
-			container.Resolve<LotteryController>();
+		}
+
+		public void CreateLottery()
+		{
+			if (CurrentLottery == null)
+			{
+				CurrentLottery = CreateLotteryInternal();
+			}
+			else
+			{
+				switch (CurrentLottery.State)
+				{
+					case LotteryState.Open:
+						throw new LotteryException("A lottery already running");
+					case LotteryState.Finished:
+						CurrentLottery = CreateLotteryInternal();
+						break;
+				}
+			}
+		}
+
+		private Lottery CreateLotteryInternal()
+		{
+			return DependencyContainer.Resolve<Lottery>();
+		}
+
+		[Subscribe]
+		public void OnLotteryWinner(LotteryWinnerEvent message)
+		{
+			CurrentLottery = null;
+			Bus.PublishSpecific(new ChatTransmitRequest(message.Lottery.Channel, $"Lottery finished, the winner is {message.Lottery.Winner.Name}!"));
+			message.Lottery.Winner.Money += message.Lottery.Pot;
+			Bus.PublishSpecific(new ChatTransmitRequest(message.Lottery.Channel, $"{User.HandlePrefix}{message.Lottery.Winner.Name} Congrats, you have won {message.Lottery.Pot} blorps"));
+			Bus.PublishSpecific(new SaveDatabaseChangesRequest());
 		}
 
 		[PluginCommand("joinlottery")]
 		public void JoinLotteryCommand(CommandEvent info)
 		{
-			if (Controller.CurrentLottery == null)
+			if (CurrentLottery == null)
 			{
 				Bus.PublishSpecific(new ChatTransmitRequest(info.Channel, $"@{info.User.Name}, there is no lottery right now :("));
 			}
 			else
 			{
-				if (Controller.CurrentLottery.Participants.Contains(info.User))
+				if (CurrentLottery.Participants.Contains(info.User))
 				{
 					Bus.PublishSpecific(new ChatTransmitRequest(info.Channel, $""));
 				}
@@ -76,7 +110,7 @@ namespace HotBot.Plugin.Lottery
 					bool success = true;
 					try
 					{
-						Controller.CurrentLottery.Join(info.User);
+						CurrentLottery.Join(info.User);
 					}
 					catch (LotteryException ex)
 					{
@@ -95,12 +129,12 @@ namespace HotBot.Plugin.Lottery
 		[PluginCommand("startlottery")]
 		public void StartLotteryCommand(CommandEvent info)
 		{
-			if (Controller.CurrentLottery == null)
+			if (CurrentLottery == null)
 			{
-				Controller.CreateLottery();
-				Controller.CurrentLottery.Pot = 1000;
-				Controller.CurrentLottery.Duration = TimeSpan.FromMinutes(1);
-				Controller.CurrentLottery.Start(info.Channel);
+				CreateLottery();
+				CurrentLottery.Pot = 1000;
+				CurrentLottery.Duration = TimeSpan.FromMinutes(1);
+				CurrentLottery.Start(info.Channel);
 				Bus.PublishSpecific(new ChatTransmitRequest(info.Channel, "A new lottery has been started. You have 1 minute to type !joinlottery to participate :D"));
 			}
 			else
