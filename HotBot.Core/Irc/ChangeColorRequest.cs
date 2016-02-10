@@ -3,7 +3,6 @@ using System.Linq;
 
 namespace HotBot.Core.Irc
 {
-	//TODO: Unit tests for new classes
 	[DefaultPublishType(typeof(IrcTransmitRequest))]
 	public sealed class ChangeColorRequest : ChatTransmitRequest
 	{

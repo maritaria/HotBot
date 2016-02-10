@@ -41,7 +41,7 @@ namespace HotBot
 			container.Resolve<PrivateMessageDecoder>();
 			container.Resolve<IrcLogger>();
 			container.Resolve<ChatCommandScanner>();
-			container.Resolve<IrcProtocolDecoder>();
+			container.Resolve<ProtocolDecoder>();
 			container.Resolve<TwitchBot>();
 		}
 	}

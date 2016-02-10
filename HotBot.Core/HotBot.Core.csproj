@@ -101,7 +101,7 @@
     <Compile Include="Plugins\PluginLoadEvent.cs" />
     <Compile Include="Plugins\PluginLoadException.cs" />
     <Compile Include="Util\TwitchEmotes.cs" />
-    <Compile Include="Irc\IrcProtocolDecoder.cs" />
+    <Compile Include="Irc\ProtocolDecoder.cs" />
     <Compile Include="Irc\ReplyCode.cs" />
     <Compile Include="Irc\WhisperKnownUserRequest.cs" />
     <Compile Include="Irc\WhisperUserRequest.cs" />

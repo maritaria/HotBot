@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc
 {
-	public sealed class IrcProtocolDecoder
+	public sealed class ProtocolDecoder
 	{
 		public const char IrcMessageStart = ':';
 
 		public MessageBus Bus { get; }
 
-		public IrcProtocolDecoder(MessageBus bus)
+		public ProtocolDecoder(MessageBus bus)
 		{
 			if (bus == null)
 			{
