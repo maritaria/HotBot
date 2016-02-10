@@ -4,7 +4,8 @@ using System.Linq;
 
 namespace HotBot.Core
 {
-	public class DbContextDataStore : DbContext, DataStore
+	//TODO: Allow plugins to have their own database connection(?)
+	public sealed class DbContextDataStore : DbContext, DataStore
 	{
 		public MessageBus Bus { get; }
 

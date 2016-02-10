@@ -87,6 +87,10 @@
       <Project>{53f07df6-6860-480f-a8ef-778f62d7aca4}</Project>
       <Name>HotBot.Plugins.Lottery</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HotBot.Plugins.QuickVote\HotBot.Plugins.QuickVote.csproj">
+      <Project>{6d0304b7-78bd-480a-8e6f-10e2b51fd79f}</Project>
+      <Name>HotBot.Plugins.QuickVote</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

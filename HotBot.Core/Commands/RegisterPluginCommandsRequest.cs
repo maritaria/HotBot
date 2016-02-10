@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace HotBot.Core.Commands
 {
+	[Obsolete]
 	public sealed class RegisterPluginCommandsRequest
 	{
 		public Plugin Plugin { get; }

@@ -14,7 +14,7 @@ namespace HotBot.Core.Commands.Tests
 		public void CommandEncoder_Constructor()
 		{
 			var bus = new Mock<MessageBus>();
-			var config = new Mock<CommandConfig>();
+			var config = new Mock<CommandManagerConfig>();
 			//Invalid calls
 			TestUtils.AssertArgumentException(() => new ChatCommandScanner(null, config.Object));
 			TestUtils.AssertArgumentException(() => new ChatCommandScanner(bus.Object, null));
@@ -28,7 +28,7 @@ namespace HotBot.Core.Commands.Tests
 		public void HandleMessage_SingleCharPrefix()
 		{
 			var mockBus = new Mock<MessageBus>();
-			var config = new Mock<CommandConfig>();
+			var config = new Mock<CommandManagerConfig>();
 			config.SetupGet(c => c.Prefixes).Returns(() => new string[] { "!", "#" });
 			var encoder = new ChatCommandScanner(mockBus.Object, config.Object);
 
@@ -52,7 +52,7 @@ namespace HotBot.Core.Commands.Tests
 		public void HandleMessage_MultiCharPrefix()
 		{
 			var bus = new Mock<MessageBus>();
-			var config = new Mock<CommandConfig>();
+			var config = new Mock<CommandManagerConfig>();
 			config.SetupGet(c => c.Prefixes).Returns(() => new string[] { "QQ", "#" });
 			var encoder = new ChatCommandScanner(bus.Object, config.Object);
 			var channel = new Mock<Channel>("TestChannel");

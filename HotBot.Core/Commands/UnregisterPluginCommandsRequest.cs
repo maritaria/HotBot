@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace HotBot.Core.Commands
 {
+	[Obsolete]
 	public sealed class UnregisterPluginCommandsRequest
 	{
 		public Plugin Plugin { get; }

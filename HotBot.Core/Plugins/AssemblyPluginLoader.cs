@@ -91,7 +91,7 @@ namespace HotBot.Core.Plugins
 
 		public string GetPluginNameFromAssemblyFilename(string assemblyFilename)
 		{
-			var regex = new Regex(@"HotBot\.Plugin\.([a-zA-Z]+)\.dll");
+			var regex = new Regex(@"HotBot\.Plugins\.([a-zA-Z]+)\.dll");
 			var match = regex.Match(assemblyFilename);
 			return match.Captures[0].Value;
 		}

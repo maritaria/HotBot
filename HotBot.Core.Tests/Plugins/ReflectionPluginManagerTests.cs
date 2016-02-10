@@ -113,7 +113,7 @@ namespace HotBot.Core.Plugins.Tests
 		{
 			public PluginDescription Description { get; set; }
 
-			public PluginManager Manager { get; set; }
+			public PluginManager PluginManager { get; set; }
 
 			public int Loads = 0;
 			public int Unloads = 0;

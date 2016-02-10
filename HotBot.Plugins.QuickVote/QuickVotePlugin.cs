@@ -1,18 +1,22 @@
 ﻿using HotBot.Core;
+using HotBot.Core.Commands;
 using HotBot.Core.Irc;
 using HotBot.Core.Plugins;
+using HotBot.Plugins.QuickVote;
 using System;
 using System.Linq;
 
+[assembly: AssemblyPlugin(typeof(QuickVotePlugin))]
 namespace HotBot.Plugins.QuickVote
 {
 	public sealed class QuickVotePlugin : Plugin
 	{
-		public PluginDescription Description { get; }
-		public PluginManager Manager { get; }
 		public MessageBus Bus { get; }
+		public PluginDescription Description { get; }
+		public PluginManager PluginManager { get; }
+		public CommandManager CommandManager { get; }
 
-		public QuickVotePlugin(PluginManager pluginManager, MessageBus bus)
+		public QuickVotePlugin(MessageBus bus, PluginManager pluginManager, CommandManager commandManager)
 		{
 			if (pluginManager == null)
 			{
@@ -22,19 +26,26 @@ namespace HotBot.Plugins.QuickVote
 			{
 				throw new ArgumentNullException("bus");
 			}
-			Manager = pluginManager;
+			if (commandManager == null)
+			{
+				throw new ArgumentNullException("commandManager");
+			}
 			Bus = bus;
 			Description = new PluginDescription("QuickVote", "Keeps track of recent trends in chat messages");
+			PluginManager = pluginManager;
+			CommandManager = commandManager;
 		}
 
 		public void Load()
 		{
 			Bus.Subscribe(this);
+			CommandManager.Register(this);
 		}
 
 		public void Unload()
 		{
 			Bus.Unsubscribe(this);
+			CommandManager.Unregister(this);
 		}
 
 		[Subscribe]

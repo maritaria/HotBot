@@ -12,7 +12,7 @@ namespace HotBot.Core.Plugins
 		/// <summary>
 		/// Gets the manager controlling the plugin
 		/// </summary>
-		PluginManager Manager { get; }
+		PluginManager PluginManager { get; }
 
 		/// <summary>
 		/// Gets the description data of the plugin

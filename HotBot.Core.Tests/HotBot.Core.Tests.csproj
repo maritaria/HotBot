@@ -81,6 +81,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Commands\ReflectionCommandManagerTests.cs" />
     <Compile Include="Irc\HostMaskTests.cs" />
     <Compile Include="Irc\ChannelJoinRequestTests.cs" />
     <Compile Include="Irc\RegisterCapabilityRequestTests.cs" />
@@ -91,7 +92,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\CommandEncoderTests.cs" />
     <Compile Include="Commands\CommandInfoTests.cs" />
-    <Compile Include="Commands\CommandRedirecterTests.cs" />
     <Compile Include="ChannelTests.cs" />
     <Compile Include="UserTests.cs" />
     <Compile Include="Irc\ChatTransmitEventTests.cs" />

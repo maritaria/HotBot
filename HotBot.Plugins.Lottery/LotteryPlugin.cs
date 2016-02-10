@@ -11,14 +11,14 @@ namespace HotBot.Plugins.Lottery
 	//TODO: public static bootstrapper class, maybe something with attributes again
 	public sealed class LotteryPlugin : BootstrappedPlugin
 	{
-		public PluginManager Manager { get; }
-		public MessageBus Bus { get; }
 		public PluginDescription Description { get; }
-		public CommandRedirecter Redirecter { get; }
+		public PluginManager PluginManager { get; }
+		public CommandManager CommandManager { get; }
+		public MessageBus Bus { get; }
 		public IUnityContainer DependencyContainer { get; }
 		public Lottery CurrentLottery { get; private set; }
 
-		public LotteryPlugin(PluginManager pluginManager, MessageBus bus, CommandRedirecter commandRedirecter, IUnityContainer container)
+		public LotteryPlugin(PluginManager pluginManager, MessageBus bus, CommandManager commandManager, IUnityContainer container)
 		{
 			if (pluginManager == null)
 			{
@@ -28,29 +28,29 @@ namespace HotBot.Plugins.Lottery
 			{
 				throw new ArgumentNullException("bus");
 			}
-			if (commandRedirecter == null)
+			if (commandManager == null)
 			{
-				throw new ArgumentNullException("commandRedirecter");
+				throw new ArgumentNullException("commandManager");
 			}
 			if (container == null)
 			{
 				throw new ArgumentNullException("container");
 			}
-			Manager = pluginManager;
+			PluginManager = pluginManager;
 			Bus = bus;
 			Description = new PluginDescription("Lottery", "Hosts lotteries and rewards money to winners");
-			Redirecter = commandRedirecter;
+			CommandManager = commandManager;
 			DependencyContainer = container;
 		}
 
 		public void Load()
 		{
-			Bus.PublishSpecific(new RegisterPluginCommandsRequest(this));
+			CommandManager.Register(this);
 		}
 
 		public void Unload()
 		{
-			Bus.PublishSpecific(new UnregisterPluginCommandsRequest(this));
+			CommandManager.Unregister(this);
 		}
 
 		public void Bootstrap(IUnityContainer container)
@@ -92,7 +92,7 @@ namespace HotBot.Plugins.Lottery
 			Bus.PublishSpecific(new SaveDatabaseChangesRequest());
 		}
 
-		[PluginCommand("joinlottery")]
+		[Command("joinlottery")]
 		public void JoinLotteryCommand(CommandEvent info)
 		{
 			if (CurrentLottery == null)
@@ -126,7 +126,7 @@ namespace HotBot.Plugins.Lottery
 			}
 		}
 
-		[PluginCommand("startlottery")]
+		[Command("startlottery")]
 		public void StartLotteryCommand(CommandEvent info)
 		{
 			if (CurrentLottery == null)
@@ -143,7 +143,7 @@ namespace HotBot.Plugins.Lottery
 			}
 		}
 
-		[PluginCommand("money")]
+		[Command("money")]
 		public void GetBalanceCommand(CommandEvent info)
 		{
 			string message = $"{User.HandlePrefix}{info.User.Name} you have {info.User.Money} blorps";

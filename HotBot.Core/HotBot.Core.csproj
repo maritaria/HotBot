@@ -72,9 +72,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandRedirecter.cs" />
     <Compile Include="Channel.cs" />
-    <Compile Include="Commands\CommandConfig.cs" />
+    <Compile Include="Commands\CommandManagerConfig.cs" />
+    <Compile Include="Commands\ReflectionCommandManager.cs" />
     <Compile Include="Commands\RegisterPluginCommandsRequest.cs" />
     <Compile Include="Commands\UnregisterPluginCommandsRequest.cs" />
     <Compile Include="DbContextDataStore.cs" />
@@ -91,7 +93,7 @@
     <Compile Include="Plugins\AssemblyLoadedEvent.cs" />
     <Compile Include="Plugins\AssemblyPluginAttribute.cs" />
     <Compile Include="Plugins\BootstrappedPlugin.cs" />
-    <Compile Include="Commands\PluginCommandAttribute.cs" />
+    <Compile Include="Commands\CommandAttribute.cs" />
     <Compile Include="Plugins\PluginInstanceCreatedEvent.cs" />
     <Compile Include="Plugins\PluginLoadedEvent.cs" />
     <Compile Include="Plugins\PluginLoader.cs" />
@@ -111,7 +113,6 @@
     <Compile Include="Commands\CommandListener.cs" />
     <Compile Include="Commands\ChatCommandScanner.cs" />
     <Compile Include="Commands\CommandEvent.cs" />
-    <Compile Include="Commands\SimpleCommandHandler.cs" />
     <Compile Include="DataStore.cs" />
     <Compile Include="Plugins\DependencyType.cs" />
     <Compile Include="Plugins\Plugin.cs" />

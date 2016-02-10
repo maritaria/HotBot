@@ -6,12 +6,12 @@ using HotBot.Core.Util;
 
 namespace HotBot.Core.Commands
 {
-	public class ChatCommandScanner
+	public sealed class ChatCommandScanner
 	{
 		public MessageBus Bus { get; }
-		public CommandConfig Config { get; }
+		public CommandManagerConfig Config { get; }
 
-		public ChatCommandScanner(MessageBus bus, CommandConfig config)
+		public ChatCommandScanner(MessageBus bus, CommandManagerConfig config)
 		{
 			if (bus == null)
 			{

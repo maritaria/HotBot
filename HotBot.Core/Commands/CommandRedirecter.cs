@@ -6,6 +6,7 @@ using System.Reflection;
 
 namespace HotBot.Core.Commands
 {
+	[Obsolete]
 	public class CommandRedirecter
 	{
 		private Dictionary<string, HashSet<CommandListener>> _listeners = new Dictionary<string, HashSet<CommandListener>>();
@@ -122,7 +123,7 @@ namespace HotBot.Core.Commands
 		{
 			foreach(MethodInfo method in plugin.GetType().GetMethods())
 			{
-				PluginCommandAttribute attr = method.GetCustomAttribute<PluginCommandAttribute>();
+				CommandAttribute attr = method.GetCustomAttribute<CommandAttribute>();
 				if (attr!=null)
 				{
 					AddListener(new PluginCommandListener(plugin, attr.CommandName, method));

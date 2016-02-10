@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace HotBot.Core.Commands
 {
-	public sealed class PluginCommandAttribute : Attribute
+	public sealed class CommandAttribute : Attribute
 	{
 		public string CommandName { get; }
 
-		public PluginCommandAttribute(string commandName)
+		public CommandAttribute(string commandName)
 		{
 			try
 			{

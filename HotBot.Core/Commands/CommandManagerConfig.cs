@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotBot.Core.Commands
 {
-	public interface CommandConfig//TODO: better name
+	public interface CommandManagerConfig
 	{
 		IEnumerable<string> Prefixes { get; set; }
 	}

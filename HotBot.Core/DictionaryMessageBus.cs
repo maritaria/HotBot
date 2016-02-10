@@ -7,7 +7,6 @@ namespace HotBot.Core
 {
 	public sealed class DictionaryMessageBus : MessageBus
 	{
-		//private Dictionary<Type, HashSet<object>> _subscribers = new Dictionary<Type, HashSet<object>>();
 		private Dictionary<Type, Dictionary<object, MethodInfo>> _subscribers = new Dictionary<Type, Dictionary<object, MethodInfo>>();
 
 		public DictionaryMessageBus()
