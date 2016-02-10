@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HotBot.Testing;
 
 namespace HotBot.Core.Irc.Tests
 {
@@ -14,13 +15,20 @@ namespace HotBot.Core.Irc.Tests
 		[TestMethod()]
 		public void RegisterCapabilityRequest_Constructor()
 		{
-			Assert.Fail();
+			var capability = "testCapability";
+			var request = new RegisterCapabilityRequest(capability);
+
+			Assert.AreEqual(capability, request.Capability);
+
+			TestUtils.AssertArgumentException(() => new RegisterCapabilityRequest(null));
+			TestUtils.AssertArgumentException(() => new RegisterCapabilityRequest(""));
 		}
 
 		[TestMethod()]
 		public void VerifyCapability()
 		{
-			Assert.Fail();
+			TestUtils.AssertArgumentException(() => RegisterCapabilityRequest.VerifyCapability(null));
+			TestUtils.AssertArgumentException(() => RegisterCapabilityRequest.VerifyCapability(""));
 		}
 	}
 }

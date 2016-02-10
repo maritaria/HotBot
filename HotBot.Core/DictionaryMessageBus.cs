@@ -70,7 +70,10 @@ namespace HotBot.Core
 		{
 			Type publishedType = GetPublishingType(handlerMethod, attr);
 			var subs = EnsureSubscribers(publishedType);
-			subs.Add(handler, handlerMethod);
+			if (!subs.ContainsKey(handler))
+			{
+				subs.Add(handler, handlerMethod);
+			}
 		}
 
 		private Type GetPublishingType(MethodInfo handlerMethod, SubscribeAttribute attr)

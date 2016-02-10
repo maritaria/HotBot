@@ -40,7 +40,7 @@ namespace HotBot.Core.Commands.Tests
 
 			encoder.HandleMessage(message);
 
-			mockBus.Verify(b => b.PublishSpecific(It.Is<CommandEvent>(info =>
+			mockBus.Verify(b => b.Publish(It.Is<CommandEvent>(info =>
 				info.User == user.Object &&
 				info.Channel == channel.Object &&
 				info.CommandName == "command" &&
@@ -61,7 +61,7 @@ namespace HotBot.Core.Commands.Tests
 
 			encoder.HandleMessage(message);
 
-			bus.Verify(b => b.PublishSpecific(It.Is<CommandEvent>(info =>
+			bus.Verify(b => b.Publish(It.Is<CommandEvent>(info =>
 				info.User == user.Object &&
 				info.Channel == channel.Object &&
 				info.CommandName == "command" &&

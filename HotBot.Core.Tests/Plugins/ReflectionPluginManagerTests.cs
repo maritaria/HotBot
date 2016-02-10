@@ -13,9 +13,8 @@ namespace HotBot.Core.Plugins.Tests
 		[TestMethod()]
 		public void ReflectionPluginManager_Constructor()
 		{
-			var container = new Mock<IUnityContainer>();
 			var loader = new Mock<PluginLoader>();
-			var manager = CreatePluginManager();
+			var manager = CreatePluginManager(loader: loader);
 
 			TestUtils.AssertArgumentException(() => new ReflectionPluginManager(null));
 
@@ -60,8 +59,8 @@ namespace HotBot.Core.Plugins.Tests
 			var manager = CreatePluginManager();
 			manager.LoadAll();
 			var plugin = CreatePlugin<Plugin>("test");
-			plugin.Setup(p => p.Load()).Callback(Assert.Fail);
 			manager.AddPlugin(plugin.Object);
+			plugin.Verify(p => p.Load(), Times.Never());
 		}
 
 		public interface UniquePluginType1 : Plugin { }
@@ -131,7 +130,7 @@ namespace HotBot.Core.Plugins.Tests
 		}
 
 		[TestMethod()]
-		public void LoadAll_CallOnce()
+		public void LoadAll_CallOncePerLoad()
 		{
 			var manager = CreatePluginManager();
 			var plugin = CreatePlugin<Plugin>("test");
@@ -145,7 +144,7 @@ namespace HotBot.Core.Plugins.Tests
 			manager.AddPlugin(newPlugin.Object);
 			manager.LoadAll();
 
-			plugin.Verify(p => p.Load(), Times.Once());
+			plugin.Verify(p => p.Load(), Times.Exactly(2));
 			newPlugin.Verify(p => p.Load(), Times.Once());
 		}
 
@@ -192,22 +191,21 @@ namespace HotBot.Core.Plugins.Tests
 		}
 
 		[TestMethod()]
-		public void Reload_DontLoadUnloadedPlugins()
+		public void Reload_LoadUnloadedPlugins()
 		{
 			var manager = CreatePluginManager();
 			var plugin = CreatePlugin<Plugin>("test");
 			manager.LoadAll();
 			manager.AddPlugin(plugin.Object);
 			manager.Reload();
-			plugin.Verify(p => p.Load(), Times.Never());
+			plugin.Verify(p => p.Load(), Times.Once());
 		}
 
-		private static ReflectionPluginManager CreatePluginManager()
+		private static ReflectionPluginManager CreatePluginManager(Mock<IUnityContainer> container = null, Mock<PluginLoader> loader = null)
 		{
-			var container = new Mock<IUnityContainer>();
-			var loader = new Mock<PluginLoader>();
-			var manager = new ReflectionPluginManager(loader.Object);
-			return manager;
+			container = container ?? new Mock<IUnityContainer>();
+			loader = loader ?? new Mock<PluginLoader>();
+			return new ReflectionPluginManager(loader.Object);
 		}
 
 		private static Mock<TPlugin> CreatePlugin<TPlugin>(string name) where TPlugin : class, Plugin

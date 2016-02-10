@@ -98,15 +98,15 @@ namespace HotBot.Core.Tests
 			handler.Verify(h => h.Listen1(data), Times.Never(), "Handler called after unsubscribe");
 		}
 
-		private class TestListener
+		public class TestListener
 		{
 			[Subscribe]
-			public void Listen1(string value)
+			public virtual void Listen1(string value)
 			{
 			}
 
 			[Subscribe]
-			public void Listen2(DateTime value)
+			public virtual void Listen2(DateTime value)
 			{
 			}
 		}
