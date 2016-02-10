@@ -22,7 +22,7 @@ namespace HotBot.Plugins.QuickVote
 		/// Gets or sets the amount of time a <see cref="TagRecord"/> stays alive for.
 		/// Whenever a tag gets recorded, the <see cref="TagRecord.ExpirationDate"/> property is updated to expire after the time specified in this property.
 		/// </summary>
-		public TimeSpan RecordLifetime { get; set; }//TODO: read from config
+		public TimeSpan RecordLifetime { get; set; }//TODO: read from config (Requires dynamic config support)
 
 		public ChannelHistory(Channel channel)
 		{
