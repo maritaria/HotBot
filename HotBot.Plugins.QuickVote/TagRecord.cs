@@ -6,6 +6,8 @@ namespace HotBot.Plugins.QuickVote
 	//TODO: support dynamic tag transformations (keep track of alternatives and automatically switch the main tag)
 	public sealed class TagRecord
 	{
+		private int _mentionCount;
+
 		/// <summary>
 		/// Gets the tag the <see cref="TagRecord"/> represents.
 		/// </summary>
@@ -19,7 +21,19 @@ namespace HotBot.Plugins.QuickVote
 		/// <summary>
 		/// Gets or sets the number of times the tag has been mentioned.
 		/// </summary>
-		public int MentionCount { get; set; }//TODO: deny negative values
+		/// <exception cref="ArgumentOutOfRangeException">Thrown when attempting to set to a value lower than zero.</exception>
+		public int MentionCount
+		{
+			get { return _mentionCount; }
+			set
+			{
+				if (value < 0)
+				{
+					throw new ArgumentOutOfRangeException("Cannot be less than zero", "value");
+				}
+				_mentionCount = value;
+			}
+		}
 
 		/// <summary>
 		/// Gets whether the <see cref="TagRecord"/> has been expired.
