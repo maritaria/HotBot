@@ -9,16 +9,12 @@ namespace HotBot.Core.Plugins
 	{
 		private Dictionary<string, Plugin> _namedPlugins = new Dictionary<string, Plugin>();
 		private Dictionary<Type, Plugin> _typedPlugins = new Dictionary<Type, Plugin>();
-		
-		public PluginLoader Loader { get; }
 
-		public ReflectionPluginManager(PluginLoader loader)
+		[Dependency]
+		public PluginLoader Loader { get; set; }
+
+		public ReflectionPluginManager()
 		{
-			if (loader == null)
-			{
-				throw new ArgumentNullException("loader");
-			}
-			Loader = loader;
 		}
 
 		public void AddPlugin(Plugin plugin)
@@ -108,6 +104,7 @@ namespace HotBot.Core.Plugins
 				}
 				catch
 				{
+					
 					//TODO: throw new PluginException();
 				}
 			}

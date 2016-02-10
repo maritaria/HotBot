@@ -16,7 +16,6 @@ namespace HotBot.Plugins.Lottery
 		private Collection<User> _participants = new Collection<User>();
 		public ReadOnlyCollection<User> Participants { get; private set; }
 		public Channel Channel { get; private set; }
-
 		public MessageBus Bus { get; }
 
 		/// <summary>

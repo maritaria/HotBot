@@ -13,21 +13,15 @@ namespace HotBot.Core.Plugins
 		public const string PluginAssemblyNamePattern = "HotBot.Plugins.*.dll";
 
 		public string PluginDirectory { get; } = "Plugins";
-		public IUnityContainer DependencyContainer { get; }
-		public MessageBus Bus { get; }
 
-		public AssemblyPluginLoader(IUnityContainer dependencyContainer, MessageBus bus)
+		[Dependency]
+		public IUnityContainer DependencyContainer { get; set; }
+
+		[Dependency]
+		public MessageBus Bus { get; set; }
+
+		public AssemblyPluginLoader()
 		{
-			if (dependencyContainer == null)
-			{
-				throw new ArgumentNullException("dependencyContainer");
-			}
-			if (bus == null)
-			{
-				throw new ArgumentNullException("bus");
-			}
-			DependencyContainer = dependencyContainer;
-			Bus = bus;
 		}
 
 		public IEnumerable<Plugin> LoadPlugins()

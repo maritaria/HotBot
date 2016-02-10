@@ -2,13 +2,15 @@
 using System.Linq;
 using HotBot.Core;
 using HotBot.Core.Util;
+using Microsoft.Practices.Unity;
 
 namespace HotBot.Core.Irc
 {
 	[Obsolete("Finish IrcProtocolDecoder")]
 	public class PrivateMessageDecoder
 	{
-		public DataStore DataStore { get; }
+		[Dependency]
+		public DataStore DataStore { get; set; }
 		public MessageBus Bus { get; }
 
 		public PrivateMessageDecoder(DataStore datastore, MessageBus bus)
@@ -21,16 +23,14 @@ namespace HotBot.Core.Irc
 			{
 				throw new ArgumentNullException("bus");
 			}
-			DataStore = datastore;
 			Bus = bus;
-			bus.Subscribe(this);
+			Bus.Subscribe(this);
 		}
 
 		[Subscribe]
 		public void OnIrcReceived(IrcReceivedEvent message)
 		{
 			ChatReceivedEvent enhancedMessage = HandleMessage(message.Message);
-
 			if (enhancedMessage != null)
 			{
 				Bus.Publish(enhancedMessage);
@@ -43,7 +43,6 @@ namespace HotBot.Core.Irc
 			{
 				throw new ArgumentException("cannot be empty or null", "message");
 			}
-
 			if (!message.Contains("PRIVMSG"))
 			{
 				return null;

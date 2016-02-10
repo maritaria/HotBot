@@ -9,8 +9,6 @@ namespace HotBot.Core.Irc
 {
 	public sealed class ProtocolDecoder
 	{
-		public const char IrcMessageStart = ':';
-
 		public MessageBus Bus { get; }
 
 		public ProtocolDecoder(MessageBus bus)

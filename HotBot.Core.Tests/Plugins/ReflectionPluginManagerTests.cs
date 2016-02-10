@@ -11,17 +11,6 @@ namespace HotBot.Core.Plugins.Tests
 	public class ReflectionPluginManagerTests
 	{
 		[TestMethod()]
-		public void ReflectionPluginManager_Constructor()
-		{
-			var loader = new Mock<PluginLoader>();
-			var manager = CreatePluginManager(loader: loader);
-
-			TestUtils.AssertArgumentException(() => new ReflectionPluginManager(null));
-
-			Assert.AreEqual(loader.Object, manager.Loader);
-		}
-
-		[TestMethod()]
 		public void AddPlugin()
 		{
 			var manager = CreatePluginManager();
@@ -205,7 +194,7 @@ namespace HotBot.Core.Plugins.Tests
 		{
 			container = container ?? new Mock<IUnityContainer>();
 			loader = loader ?? new Mock<PluginLoader>();
-			return new ReflectionPluginManager(loader.Object);
+			return new ReflectionPluginManager() { Loader = loader.Object };
 		}
 
 		private static Mock<TPlugin> CreatePlugin<TPlugin>(string name) where TPlugin : class, Plugin

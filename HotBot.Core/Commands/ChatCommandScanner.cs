@@ -3,13 +3,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using HotBot.Core.Irc;
 using HotBot.Core.Util;
+using Microsoft.Practices.Unity;
 
 namespace HotBot.Core.Commands
 {
 	public sealed class ChatCommandScanner
 	{
 		public MessageBus Bus { get; }
-		public CommandManagerConfig Config { get; }
+		[Dependency]
+		public CommandManagerConfig Config { get; set; }
 
 		public ChatCommandScanner(MessageBus bus, CommandManagerConfig config)
 		{
@@ -23,7 +25,6 @@ namespace HotBot.Core.Commands
 			}
 			Bus = bus;
 			Bus.Subscribe(this);
-			Config = config;
 		}
 
 		[Subscribe]

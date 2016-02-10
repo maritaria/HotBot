@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -28,20 +29,17 @@ namespace HotBot.Core.Irc
 		public IReadOnlyDictionary<string, Channel> JoinedChannels { get; }
 
 		public MessageBus Bus { get; }
-		public DataStore DataStore { get; }
+		[Dependency]
+		public DataStore DataStore { get; set; }
 		public IrcClientConfig Config { get; }
 
 		public bool IsConnected => _tcpClient != null && _tcpClient.Connected;
 
-		public IrcClient(MessageBus bus, DataStore dataStore, IrcClientConfig config)
+		public IrcClient(MessageBus bus, IrcClientConfig config)
 		{
 			if (bus == null)
 			{
 				throw new ArgumentNullException("bus");
-			}
-			if (dataStore == null)
-			{
-				throw new ArgumentNullException("dataStore");
 			}
 			if (config == null)
 			{
@@ -51,11 +49,10 @@ namespace HotBot.Core.Irc
 			Bus = bus;
 			//TODO: Generalize this, maybe something with attributed methods YES MAKE THIS HAPPEN
 			Bus.Subscribe(this);
-			DataStore = dataStore;
 			Config = config;
 			Connect();
 		}
-
+		
 		public void Connect()
 		{
 			lock (_tcpClientLock)

@@ -3,38 +3,26 @@ using HotBot.Core.Commands;
 using HotBot.Core.Irc;
 using HotBot.Core.Plugins;
 using HotBot.Plugins.QuickVote;
+using Microsoft.Practices.Unity;
 using System;
 using System.Linq;
 
 [assembly: AssemblyPlugin(typeof(QuickVotePlugin))]
+
 namespace HotBot.Plugins.QuickVote
 {
 	public sealed class QuickVotePlugin : Plugin
 	{
-		public MessageBus Bus { get; }
-		public PluginDescription Description { get; }
-		public PluginManager PluginManager { get; }
-		public CommandManager CommandManager { get; }
+		public PluginDescription Description { get; } = new PluginDescription("QuickVote", "Keeps track of recent trends in chat messages");
 
-		public QuickVotePlugin(MessageBus bus, PluginManager pluginManager, CommandManager commandManager)
-		{
-			if (pluginManager == null)
-			{
-				throw new ArgumentNullException("pluginManager");
-			}
-			if (bus == null)
-			{
-				throw new ArgumentNullException("bus");
-			}
-			if (commandManager == null)
-			{
-				throw new ArgumentNullException("commandManager");
-			}
-			Bus = bus;
-			Description = new PluginDescription("QuickVote", "Keeps track of recent trends in chat messages");
-			PluginManager = pluginManager;
-			CommandManager = commandManager;
-		}
+		[Dependency]
+		public MessageBus Bus { get; set; }
+
+		[Dependency]
+		public PluginManager PluginManager { get; set; }
+
+		[Dependency]
+		public CommandManager CommandManager { get; set; }
 
 		public void Load()
 		{

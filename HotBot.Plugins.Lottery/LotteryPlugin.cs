@@ -11,37 +11,18 @@ namespace HotBot.Plugins.Lottery
 	//TODO: public static bootstrapper class, maybe something with attributes again
 	public sealed class LotteryPlugin : BootstrappedPlugin
 	{
-		public PluginDescription Description { get; }
-		public PluginManager PluginManager { get; }
-		public CommandManager CommandManager { get; }
-		public MessageBus Bus { get; }
-		public IUnityContainer DependencyContainer { get; }
-		public Lottery CurrentLottery { get; private set; }
+		public PluginDescription Description { get; } = new PluginDescription("Lottery", "Hosts lotteryies and rewards money to winners");
 
-		public LotteryPlugin(PluginManager pluginManager, MessageBus bus, CommandManager commandManager, IUnityContainer container)
-		{
-			if (pluginManager == null)
-			{
-				throw new ArgumentNullException("pluginManager");
-			}
-			if (bus == null)
-			{
-				throw new ArgumentNullException("bus");
-			}
-			if (commandManager == null)
-			{
-				throw new ArgumentNullException("commandManager");
-			}
-			if (container == null)
-			{
-				throw new ArgumentNullException("container");
-			}
-			PluginManager = pluginManager;
-			Bus = bus;
-			Description = new PluginDescription("Lottery", "Hosts lotteries and rewards money to winners");
-			CommandManager = commandManager;
-			DependencyContainer = container;
-		}
+		[Dependency]
+		public PluginManager PluginManager { get; set; }
+
+		[Dependency]
+		public CommandManager CommandManager { get; set; }
+
+		[Dependency]
+		public MessageBus Bus { get; set; }
+
+		public Lottery CurrentLottery { get; private set; }
 
 		public void Load()
 		{
@@ -79,7 +60,7 @@ namespace HotBot.Plugins.Lottery
 
 		private Lottery CreateLotteryInternal()
 		{
-			return DependencyContainer.Resolve<Lottery>();
+			return new Lottery(Bus);
 		}
 
 		[Subscribe]
