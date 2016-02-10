@@ -82,5 +82,52 @@ namespace HotBot.Core.Util
 			}
 			yield return remaining;
 		}
+
+		public static int LevenshteinDistance(this string source, string match)
+		{
+			//TODO: Create levenstein automaton support
+			int sourceLength = source.Length;
+			int matchLength = match.Length;
+			int[,] distances = new int[sourceLength + 1, matchLength + 1];
+
+			// Step 1
+			if (sourceLength == 0)
+			{
+				return matchLength;
+			}
+
+			if (matchLength == 0)
+			{
+				return sourceLength;
+			}
+
+			// Step 2
+			for (int i = 0; i <= sourceLength; distances[i, 0] = i++)
+			{
+			}
+
+			for (int j = 0; j <= matchLength; distances[0, j] = j++)
+			{
+			}
+
+			// Step 3
+			for (int i = 1; i <= sourceLength; i++)
+			{
+				//Step 4
+				for (int j = 1; j <= matchLength; j++)
+				{
+					// Step 5
+					int cost = (match[j - 1] == source[i - 1]) ? 0 : 1;
+
+					// Step 6
+					distances[i, j] = Math.Min(
+						Math.Min(distances[i - 1, j] + 1, distances[i, j - 1] + 1),
+						distances[i - 1, j - 1] + cost);
+				}
+			}
+			// Step 7
+			return distances[sourceLength, matchLength];
+		}
+
 	}
 }
