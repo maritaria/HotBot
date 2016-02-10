@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="ChannelHistoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagRecordTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotBot.Core\HotBot.Core.csproj">
