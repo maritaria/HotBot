@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChannelHistory.cs" />
     <Compile Include="QuickVotePlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagRecord.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotBot.Core\HotBot.Core.csproj">
