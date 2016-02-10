@@ -132,7 +132,6 @@
     <Compile Include="DictionaryMessageBus.cs" />
     <Compile Include="MessageBus.cs" />
     <Compile Include="Util\StringExtensions.cs" />
-    <Compile Include="Irc\Throttler.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
