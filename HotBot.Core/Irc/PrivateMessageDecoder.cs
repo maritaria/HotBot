@@ -59,7 +59,6 @@ namespace HotBot.Core.Irc
 					break;
 				}
 			}
-			//TODO: Clean up this code
 			string[] parts = message.SplitOnce("PRIVMSG");
 			string username = parts[0].Substring(0, usernameLength);
 			string chatDetails = parts[1].TrimStart(' ').Substring(1);
@@ -78,7 +77,7 @@ namespace HotBot.Core.Irc
 			User user = DataStore.Users.FirstOrDefault(u => u.Name == username);
 			if (user == null)
 			{
-				user = new User(username);//TODO: Add new user message
+				user = new User(username);
 				DataStore.Users.Add(user);
 				DataStore.SaveChanges();
 			}

@@ -100,12 +100,11 @@ namespace HotBot.Core.Plugins
 			{
 				try
 				{
-					pl.Load();//TODO: try-catch loading of plugins
+					pl.Load();
 				}
 				catch
 				{
-					
-					//TODO: throw new PluginException();
+					//TODO: Handle exception
 				}
 			}
 		}
@@ -116,11 +115,11 @@ namespace HotBot.Core.Plugins
 			{
 				try
 				{
-					pl.Unload();//TODO: try-catch unloading of plugins
+					pl.Unload();
 				}
 				catch
 				{
-					//TODO: throw new PluginException();
+					//TODO: Handle exception
 				}
 			}
 		}

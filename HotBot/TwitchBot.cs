@@ -19,7 +19,7 @@ namespace HotBot
 		public PluginManager PluginManager { get; }
 		public IrcClient IrcClient { get; }
 
-		public TwitchBot(MessageBus bus, PluginManager pluginManager, IrcClient ircClient)
+		public TwitchBot(MessageBus bus, PluginManager pluginManager, IrcClient ircClient, DataStore dataStore)
 		{
 			if (bus == null)
 			{
@@ -33,11 +33,16 @@ namespace HotBot
 			{
 				throw new ArgumentNullException("ircClient");
 			}
+			if (dataStore == null)
+			{
+				throw new ArgumentNullException("dataStore");
+			}
 			Bus = bus;
 			PluginManager = pluginManager;
 			IrcClient = ircClient;
 			JoinPrimaryChannel();
 			PluginManager.LoadAll();
+			dataStore.Initialize();
 		}
 
 		private void JoinPrimaryChannel()

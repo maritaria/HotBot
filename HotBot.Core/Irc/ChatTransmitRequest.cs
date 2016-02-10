@@ -3,7 +3,6 @@ using System.Linq;
 
 namespace HotBot.Core.Irc
 {
-	//TODO: Move this up to HotBot.Core or a different namespace at least (HotBot.Core.Irc is getting crowded)
 	[DefaultPublishType(typeof(IrcTransmitRequest))]
 	public class ChatTransmitRequest : IrcTransmitRequest
 	{

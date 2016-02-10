@@ -26,11 +26,13 @@ namespace HotBot.Plugins.Lottery
 
 		public void Load()
 		{
+			Bus.Subscribe(this);
 			CommandManager.Register(this);
 		}
 
 		public void Unload()
 		{
+			Bus.Unsubscribe(this);
 			CommandManager.Unregister(this);
 		}
 

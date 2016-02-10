@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace HotBot.Core.Irc
 {
-	//TODO: create smaller classes that handle these messages? or keep growing the irc client class which will result in mammoth classes.
+	//TODO: Remove async behaviour; handle this through message bus.
 	public class IrcClient : IDisposable
 	{
 		//https://github.com/SirCmpwn/ChatSharp
@@ -47,7 +47,6 @@ namespace HotBot.Core.Irc
 			}
 			JoinedChannels = new ReadOnlyDictionary<string, Channel>(_joinedChannels);
 			Bus = bus;
-			//TODO: Generalize this, maybe something with attributed methods YES MAKE THIS HAPPEN
 			Bus.Subscribe(this);
 			Config = config;
 			Connect();

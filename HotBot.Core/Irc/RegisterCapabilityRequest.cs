@@ -15,7 +15,7 @@ namespace HotBot.Core.Irc
 		{
 			get
 			{
-				return $"CAP REQ :{Capability}";
+				return $"CAP REQ :{Capability}\nCAP END";
 			}
 		}
 

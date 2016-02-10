@@ -54,7 +54,6 @@ namespace HotBot.Testing
 
 		public static void AssertArgumentException(Action callback, string parameterName)
 		{
-			//TODO: check the argument for which the exception is thrown
 			try
 			{
 				callback();

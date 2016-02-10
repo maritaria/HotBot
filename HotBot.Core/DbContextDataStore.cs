@@ -21,8 +21,6 @@ namespace HotBot.Core
 
 		public DbContextDataStore(MessageBus bus) : base()
 		{
-			//TODO: Do this in a different thread
-			Database.Initialize(false);
 			if (bus == null)
 			{
 				throw new ArgumentNullException("bus");
@@ -33,7 +31,10 @@ namespace HotBot.Core
 
 		public void Initialize()
 		{
+			Console.WriteLine("Initializing database");//TODO: Better logging
+			Database.Initialize(false);
 			Database.Connection.Open();
+			Console.WriteLine("Initializing database DONE");
 		}
 
 		[Subscribe]
