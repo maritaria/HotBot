@@ -92,7 +92,6 @@
     <Compile Include="SubscribeAttribute.cs" />
     <Compile Include="Plugins\AssemblyLoadedEvent.cs" />
     <Compile Include="Plugins\AssemblyPluginAttribute.cs" />
-    <Compile Include="Plugins\BootstrappedPlugin.cs" />
     <Compile Include="Commands\CommandAttribute.cs" />
     <Compile Include="Plugins\PluginInstanceCreatedEvent.cs" />
     <Compile Include="Plugins\PluginLoadedEvent.cs" />

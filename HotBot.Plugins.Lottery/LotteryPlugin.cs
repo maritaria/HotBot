@@ -9,7 +9,7 @@ using System.Linq;
 namespace HotBot.Plugins.Lottery
 {
 	//TODO: public static bootstrapper class, maybe something with attributes again
-	public sealed class LotteryPlugin : BootstrappedPlugin
+	public sealed class LotteryPlugin : Plugin
 	{
 		public PluginDescription Description { get; } = new PluginDescription("Lottery", "Hosts lotteryies and rewards money to winners");
 
@@ -32,11 +32,6 @@ namespace HotBot.Plugins.Lottery
 		public void Unload()
 		{
 			CommandManager.Unregister(this);
-		}
-
-		public void Bootstrap(IUnityContainer container)
-		{
-			container.RegisterType<Lottery, Lottery>(new PerResolveLifetimeManager());
 		}
 
 		public void CreateLottery()

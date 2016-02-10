@@ -33,7 +33,6 @@ namespace HotBot.Core.Plugins
 				{
 					Assembly asm = LoadAssembly(assemblyFilename);
 					plugin = CreatePluginFromAssembly(asm);
-					BootstrapPlugin(plugin);
 				}
 				catch (PluginLoadException ex)
 				{
@@ -49,15 +48,6 @@ namespace HotBot.Core.Plugins
 				{
 					yield return plugin;
 				}
-			}
-		}
-
-		private void BootstrapPlugin(Plugin plugin)
-		{
-			if (plugin is BootstrappedPlugin)
-			{
-				BootstrappedPlugin bootstrappedPlugin = (BootstrappedPlugin)plugin;
-				bootstrappedPlugin.Bootstrap(DependencyContainer);
 			}
 		}
 
