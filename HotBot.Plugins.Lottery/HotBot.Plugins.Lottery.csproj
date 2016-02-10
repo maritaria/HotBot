@@ -7,8 +7,8 @@
     <ProjectGuid>{53F07DF6-6860-480F-A8EF-778F62D7ACA4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HotBot.Plugin.Lottery</RootNamespace>
-    <AssemblyName>HotBot.Plugin.Lottery</AssemblyName>
+    <RootNamespace>HotBot.Plugins.Lottery</RootNamespace>
+    <AssemblyName>HotBot.Plugins.Lottery</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
