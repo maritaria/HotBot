@@ -8,92 +8,49 @@ namespace HotBot.Core.Util.Tests
 	[TestClass()]
 	public class StringExtensionsTests
 	{
-		//TODO: better test for splitmultiple
-		[TestMethod]
-		public void SplitOnce_Single_Source_Null()
+		[TestMethod()]
+		public void SplitOnce_Single()
 		{
 			TestUtils.AssertArgumentException(() => ((string)null).SplitOnce("asdf"));
 			TestUtils.AssertArgumentException(() => ("asdf").SplitOnce((string)null));
-		}
-		//TODO: Copy these tests for SplitOnce_Multi
-		[TestMethod]
-		public void SplitOnce_Single_Splitter_Empty()
-		{
-			string source = "asdf";
-			source.SplitOnce(string.Empty);
+
+			SplitOnce_SingleTest("Hello world :D", " ", "Hello", "world :D");
+			SplitOnce_SingleTest("Hello world :D", " ", "Hello", "world :D");
+			SplitOnce_SingleTest("Hello world :D", "Hello", "", " world :D");
+			SplitOnce_SingleTest("HelloHello world :D", "Hello", "", "Hello world :D");
+			SplitOnce_SingleTest("Hello world :D", "_", "Hello world :D", "");
+			SplitOnce_SingleTest("Hello world :D", "", "Hello world :D", "");
 		}
 
-		[TestMethod()]
-		public void SplitOnce_Single_ContainsSplitterMulitpleTimes()
+		private static void SplitOnce_SingleTest(string source, string splitter, string expectedResult, string expectedLeftover)
 		{
-			string source = "Hello world :D";
-			string[] result = source.SplitOnce(" ");
-			Assert.AreEqual("Hello", result[0]);
-			Assert.AreEqual("world :D", result[1]);
-		}
-
-		[TestMethod()]
-		public void SplitOnce_Single_StartsWithSplitter()
-		{
-			string source = " Starts with splitter";
-			string[] result = source.SplitOnce(" ");
-			Assert.AreEqual("", result[0]);
-			Assert.AreEqual("Starts with splitter", result[1]);
-		}
-
-		[TestMethod()]
-		public void SplitOnce_Single_StartsWithDoubleSplitter()
-		{
-			string source = "  Starts with double splitter";
-			string[] result = source.SplitOnce(" ", "w");
-			Assert.AreEqual("", result[0]);
-			Assert.AreEqual(" Starts with double splitter", result[1]);
-		}
-
-		[TestMethod()]
-		public void SplitOnce_Single_NoSplit()
-		{
-			string source = "Hello world :D";
-			string[] result = source.SplitOnce("_");
-			Assert.AreEqual("Hello world :D", result[0]);
-			Assert.AreEqual("", result[1]);
+			string[] result = source.SplitOnce(splitter);
+			Assert.AreEqual(expectedResult, result[0]);
+			Assert.AreEqual(expectedLeftover, result[1]);
 		}
 
 		[TestMethod()]
 		public void SplitOnce_Multi()
 		{
-			string source = "Hello world Q :D";
-			string[] result = source.SplitOnce(" ", "Q");
-			Assert.AreEqual("Hello", result[0]);
-			Assert.AreEqual("world Q :D", result[1]);
+			TestUtils.AssertArgumentException(() => ((string)null).SplitOnce("asdf", "asdf"));
+			TestUtils.AssertArgumentException(() => ("asdf").SplitOnce((string)null, (string)null));
+
+			SplitOnce_MultiTest("Hello world :D", " ", "Q", "Hello", "world :D");
+			SplitOnce_MultiTest("Hello world :D", "Q", " ", "Hello", "world :D");
+			SplitOnce_MultiTest("Hello world :D", " ", "Q", "Hello", "world :D");
+			SplitOnce_MultiTest("Hello world :D", "Hello", "Q", "", " world :D");
+			SplitOnce_MultiTest("Hello world :D", "world", "Hello", "", " world :D");
+			SplitOnce_MultiTest("HelloHello world :D", "Hello", "Q", "", "Hello world :D");
+			SplitOnce_MultiTest("Hello world :D", "_", "Q", "Hello world :D", "");
+			SplitOnce_MultiTest("Hello world :D", "", "Q", "Hello world :D", "");
+
 		}
 
-		[TestMethod()]
-		public void SplitOnce_Multi_StartsWithSplitter()
+		private static void SplitOnce_MultiTest(string source, string splitter1, string splitter2, string expectedResult, string expectedLeftover)
 		{
-			string source = " Starts with splitter";
-			string[] result = source.SplitOnce(" ", "w");
-			Assert.AreEqual("", result[0]);
-			Assert.AreEqual("Starts with splitter", result[1]);
+			string[] result = source.SplitOnce(splitter1, splitter2);
+			Assert.AreEqual(expectedResult, result[0]);
+			Assert.AreEqual(expectedLeftover, result[1]);
 		}
-
-		[TestMethod()]
-		public void SplitOnce_Multi_StartsWithDoubleSplitter()
-		{
-			string source = "  Starts with double splitter";
-			string[] result = source.SplitOnce(" ", "w");
-			Assert.AreEqual("", result[0]);
-			Assert.AreEqual(" Starts with double splitter", result[1]);
-		}
-
-		[TestMethod()]
-		public void SplitOnce_Multi_NoSplit()
-		{
-			string source = "Hello world :D";
-			string[] result = source.SplitOnce("_", ",");
-			Assert.AreEqual("Hello world :D", result[0]);
-			Assert.AreEqual("", result[1]);
-		}
-		
 	}
 }
