@@ -114,7 +114,7 @@ namespace HotBot.Plugins.Lottery
 		{
 			if (Participants.Count == 0)
 			{
-				Bus.PublishSpecific(new ChatTransmitRequest(Channel, $"The lottery is over, but nobody participated :("));
+				//Bus.PublishSpecific(new ChatTransmitRequest(Channel, $"The lottery is over, but nobody participated :("));
 			}
 			else
 			{

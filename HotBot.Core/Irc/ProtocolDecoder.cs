@@ -1,16 +1,13 @@
-﻿using HotBot.Core.Util;
+﻿using Microsoft.Practices.Unity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc
 {
 	public sealed class ProtocolDecoder
 	{
 		public MessageBus Bus { get; }
-
+		
 		public ProtocolDecoder(MessageBus bus)
 		{
 			if (bus == null)
@@ -22,28 +19,13 @@ namespace HotBot.Core.Irc
 		}
 
 		[Subscribe]
-		public void OnIrcReceived(IrcReceivedEvent ircMessage)
+		public void OnResponse(Response response)
 		{
-			//:USERNAME!USERNAME@USERNAME.tmi.twitch.tv PRIVMSG #CHANNEL :MESSAGE
+			if (response.Command == "PRIVMSG")
+			{
 
-			//:NICKNAME!USERNAME@SERVER CODE BODY
-
-			//TODO: Implement Irc support
-
-			//WHISPER 
-			//PRIVMSG
-
-			//ircMessage.Split
-
-			//https://github.com/justintv/Twitch-API/blob/master/IRC.md
-
-			string[] parts = ircMessage.Message.SplitOnce(" ");
-			HostMask hostmask = new HostMask(parts[0]);
-			string remainingText = parts[1];
-
-			parts = remainingText.SplitOnce(" ");
-			string command = parts[0];
-			string args = parts[1];
+			}
 		}
+
 	}
 }

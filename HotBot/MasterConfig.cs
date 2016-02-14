@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace HotBot
 {
-	public class MasterConfig : ApplicationSettingsBase, IrcClientConfig, CommandManagerConfig
+	public class MasterConfig : ApplicationSettingsBase, CommandManagerConfig
 	{
 		[UserScopedSetting]
 		[DefaultSettingValue("irc.twitch.tv")]

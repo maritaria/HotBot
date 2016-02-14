@@ -8,22 +8,22 @@ namespace HotBot.Core.Irc
 	/// Encapsulates the hostmask of an IRC message.
 	/// A hostmask looks like this: {Nickname}{}
 	/// </summary>
-	public struct HostMask
+	public sealed class HostMask
 	{
 		/// <summary>
 		/// Gets or sets the nickname displayed in the hostmask
 		/// </summary>
-		public string Nickname;
+		public string Nickname { get; }
 
 		/// <summary>
 		/// Gets or sets the username displayed in the hostmask
 		/// </summary>
-		public string Username;
+		public string Username { get; }
 
 		/// <summary>
 		/// Gets or sets the hostname of the server that is displayed in the hostmask
 		/// </summary>
-		public string Hostname;
+		public string Hostname { get; }
 
 		/// <summary>
 		/// Decodes a hostmask into seperate user, nick and host namesy

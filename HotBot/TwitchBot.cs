@@ -1,6 +1,8 @@
 ﻿using HotBot.Core;
 using HotBot.Core.Irc;
+using HotBot.Core.Irc.Twitch;
 using HotBot.Core.Plugins;
+using Microsoft.Practices.Unity;
 using System;
 using System.Linq;
 
@@ -13,45 +15,53 @@ namespace HotBot
 		public static readonly UInt16 Port = 6667;
 
 		private object _consoleLock = new object();
-		public MessageBus Bus { get; }
+		[Dependency]
+		public MessageBus Bus { get; set; }
+
+		[Dependency]
+		public MasterConfig MasterConfig { get; set; }
+
+		[Dependency]
+		public PluginManager PluginManager { get; set; }
+
+		[Dependency]
+		public TwitchIrcClient TwitchClient { get; set; }
+
+		[Dependency]
+		public DataStore DataStore { get; set; }
 
 		public Channel PrimaryChannel { get; } = new Channel("maritaria");
-		public PluginManager PluginManager { get; }
-		public IrcClient IrcClient { get; }
 
-		public TwitchBot(MessageBus bus, PluginManager pluginManager, IrcClient ircClient, DataStore dataStore)
+		public TwitchBot()
 		{
-			if (bus == null)
-			{
-				throw new ArgumentNullException("bus");
-			}
-			if (pluginManager == null)
-			{
-				throw new ArgumentNullException("pluginManager");
-			}
-			if (ircClient == null)
-			{
-				throw new ArgumentNullException("ircClient");
-			}
-			if (dataStore == null)
-			{
-				throw new ArgumentNullException("dataStore");
-			}
-			Bus = bus;
-			PluginManager = pluginManager;
-			IrcClient = ircClient;
+		}
+
+		public void Run()
+		{
 			JoinPrimaryChannel();
+			DataStore.Initialize();
+			Bus.Subscribe(this);
 			PluginManager.LoadAll();
-			dataStore.Initialize();
 		}
 
 		private void JoinPrimaryChannel()
 		{
+			/*
 			Bus.PublishSpecific(new ChannelJoinRequest(PrimaryChannel));
 			Bus.PublishSpecific(new ChannelNotificationRequest(PrimaryChannel, "is now online"));
 			Bus.PublishSpecific(new RegisterCapabilityRequest(RegisterCapabilityRequest.TwitchMembership));
 			Bus.PublishSpecific(new RegisterCapabilityRequest(RegisterCapabilityRequest.ExtendedCommands));
 			Bus.PublishSpecific(new ChangeColorRequest(PrimaryChannel, ChangeColorRequest.ChatColor.DodgerBlue));
+			*/
+			TwitchClient.Connection.Connect("tmi.twitch.tv", 6667);
+			var login = new TwitchLogin { AuthKey = "oauth:to4julsv3nu1c6lx9l1s13s7nj25yp", Username = "maritaria_bot01" };
+			TwitchClient.Login(login);
+			
+			while (true)
+			{
+				Response r = TwitchClient.Connection.ReadResponse();
+				Console.WriteLine(r.ToString());
+			}
 		}
 	}
 }

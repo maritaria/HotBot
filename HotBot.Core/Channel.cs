@@ -5,6 +5,8 @@ using System.Linq;
 
 namespace HotBot.Core
 {
+	//TODO: Two seperate classes: Channel and ChannelData
+	//Implemented in ChannelConnection and Channel. Possible rename from Channel to ChannelData later
 	public class Channel
 	{
 		public const int MinimumNameLength = User.MinimumNameLength;

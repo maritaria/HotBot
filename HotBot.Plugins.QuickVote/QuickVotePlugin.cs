@@ -37,7 +37,7 @@ namespace HotBot.Plugins.QuickVote
 		}
 
 		[Subscribe]
-		public void OnChatMessage(ChatReceivedEvent receivedChat)
+		public void OnChatMessage(/*ChatReceivedEvent receivedChat*/)
 		{
 			//TODO: Keep track of data
 		}

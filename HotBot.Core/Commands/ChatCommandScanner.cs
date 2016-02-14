@@ -26,7 +26,7 @@ namespace HotBot.Core.Commands
 			Bus = bus;
 			Bus.Subscribe(this);
 		}
-
+		/*
 		[Subscribe]
 		public void HandleMessage(ChatReceivedEvent message)
 		{
@@ -66,7 +66,7 @@ namespace HotBot.Core.Commands
 			CommandEvent commandInfo = new CommandEvent(message.Channel, message.User, commandName, argumentText);
 			return commandInfo;
 		}
-
+		*/
 		private string RemovePrefix(string text)
 		{
 			foreach(string prefix in Config.Prefixes)

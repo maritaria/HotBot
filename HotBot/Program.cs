@@ -32,17 +32,15 @@ namespace HotBot
 		{
 			MasterConfig config = new MasterConfig();
 			container.RegisterInstance(config, new ContainerControlledLifetimeManager());
-			container.RegisterInstance<IrcClientConfig>(config, new ExternallyControlledLifetimeManager());
 			container.RegisterInstance<CommandManagerConfig>(config, new ExternallyControlledLifetimeManager());
 		}
 
 		private static void InitializeInstances(UnityContainer container)
 		{
-			container.Resolve<PrivateMessageDecoder>();
-			container.Resolve<IrcLogger>();
 			container.Resolve<ChatCommandScanner>();
 			container.Resolve<ProtocolDecoder>();
-			container.Resolve<TwitchBot>();
+			var bot = container.Resolve<TwitchBot>();
+			bot.Run();
 		}
 	}
 }
