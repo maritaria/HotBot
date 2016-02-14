@@ -38,7 +38,6 @@ namespace HotBot
 		private static void InitializeInstances(UnityContainer container)
 		{
 			container.Resolve<ChatCommandScanner>();
-			container.Resolve<ProtocolDecoder>();
 			var bot = container.Resolve<TwitchBot>();
 			bot.Run();
 		}

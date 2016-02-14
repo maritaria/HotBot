@@ -1,6 +1,5 @@
 ﻿using HotBot.Core;
 using HotBot.Core.Irc;
-using HotBot.Core.Irc.Twitch;
 using HotBot.Core.Plugins;
 using Microsoft.Practices.Unity;
 using System;
@@ -25,10 +24,12 @@ namespace HotBot
 		public PluginManager PluginManager { get; set; }
 
 		[Dependency]
-		public TwitchIrcClient TwitchClient { get; set; }
+		public TwitchConnector ChatConnector { get; set; }
 
 		[Dependency]
 		public DataStore DataStore { get; set; }
+		[Dependency]
+		public TwitchApi TwitchApi { get; set; }
 
 		public Channel PrimaryChannel { get; } = new Channel("maritaria");
 
@@ -46,21 +47,14 @@ namespace HotBot
 
 		private void JoinPrimaryChannel()
 		{
-			/*
-			Bus.PublishSpecific(new ChannelJoinRequest(PrimaryChannel));
-			Bus.PublishSpecific(new ChannelNotificationRequest(PrimaryChannel, "is now online"));
-			Bus.PublishSpecific(new RegisterCapabilityRequest(RegisterCapabilityRequest.TwitchMembership));
-			Bus.PublishSpecific(new RegisterCapabilityRequest(RegisterCapabilityRequest.ExtendedCommands));
-			Bus.PublishSpecific(new ChangeColorRequest(PrimaryChannel, ChangeColorRequest.ChatColor.DodgerBlue));
-			*/
-			TwitchClient.Connection.Connect("tmi.twitch.tv", 6667);
-			var login = new TwitchLogin { AuthKey = "oauth:to4julsv3nu1c6lx9l1s13s7nj25yp", Username = "maritaria_bot01" };
-			TwitchClient.Login(login);
-			
-			while (true)
+			ChatConnector.DefaultCredentials = new Credentials { AuthKey = MasterConfig.AuthKey, Username = MasterConfig.Username };
+			var channel = ChatConnector.GetConnection(PrimaryChannel);
+			channel.Join();
+			channel.Say(@"/me is now online");
+			while(true)
 			{
-				Response r = TwitchClient.Connection.ReadResponse();
-				Console.WriteLine(r.ToString());
+				var r = channel.Connection.ReadResponse();
+				Console.WriteLine(r);
 			}
 		}
 	}

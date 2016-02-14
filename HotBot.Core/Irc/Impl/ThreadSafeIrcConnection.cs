@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 
-namespace HotBot.Core.Irc
+namespace HotBot.Core.Irc.Impl
 {
 	public class ThreadSafeIrcConnection : IrcConnection
 	{
@@ -24,7 +24,7 @@ namespace HotBot.Core.Irc
 			}
 		}
 				
-		public void Connect(string hostname, ushort port)
+		public void Connect(ConnectionInfo info)
 		{
 			lock (_communicationLock)
 			{
@@ -33,7 +33,7 @@ namespace HotBot.Core.Irc
 					throw new InvalidOperationException("IrcClient already connected");
 				}
 				CleaupTcpClient();
-				_tcpClient = new TcpClient(hostname, port);
+				_tcpClient = new TcpClient(info.Hostname, info.Port);
 				_stream = _tcpClient.GetStream();
 				_reader = new StreamReader(_stream);
 				_writer = new StreamWriter(_stream);

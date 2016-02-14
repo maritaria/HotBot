@@ -7,7 +7,7 @@ namespace HotBot.Core.Irc
 	{
 		bool IsConnected { get; }
 
-		void Connect(string hostname, ushort port);
+		void Connect(ConnectionInfo info);
 
 		void Disconnect();
 
@@ -16,5 +16,6 @@ namespace HotBot.Core.Irc
 		void SendCommandBatch(params string[] ircCommands);
 
 		Response ReadResponse();
+
 	}
 }

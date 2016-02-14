@@ -60,6 +60,10 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
@@ -81,21 +85,22 @@
     <Compile Include="Commands\UnregisterPluginCommandsRequest.cs" />
     <Compile Include="DbContextDataStore.cs" />
     <Compile Include="DefaultPublishTypeAttribute.cs" />
-    <Compile Include="Irc\BasicIrcClient.cs" />
+    <Compile Include="Irc\ChannelConnection.cs" />
+    <Compile Include="Irc\ConnectionInfo.cs" />
     <Compile Include="Irc\HostMask.cs" />
-    <Compile Include="Irc\IrcClient.cs" />
-    <Compile Include="Irc\LoginMethod.cs" />
-    <Compile Include="Irc\ProtocolDecoder.cs" />
+    <Compile Include="Irc\Impl\BasicChannelConnection.cs" />
+    <Compile Include="Irc\Impl\BasicTwitchApi.cs" />
+    <Compile Include="Irc\Impl\BasicTwitchConnector.cs" />
+    <Compile Include="Irc\Impl\BasicWhisperConnection.cs" />
     <Compile Include="Irc\ReplyCode.cs" />
     <Compile Include="Irc\Response.cs" />
-    <Compile Include="Irc\Twitch\BasicTwitchApi.cs" />
-    <Compile Include="Irc\Twitch\BasicTwitchIrcClient.cs" />
-    <Compile Include="Irc\Twitch\TwitchApi.cs" />
-    <Compile Include="Irc\Twitch\TwitchIrcClient.cs" />
-    <Compile Include="Irc\Twitch\TwitchLogin.cs" />
-    <Compile Include="Irc\Twitch\WhisperConnection.cs" />
+    <Compile Include="Irc\ResponseEventArgs.cs" />
+    <Compile Include="Irc\TwitchApi.cs" />
+    <Compile Include="Irc\TwitchConnector.cs" />
+    <Compile Include="Irc\Credentials.cs" />
     <Compile Include="Irc\IrcConnection.cs" />
-    <Compile Include="Irc\ThreadSafeIrcConnection.cs" />
+    <Compile Include="Irc\Impl\ThreadSafeIrcConnection.cs" />
+    <Compile Include="Irc\WhisperConnection.cs" />
     <Compile Include="MessageBusExtensions.cs" />
     <Compile Include="SubscribeAttribute.cs" />
     <Compile Include="Plugins\AssemblyLoadedEvent.cs" />

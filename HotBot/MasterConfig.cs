@@ -11,22 +11,6 @@ namespace HotBot
 	public class MasterConfig : ApplicationSettingsBase, CommandManagerConfig
 	{
 		[UserScopedSetting]
-		[DefaultSettingValue("irc.twitch.tv")]
-		public string Hostname
-		{
-			get { return (string)this["Hostname"]; }
-			set { this["Hostname"] = value; }
-		}
-
-		[UserScopedSetting]
-		[DefaultSettingValue("6667")]
-		public ushort Port
-		{
-			get { return (ushort)this["Port"]; }
-			set { this["Port"] = value; }
-		}
-
-		[UserScopedSetting]
 		[DefaultSettingValue("maritaria_bot01")]
 		public string Username
 		{
