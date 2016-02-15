@@ -1,17 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc.Impl
 {
-	public class ThreadSafeIrcConnection : IrcConnection
+	public sealed partial class BasicIrcConnection : IrcConnection
 	{
+		public const int ReceiveBufferSize = 4096;
+		public const int TransmitBufferSize = 4096;
+
 		private readonly object _communicationLock = new object();
+		private bool _stopReaderThread = false;
 		private TcpClient _tcpClient;
 		private NetworkStream _stream;
-		private StreamReader _reader;
-		private StreamWriter _writer;
+		private Reader _reader;
+		private Writer _writer;
+
+		public Encoding Encoding { get; set; } = Encoding.ASCII;
 
 		public bool IsConnected
 		{
@@ -23,7 +33,11 @@ namespace HotBot.Core.Irc.Impl
 				}
 			}
 		}
-				
+
+		private byte[] TransmitBuffer = new byte[TransmitBufferSize];
+
+		private byte[] ReceiveBuffer = new byte[ReceiveBufferSize];
+
 		public void Connect(ConnectionInfo info)
 		{
 			lock (_communicationLock)
@@ -35,8 +49,8 @@ namespace HotBot.Core.Irc.Impl
 				CleaupTcpClient();
 				_tcpClient = new TcpClient(info.Hostname, info.Port);
 				_stream = _tcpClient.GetStream();
-				_reader = new StreamReader(_stream);
-				_writer = new StreamWriter(_stream);
+				_reader = new Reader(_stream);
+				_writer = new Writer(_stream);
 			}
 		}
 
@@ -54,8 +68,7 @@ namespace HotBot.Core.Irc.Impl
 			lock (_communicationLock)
 			{
 				VerifyConnection();
-				_writer.WriteLine(ircCommand);
-				_writer.Flush();
+				_writer.Queue(ircCommand);
 			}
 		}
 
@@ -64,26 +77,14 @@ namespace HotBot.Core.Irc.Impl
 			lock (_communicationLock)
 			{
 				VerifyConnection();
-				foreach (string command in ircCommands)
-				{
-					_writer.WriteLine(command);
-				}
-				_writer.Flush();
+				string block = string.Join("\n", ircCommands);
+				_writer.Queue(block);
 			}
 		}
 
 		public Response ReadResponse()
 		{
-			lock (_communicationLock)
-			{
-				VerifyConnection();
-				string response = _reader.ReadLine();
-				if (response == null)
-				{
-					return null;
-				}
-				return new Response(response);
-			}
+			throw new NotImplementedException();
 		}
 
 		private void VerifyConnection()
@@ -98,15 +99,15 @@ namespace HotBot.Core.Irc.Impl
 		{
 			if (_tcpClient != null)
 			{
-				if (_tcpClient.Connected)
-				{
-					_tcpClient.Close();
-				}
+				_reader.Dispose();
+				_writer.Dispose();
+				_tcpClient.Close();
 				_tcpClient = null;
 				_stream = null;
 				_reader = null;
 				_writer = null;
 			}
 		}
+
 	}
 }

@@ -89,6 +89,8 @@
     <Compile Include="Irc\ConnectionInfo.cs" />
     <Compile Include="Irc\HostMask.cs" />
     <Compile Include="Irc\Impl\BasicChannelConnection.cs" />
+    <Compile Include="Irc\Impl\BasicIrcConnection.Reader.cs" />
+    <Compile Include="Irc\Impl\BasicIrcConnection.Writer.cs" />
     <Compile Include="Irc\Impl\BasicTwitchApi.cs" />
     <Compile Include="Irc\Impl\BasicTwitchConnector.cs" />
     <Compile Include="Irc\Impl\BasicWhisperConnection.cs" />
@@ -99,7 +101,7 @@
     <Compile Include="Irc\TwitchConnector.cs" />
     <Compile Include="Irc\Credentials.cs" />
     <Compile Include="Irc\IrcConnection.cs" />
-    <Compile Include="Irc\Impl\ThreadSafeIrcConnection.cs" />
+    <Compile Include="Irc\Impl\BasicIrcConnection.cs" />
     <Compile Include="Irc\WhisperConnection.cs" />
     <Compile Include="MessageBusExtensions.cs" />
     <Compile Include="SubscribeAttribute.cs" />
