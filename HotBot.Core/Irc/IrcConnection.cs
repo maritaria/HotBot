@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace HotBot.Core.Irc
 {
-	public interface IrcConnection
+	public interface IrcConnection : Publisher
 	{
 		bool IsConnected { get; }
 

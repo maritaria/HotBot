@@ -96,7 +96,6 @@
     <Compile Include="Irc\Impl\BasicWhisperConnection.cs" />
     <Compile Include="Irc\ReplyCode.cs" />
     <Compile Include="Irc\Response.cs" />
-    <Compile Include="Irc\ResponseEventArgs.cs" />
     <Compile Include="Irc\TwitchApi.cs" />
     <Compile Include="Irc\TwitchConnector.cs" />
     <Compile Include="Irc\Credentials.cs" />
@@ -104,6 +103,7 @@
     <Compile Include="Irc\Impl\BasicIrcConnection.cs" />
     <Compile Include="Irc\WhisperConnection.cs" />
     <Compile Include="MessageBusExtensions.cs" />
+    <Compile Include="Publisher.cs" />
     <Compile Include="SubscribeAttribute.cs" />
     <Compile Include="Plugins\AssemblyLoadedEvent.cs" />
     <Compile Include="Plugins\AssemblyPluginAttribute.cs" />

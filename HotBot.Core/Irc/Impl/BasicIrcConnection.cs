@@ -20,7 +20,10 @@ namespace HotBot.Core.Irc.Impl
 		private NetworkStream _stream;
 		private Reader _reader;
 		private Writer _writer;
+		private byte[] TransmitBuffer = new byte[TransmitBufferSize];
+		private byte[] ReceiveBuffer = new byte[ReceiveBufferSize];
 
+		public MessageBus Bus { get; }
 		public Encoding Encoding { get; set; } = Encoding.ASCII;
 
 		public bool IsConnected
@@ -34,9 +37,14 @@ namespace HotBot.Core.Irc.Impl
 			}
 		}
 
-		private byte[] TransmitBuffer = new byte[TransmitBufferSize];
-
-		private byte[] ReceiveBuffer = new byte[ReceiveBufferSize];
+		public BasicIrcConnection(MessageBus bus)
+		{
+			if (bus == null)
+			{
+				throw new ArgumentNullException("bus");
+			}
+			Bus = bus;
+		}
 
 		public void Connect(ConnectionInfo info)
 		{

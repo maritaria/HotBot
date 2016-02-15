@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace HotBot.Core.Irc
 {
-	public interface WhisperConnection : IDisposable
+	public interface WhisperConnection : Publisher, IDisposable
 	{
 		TwitchConnector Connector { get; }
 		IrcConnection Connection { get; }

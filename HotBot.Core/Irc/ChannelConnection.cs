@@ -1,6 +1,6 @@
 ﻿namespace HotBot.Core.Irc
 {
-	public interface ChannelConnection
+	public interface ChannelConnection : Publisher
 	{
 		Channel ChannelData { get; }
 		TwitchConnector Connector { get; }
@@ -10,5 +10,4 @@
 		void Leave();
 		void Say(string message);
 	}
-
 }
