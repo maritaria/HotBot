@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc
 {
 	public interface ChannelData
 	{
+		string Name { get; }
+
 		/// <summary>
-		/// Users who at some point have joined the <see cref="Channel"/>.
+		/// Gets a querryable source holding all users who at some point have joined the <see cref="ChannelData"/>.
 		/// </summary>
 		IQueryable<ChannelUser> KnownUsers { get; }
 	}

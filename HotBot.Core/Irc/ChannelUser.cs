@@ -7,7 +7,7 @@ namespace HotBot.Core.Irc
 		/// <summary>
 		/// Gets the channel the instance relates to.
 		/// </summary>
-		Channel Channel { get; }
+		ChannelData Channel { get; }
 
 		/// <summary>
 		/// Gets the global instance of the user.

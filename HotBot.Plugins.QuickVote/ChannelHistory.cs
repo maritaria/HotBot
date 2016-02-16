@@ -8,16 +8,16 @@ using System.Linq;
 namespace HotBot.Plugins.QuickVote
 {
 	/// <summary>
-	/// Keeps track of tag records for a specific <see cref="Channel"/>.
+	/// Keeps track of tag records for a specific <see cref="ChannelData"/>.
 	/// </summary>
 	public sealed class ChannelHistory
 	{
 		private Dictionary<string, TagRecord> _history = new Dictionary<string, TagRecord>();
 
 		/// <summary>
-		/// Gets the <see cref="Channel"/> the <see cref="ChannelHistory"/> is monitoring.
+		/// Gets the <see cref="ChannelData"/> the <see cref="ChannelHistory"/> is monitoring.
 		/// </summary>
-		public Channel ObservedChannel { get; }
+		public ChannelData ObservedChannel { get; }
 
 		/// <summary>
 		/// Gets or sets the amount of time a <see cref="TagRecord"/> stays alive for.
@@ -25,7 +25,7 @@ namespace HotBot.Plugins.QuickVote
 		/// </summary>
 		public TimeSpan RecordLifetime { get; set; }//TODO: read from config (Requires dynamic config support)
 
-		public ChannelHistory(Channel channel)
+		public ChannelHistory(ChannelData channel)
 		{
 			if (channel == null)
 			{

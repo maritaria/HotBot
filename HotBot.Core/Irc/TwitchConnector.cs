@@ -7,11 +7,9 @@ namespace HotBot.Core.Irc
 	{
 		Credentials DefaultCredentials { get; set; }
 		IrcConnection[] GroupServers { get; }
-		WhisperConnection WhisperServer { get; }
-		ChannelConnection[] ConnectedChannels { get; }
-		ChannelConnection GetConnection(Channel channel);
-
-		ProtocolDecoder Decoder { get; set; }
-
+		WhisperConnection WhisperServer { get; }//TODO: Dictionary<Login, WhisperConnection> WhisperConnections{get;}
+		LiveChannel[] ConnectedChannels { get; }
+		ProtocolDecoder Decoder { get; }
+		LiveChannel GetConnection(ChannelData channel);
 	}
 }

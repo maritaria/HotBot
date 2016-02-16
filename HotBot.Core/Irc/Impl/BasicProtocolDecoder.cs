@@ -24,6 +24,8 @@ namespace HotBot.Core.Irc.Impl
 		public event EventHandler<ChatEventArgs> ChatReceived;
 
 		public event EventHandler<PingEventArgs> PingReceived;
+		public event EventHandler<ChannelUserEventArgs> UserJoinedChannel;
+		public event EventHandler<ChannelUserEventArgs> UserLefthannel;
 
 		public void Decode(IrcConnection connection, Response response)
 		{
@@ -63,21 +65,47 @@ namespace HotBot.Core.Irc.Impl
 		private void HandleChatMessage(IrcConnection connection, Response response)
 		{
 			string channelName = response.Arguments[0];
-			Channel channel = Connector.ConnectedChannels.First(c => c.ChannelData.Name == channelName).ChannelData;
 			string username = response.Arguments[1];
-			ChannelUser user = new BasicChannelUser();
 			string message = response.Arguments[2];
-			ChatReceived?.Invoke(this, new ChatEventArgs(user, message));
+			LiveChannel channel = GetChannel(channelName);
+			ChannelUser user = GetChannelUser(channel, username);
+			ChatReceived?.Invoke(this, new ChatEventArgs(channel, user, message));
 		}
-
 		private void HandleJoinCommand(IrcConnection connection, Response response)
 		{
-			throw new NotImplementedException();
+			string channelName = response.Arguments[0];
+			string username = response.Arguments[1];
+			string message = response.Arguments[2];
+			LiveChannel channel = GetChannel(channelName);
+			ChannelUser user = GetChannelUser(channel, username);
+			ChatReceived?.Invoke(this, new ChatEventArgs(channel, user, message));
 		}
 
 		private void HandleLeaveCommand(IrcConnection connection, Response response)
 		{
-			throw new NotImplementedException();
+			
+			string channelName = response.Arguments[0];
+			string username = response.HostMask.Username;
+			string message = response.Arguments[2];
+			LiveChannel channel = GetChannel(channelName);
+			ChannelUser user = GetChannelUser(channel, username);
+			ChatReceived?.Invoke(this, new ChatEventArgs(channel, user, message));
 		}
+
+		private LiveChannel GetChannel(string channelName)
+		{
+			return Connector.ConnectedChannels.First(c => c.Data.Name == channelName);
+		}
+
+		private ChannelUser GetChannelUser(LiveChannel channel, string username)
+		{
+			return new BasicChannelUser(channel.Data, GetUser(username));
+		}
+
+		private BasicUser GetUser(string username)
+		{
+			return new BasicUser(username);
+		}
+
 	}
 }

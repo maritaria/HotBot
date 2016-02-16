@@ -9,7 +9,7 @@ namespace HotBot.Core.Irc
 	//TODO: Doesnt belong in this namespace
 	public interface TwitchApi
 	{
-		IEnumerable<ConnectionInfo> GetChatServers(Channel channel);
+		IEnumerable<ConnectionInfo> GetChatServers(ChannelData channel);
 
 		IEnumerable<ConnectionInfo> GetWhisperServers();
 

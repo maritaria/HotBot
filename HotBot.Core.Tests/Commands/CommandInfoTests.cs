@@ -1,9 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using HotBot.Core.Irc;
+using HotBot.Core.Irc.Impl;
+using HotBot.Testing;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Linq;
-using HotBot.Core.Irc;
-using HotBot.Testing;
 
 namespace HotBot.Core.Commands.Tests
 {
@@ -13,7 +14,7 @@ namespace HotBot.Core.Commands.Tests
 		[TestMethod()]
 		public void CommandInfo_Constructor()
 		{
-			var channel = new Mock<Channel>("TestChannel");
+			var channel = new Mock<ChannelData>("TestChannel");
 			var user = new Mock<BasicUser>("TestChannel");
 			var authorizer = new Mock<BasicUser>("TestAuthorizer");
 			var command = "command";

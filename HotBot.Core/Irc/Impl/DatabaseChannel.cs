@@ -9,11 +9,8 @@ using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc.Impl
 {
-	public sealed class BasicChannel : Channel
+	class DatabaseChannel
 	{
-		//TODO: Store this somewhere safe.
-		public const string ChannelPrefix = "#";
-
 		[Key]
 		public Guid Id { get; private set; }
 
@@ -21,7 +18,7 @@ namespace HotBot.Core.Irc.Impl
 		[StringLength(25)]
 		public string Name { get; private set; }
 
-		public BasicChannel(string name) : this()
+		public DatabaseChannel(string name) : this()
 		{
 			try
 			{
@@ -34,14 +31,14 @@ namespace HotBot.Core.Irc.Impl
 			Name = name;
 		}
 
-		private BasicChannel()
+		private DatabaseChannel()
 		{
 			Id = Guid.NewGuid();
 		}
 
 		public override string ToString()
 		{
-			return ChannelPrefix + Name;
+			return "#" + Name;
 		}
 	}
 }

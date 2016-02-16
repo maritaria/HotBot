@@ -30,7 +30,7 @@ namespace HotBot
 		[Dependency]
 		public TwitchApi TwitchApi { get; set; }
 
-		public Channel PrimaryChannel { get; } = new BasicChannel("maritaria");
+		public LiveChannel PrimaryChannel { get; set; }
 
 		public TwitchBot()
 		{
@@ -38,7 +38,6 @@ namespace HotBot
 
 		public void Run()
 		{
-			JoinPrimaryChannel();
 			Bus.Subscribe(this);
 			PluginManager.LoadAll();
 		}
@@ -46,9 +45,9 @@ namespace HotBot
 		private void JoinPrimaryChannel()
 		{
 			ChatConnector.DefaultCredentials = new Credentials { AuthKey = MasterConfig.AuthKey, Username = MasterConfig.Username };
-			var channel = ChatConnector.GetConnection(PrimaryChannel);
-			channel.Join();
-			channel.Say(@"/me is now online");
+			PrimaryChannel = ChatConnector.GetConnection(new BasicChannelData("maritaria"));
+			PrimaryChannel.Join();
+			PrimaryChannel.Say(@"/me is now online");
 			ChatConnector.WhisperServer.WhisperReceived += WhisperServer_WhisperReceived;
 		}
 

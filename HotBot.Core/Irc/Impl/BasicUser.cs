@@ -7,8 +7,10 @@ using HotBot.Core.Util;
 
 namespace HotBot.Core.Irc.Impl
 {
-	public sealed class BasicUser : User 
+	public sealed class BasicUser : User
 	{
+		//TODO: Store this somewhere safe.
+		public const string ChannelPrefix = "#";
 		public const char HandlePrefix = '@';//TODO: Store this somewhere safe
 
 		[Key]

@@ -8,7 +8,7 @@ namespace HotBot.Core.Irc.Impl
 	public sealed class BasicTwitchConnector : TwitchConnector
 	{
 		private Dictionary<ConnectionInfo, IrcConnection> _connections = new Dictionary<ConnectionInfo, IrcConnection>();
-		private Dictionary<Channel, ChannelConnection> _channels = new Dictionary<Channel, ChannelConnection>();
+		private Dictionary<ChannelData, LiveChannel> _channels = new Dictionary<ChannelData, LiveChannel>();
 		private DependencyOverrides _overrides = new DependencyOverrides();
 		private WhisperConnection _whisperServer;
 
@@ -16,12 +16,14 @@ namespace HotBot.Core.Irc.Impl
 
 		public Credentials DefaultCredentials { get; set; }
 
-		public ChannelConnection[] ConnectedChannels => _channels.Values.ToArray();
+		public LiveChannel[] ConnectedChannels => _channels.Values.ToArray();
 
 		public IrcConnection[] GroupServers => _connections.Values.ToArray();
 
 		public IUnityContainer DependencyInjector { get; }
 
+		public ProtocolDecoder Decoder { get; }
+		
 		public WhisperConnection WhisperServer
 		{
 			get
@@ -34,15 +36,13 @@ namespace HotBot.Core.Irc.Impl
 			}
 		}
 
-		public ProtocolDecoder Decoder { get; set; }
-
 		public BasicTwitchConnector(TwitchApi api, IUnityContainer dependencyInjector)
 		{
 			Api = api;
 			DependencyInjector = dependencyInjector;
 		}
 
-		public ChannelConnection GetConnection(Channel channel)
+		public LiveChannel GetConnection(ChannelData channel)
 		{
 			if (!_channels.ContainsKey(channel))
 			{
@@ -51,17 +51,17 @@ namespace HotBot.Core.Irc.Impl
 			return _channels[channel];
 		}
 
-		private ChannelConnection CreateChannelConnection(Channel channel)
+		private LiveChannel CreateChannelConnection(ChannelData channel)
 		{
 			var connection = GetIrcConnection(channel);
 			var overrides = new DependencyOverrides();
 			overrides.Add(typeof(TwitchConnector), this);
 			overrides.Add(typeof(IrcConnection), connection);
-			overrides.Add(typeof(Channel), channel);
-			return DependencyInjector.Resolve<ChannelConnection>(overrides);
+			overrides.Add(typeof(ChannelData), channel);
+			return DependencyInjector.Resolve<LiveChannel>(overrides);
 		}
 
-		private IrcConnection GetIrcConnection(Channel channel)
+		private IrcConnection GetIrcConnection(ChannelData channel)
 		{
 			var connections = Api.GetChatServers(channel);
 			foreach (KeyValuePair<ConnectionInfo, IrcConnection> pair in _connections)

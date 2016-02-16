@@ -12,7 +12,7 @@ namespace HotBot.Core.Irc.Impl
 	{
 		private WebClient _client = new WebClient();
 
-		public IEnumerable<ConnectionInfo> GetChatServers(Channel channel)
+		public IEnumerable<ConnectionInfo> GetChatServers(ChannelData channel)
 		{
 			string responseJson = _client.DownloadString($"https://api.twitch.tv/api/channels/{channel.Name}/chat_properties");
 			JObject response = JObject.Parse(responseJson);

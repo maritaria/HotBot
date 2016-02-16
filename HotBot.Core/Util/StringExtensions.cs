@@ -129,5 +129,28 @@ namespace HotBot.Core.Util
 			return distances[sourceLength, matchLength];
 		}
 
+		/// <summary>
+		/// Removes the a given prefix once from a string but only if the string starts with the prefix.
+		/// </summary>
+		/// <param name="source">The string that may contain the prefix.</param>
+		/// <param name="prefix">The prefix to remove.</param>
+		/// <returns>The source string without the prefix.</returns>
+		public static string RemovePrefixOnce(this string source, string prefix)
+		{
+			if (source == null)
+			{
+				throw new ArgumentNullException("source");
+			}
+			if (prefix == null)
+			{
+				throw new ArgumentNullException("prefix");
+			}
+			if (source.StartsWith(prefix))
+			{
+				source = source.Substring(prefix.Length);
+			}
+			return source;
+		}
+
 	}
 }

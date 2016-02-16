@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotBot.Plugins.QuickVote", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotBot.Plugins.QuickVote.Tests", "HotBot.Plugins.QuickVote.Tests\HotBot.Plugins.QuickVote.Tests.csproj", "{9911A6DF-55A0-40C4-813E-34D7D8A2B921}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotBot.Plugins.Wallet", "HotBot.Plugins.Wallet\HotBot.Plugins.Wallet.csproj", "{AD738D9F-489E-447F-96F9-6B3B293FF8C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{9911A6DF-55A0-40C4-813E-34D7D8A2B921}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9911A6DF-55A0-40C4-813E-34D7D8A2B921}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9911A6DF-55A0-40C4-813E-34D7D8A2B921}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD738D9F-489E-447F-96F9-6B3B293FF8C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD738D9F-489E-447F-96F9-6B3B293FF8C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD738D9F-489E-447F-96F9-6B3B293FF8C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD738D9F-489E-447F-96F9-6B3B293FF8C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

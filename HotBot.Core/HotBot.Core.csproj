@@ -78,22 +78,20 @@
   <ItemGroup>
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandRedirecter.cs" />
-    <Compile Include="Irc\Channel.cs" />
+    <Compile Include="Irc\ChannelData.cs" />
     <Compile Include="Commands\CommandManagerConfig.cs" />
     <Compile Include="Commands\ReflectionCommandManager.cs" />
     <Compile Include="Commands\RegisterPluginCommandsRequest.cs" />
     <Compile Include="Commands\UnregisterPluginCommandsRequest.cs" />
     <Compile Include="DefaultPublishTypeAttribute.cs" />
-    <Compile Include="Irc\ChannelConnection.cs" />
-    <Compile Include="Irc\ChannelData.cs" />
-    <Compile Include="Irc\ChannelState.cs" />
+    <Compile Include="Irc\Impl\BasicChannelData.cs" />
+    <Compile Include="Irc\LiveChannel.cs" />
     <Compile Include="Irc\ChannelUser.cs" />
     <Compile Include="Irc\ChannelUserEventArgs.cs" />
     <Compile Include="Irc\ChatEventArgs.cs" />
     <Compile Include="Irc\ConnectionInfo.cs" />
     <Compile Include="Irc\HostMask.cs" />
-    <Compile Include="Irc\Impl\BasicChannel.cs" />
-    <Compile Include="Irc\Impl\BasicChannelConnection.cs" />
+    <Compile Include="Irc\Impl\BasicLiveConnection.cs" />
     <Compile Include="Irc\Impl\BasicChannelUser.cs" />
     <Compile Include="Irc\Impl\BasicIrcConnection.Reader.cs" />
     <Compile Include="Irc\Impl\BasicIrcConnection.Writer.cs" />
@@ -101,6 +99,7 @@
     <Compile Include="Irc\Impl\BasicTwitchApi.cs" />
     <Compile Include="Irc\Impl\BasicTwitchConnector.cs" />
     <Compile Include="Irc\Impl\BasicWhisperConnection.cs" />
+    <Compile Include="Irc\Impl\DatabaseChannel.cs" />
     <Compile Include="Irc\Impl\PingResponder.cs" />
     <Compile Include="Irc\User.cs" />
     <Compile Include="Irc\PingEventArgs.cs" />

@@ -10,5 +10,7 @@ namespace HotBot.Core.Irc
 
 		event EventHandler<PingEventArgs> PingReceived;
 		event EventHandler<ChatEventArgs> ChatReceived;
+		event EventHandler<ChannelUserEventArgs> UserJoinedChannel;
+		event EventHandler<ChannelUserEventArgs> UserLefthannel;
 	}
 }
