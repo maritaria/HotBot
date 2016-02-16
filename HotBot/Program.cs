@@ -1,6 +1,7 @@
 ﻿using HotBot.Core;
 using HotBot.Core.Commands;
 using HotBot.Core.Irc;
+using HotBot.Core.Irc.Impl;
 using HotBot.Core.Plugins;
 using HotBot.Plugins.Lottery;
 using Microsoft.Practices.Unity;
@@ -27,7 +28,7 @@ namespace HotBot
 			container.RegisterInstance(typeof(IUnityContainer), container, new ContainerControlledLifetimeManager());
 			return container;
 		}
-
+		
 		private static void InitializeConfig(UnityContainer container)
 		{
 			MasterConfig config = new MasterConfig();

@@ -17,5 +17,6 @@ namespace HotBot.Core.Irc
 
 		Response ReadResponse();
 
+		event EventHandler<ResponseEventArgs> ResponseReceived;
 	}
 }

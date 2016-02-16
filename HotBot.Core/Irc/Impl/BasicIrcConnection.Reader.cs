@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -10,32 +11,53 @@ namespace HotBot.Core.Irc.Impl
 	{
 		private class Reader : IDisposable
 		{
-			private NetworkStream _stream;
+			private StreamReader _stream;
 			private byte[] _buffer = new byte[BasicIrcConnection.ReceiveBufferSize];
 			private bool _disposed = false;
-			public Encoding Encoding { get; set; }
+			private BasicIrcConnection _owner;
+			private CancellationTokenSource _cancellation = new CancellationTokenSource();
+			private Thread _readerThread;
+			public Encoding Encoding { get; set; } = Encoding.UTF8;
 
-			public Reader(NetworkStream stream)
+			public Reader(BasicIrcConnection owner, StreamReader stream)
 			{
+				_owner = owner;
 				_stream = stream;
-				StartRead();
+				StartReaderThread();
+			}
+
+			private void StartReaderThread()
+			{
+				_readerThread = new Thread(ReaderThreadMethod);
+				_readerThread.Name = "BasicIrcConnection.Reader";
+				_readerThread.Start();
+			}
+
+			private void StopReaderThread()
+			{
+				_cancellation.Cancel();
 			}
 			
-			private void StartRead()
+			private void ReaderThreadMethod()
 			{
-				_stream.BeginRead(_buffer, 0, _buffer.Length, ReadCompleted, null);
-			}
-
-			private void ReadCompleted(IAsyncResult ar)
-			{
-				int bytesRead = _stream.EndRead(ar);
-				if (bytesRead > 0)
+				while (!_cancellation.IsCancellationRequested)
 				{
-					DataReceived(_buffer, bytesRead);
-					StartRead();
+					HandleReceivedData(_stream.ReadLine());
+					/*
+					var task = _stream.ReadAsync(_buffer, 0, _buffer.Length, _cancellation.Token);
+					task.Wait(_cancellation.Token);
+					if (!task.IsCanceled)
+					{
+						int bytesRead = task.Result;
+						if (bytesRead > 0)
+						{
+							DataReceived(_buffer, bytesRead);
+						}
+					}
+					*/
 				}
 			}
-
+			
 			private void DataReceived(byte[] buffer, int length)
 			{
 				string message = Decode(buffer, length);
@@ -50,13 +72,12 @@ namespace HotBot.Core.Irc.Impl
 			private void HandleReceivedData(string message)
 			{
 				Response r = new Response(message);
-				//TODO: Handle it
-				throw new NotImplementedException();
+				Console.WriteLine(r);
+				_owner.HandleResponse(r);
 			}
 
 			#region IDisposable Support
-
-
+			
 			protected virtual void Dispose(bool disposing)
 			{
 				if (!_disposed)
@@ -83,6 +104,7 @@ namespace HotBot.Core.Irc.Impl
 
 			private void DisposeUnmanaged()
 			{
+				StopReaderThread();
 			}
 
 			private void DisposeManaged()

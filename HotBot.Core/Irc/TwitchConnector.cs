@@ -10,5 +10,8 @@ namespace HotBot.Core.Irc
 		WhisperConnection WhisperServer { get; }
 		ChannelConnection[] ConnectedChannels { get; }
 		ChannelConnection GetConnection(Channel channel);
+
+		ProtocolDecoder Decoder { get; set; }
+
 	}
 }

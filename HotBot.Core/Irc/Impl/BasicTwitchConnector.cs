@@ -10,6 +10,7 @@ namespace HotBot.Core.Irc.Impl
 		private Dictionary<ConnectionInfo, IrcConnection> _connections = new Dictionary<ConnectionInfo, IrcConnection>();
 		private Dictionary<Channel, ChannelConnection> _channels = new Dictionary<Channel, ChannelConnection>();
 		private DependencyOverrides _overrides = new DependencyOverrides();
+		private WhisperConnection _whisperServer;
 
 		public TwitchApi Api { get; }
 
@@ -20,8 +21,6 @@ namespace HotBot.Core.Irc.Impl
 		public IrcConnection[] GroupServers => _connections.Values.ToArray();
 
 		public IUnityContainer DependencyInjector { get; }
-
-		private WhisperConnection _whisperServer;
 
 		public WhisperConnection WhisperServer
 		{
@@ -34,6 +33,8 @@ namespace HotBot.Core.Irc.Impl
 				return _whisperServer;
 			}
 		}
+
+		public ProtocolDecoder Decoder { get; set; }
 
 		public BasicTwitchConnector(TwitchApi api, IUnityContainer dependencyInjector)
 		{

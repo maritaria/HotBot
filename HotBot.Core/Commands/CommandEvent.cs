@@ -1,4 +1,5 @@
-﻿using HotBot.Core.Permissions;
+﻿using HotBot.Core.Irc;
+using HotBot.Core.Permissions;
 using System;
 using System.Linq;
 
@@ -68,7 +69,7 @@ namespace HotBot.Core.Commands
 			CommandName = commandName;
 			ArgumentText = argumentText;
 		}
-		
+
 		public static void VerifyCommandName(string commandName)
 		{
 			if (commandName == null)

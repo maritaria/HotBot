@@ -46,6 +46,8 @@ namespace HotBot.Core.Irc.Impl
 			Bus = bus;
 		}
 
+		public event EventHandler<ResponseEventArgs> ResponseReceived;
+
 		public void Connect(ConnectionInfo info)
 		{
 			lock (_communicationLock)
@@ -57,8 +59,8 @@ namespace HotBot.Core.Irc.Impl
 				CleaupTcpClient();
 				_tcpClient = new TcpClient(info.Hostname, info.Port);
 				_stream = _tcpClient.GetStream();
-				_reader = new Reader(_stream);
-				_writer = new Writer(_stream);
+				_reader = new Reader(this, new StreamReader(_stream));
+				_writer = new Writer(new StreamWriter(_stream));
 			}
 		}
 
@@ -85,8 +87,12 @@ namespace HotBot.Core.Irc.Impl
 			lock (_communicationLock)
 			{
 				VerifyConnection();
-				string block = string.Join("\n", ircCommands);
-				_writer.Queue(block);
+				foreach(string com in ircCommands)
+				{
+					_writer.Queue(com);
+				}
+				//string block = string.Join("\n", ircCommands);
+				//_writer.Queue(block);
 			}
 		}
 
@@ -115,6 +121,11 @@ namespace HotBot.Core.Irc.Impl
 				_reader = null;
 				_writer = null;
 			}
+		}
+
+		private void HandleResponse(Response response)
+		{
+			ResponseReceived?.Invoke(this, new ResponseEventArgs(this, response));
 		}
 
 	}

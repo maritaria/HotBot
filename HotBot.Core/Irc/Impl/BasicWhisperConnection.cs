@@ -28,74 +28,24 @@ namespace HotBot.Core.Irc.Impl
 			}
 			Connector = connector;
 			Connection = connection;
+			Connection.ResponseReceived += Connection_ResponseReceived;
 			Bus = bus;
-			StartReaderThread();
 		}
+
+		public event EventHandler<WhisperEventArgs> WhisperReceived;
 
 		public void SendWhisper(User user, string message)
 		{
 		}
 
-
-		private void StartReaderThread()
+		private void Connection_ResponseReceived(object sender, ResponseEventArgs e)
 		{
-			_readerThread = new Thread(new ThreadStart(ReaderThreadMethod));
-			_readerThread.Name = $"BasicWhisperConnection.ReaderThread";
-			_readerThread.Start();
-		}
-
-		private void ReaderThreadMethod()
-		{
-			while (true)
+			if (e.Response.Command == "WHISPER")
 			{
-				Response r = Connection.ReadResponse();
-				Bus.Publish(r);
+				var user = new User(e.Response.Arguments[0]);
+				var message = e.Response.Arguments[1];
+				WhisperReceived?.Invoke(this, new WhisperEventArgs(user, message));
 			}
 		}
-
-		private void StopReaderThread()
-		{
-			//TODO: Make API async
-		}
-
-
-
-		#region IDisposable Support
-
-		public bool IsDisposed { get; private set; }
-
-		~BasicWhisperConnection()
-		{
-			Dispose(false);
-		}
-
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-		private void Dispose(bool disposing)
-		{
-			if (!IsDisposed)
-			{
-				if (disposing)
-				{
-					DisposeManaged();
-				}
-				DisposeUnmanaged();
-				IsDisposed = true;
-			}
-		}
-
-		private void DisposeUnmanaged()
-		{
-		}
-
-		private void DisposeManaged()
-		{
-		}
-
-		#endregion IDisposable Support
 	}
 }

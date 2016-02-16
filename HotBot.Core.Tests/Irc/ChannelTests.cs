@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
-namespace HotBot.Core.Tests
+namespace HotBot.Core.Irc.Tests
 {
 	[TestClass()]
 	public class ChannelTests

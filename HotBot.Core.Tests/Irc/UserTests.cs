@@ -4,7 +4,7 @@ using System.Linq;
 using HotBot.Core.Permissions;
 using HotBot.Testing;
 
-namespace HotBot.Core.Tests
+namespace HotBot.Core.Irc.Tests
 {
 	[TestClass()]
 	public class UserTests

@@ -36,6 +36,8 @@ namespace HotBot.Core.Irc.Impl
 			Bus = bus;
 		}
 
+		public event EventHandler<ChatEventArgs> ChatReceived;
+
 		public void Join()
 		{
 			Connection.SendCommand($"JOIN #{ChannelData.Name}");

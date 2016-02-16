@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
-namespace HotBot.Core
+namespace HotBot.Core.Irc
 {
 	//TODO: Two seperate classes: Channel and ChannelData
 	//Implemented in ChannelConnection and Channel. Possible rename from Channel to ChannelData later

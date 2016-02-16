@@ -1,4 +1,6 @@
-﻿namespace HotBot.Core.Irc
+﻿using System;
+
+namespace HotBot.Core.Irc
 {
 	public interface ChannelConnection : Publisher
 	{
@@ -9,5 +11,8 @@
 		void Join();
 		void Leave();
 		void Say(string message);
+
+		event EventHandler<ChatEventArgs> ChatReceived;
+
 	}
 }

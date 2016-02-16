@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -10,14 +11,12 @@ namespace HotBot.Core.Irc.Impl
 	{
 		private class Writer : IDisposable
 		{
-			private NetworkStream _stream;
+			private StreamWriter _stream;
 			private Queue<string> _queue = new Queue<string>();
-			private bool _isWriting = false;
 			private object _queueLock = new object();
 			private bool _disposed = false;
-			public Encoding Encoding { get; set; }
 
-			public Writer(NetworkStream stream)
+			public Writer(StreamWriter stream)
 			{
 				_stream = stream;
 			}
@@ -27,19 +26,16 @@ namespace HotBot.Core.Irc.Impl
 				lock (_queueLock)
 				{
 					_queue.Enqueue(message);
-					if (!_isWriting)
-					{
-						_isWriting = true;
-						StartWrite();
-					}
+					StartWrite();
 				}
 			}
 
 			private void StartWrite()
 			{
 				string message = NextMessage();
-				byte[] encoded = Encode(message);
-				_stream.BeginWrite(encoded, 0, encoded.Length, WriteCompleted, null);
+				Console.WriteLine(message);
+				_stream.WriteLine(message);
+				_stream.Flush();
 			}
 
 			private string NextMessage()
@@ -49,13 +45,7 @@ namespace HotBot.Core.Irc.Impl
 					return _queue.Dequeue();
 				}
 			}
-
-			private byte[] Encode(string message)
-			{
-				return Encoding.GetBytes(message);
-			}
-
-
+			/*
 			private void WriteCompleted(IAsyncResult ar)
 			{
 				_stream.EndWrite(ar);
@@ -67,10 +57,11 @@ namespace HotBot.Core.Irc.Impl
 					}
 					else
 					{
-						_isWriting = false;
+						//_isWriting = false;
 					}
 				}
 			}
+			*/
 
 			#region IDisposable Support
 

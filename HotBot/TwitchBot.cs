@@ -25,9 +25,7 @@ namespace HotBot
 
 		[Dependency]
 		public TwitchConnector ChatConnector { get; set; }
-
-		[Dependency]
-		public DataStore DataStore { get; set; }
+		
 		[Dependency]
 		public TwitchApi TwitchApi { get; set; }
 
@@ -40,7 +38,6 @@ namespace HotBot
 		public void Run()
 		{
 			JoinPrimaryChannel();
-			DataStore.Initialize();
 			Bus.Subscribe(this);
 			PluginManager.LoadAll();
 		}
@@ -51,11 +48,12 @@ namespace HotBot
 			var channel = ChatConnector.GetConnection(PrimaryChannel);
 			channel.Join();
 			channel.Say(@"/me is now online");
-			while(true)
-			{
-				var r = channel.Connection.ReadResponse();
-				Console.WriteLine(r);
-			}
+			ChatConnector.WhisperServer.WhisperReceived += WhisperServer_WhisperReceived;
+		}
+
+		private void WhisperServer_WhisperReceived(object sender, WhisperEventArgs e)
+		{
+			Console.WriteLine($"Whisper> {e.Sender.Name} {e.Message}");
 		}
 	}
 }
