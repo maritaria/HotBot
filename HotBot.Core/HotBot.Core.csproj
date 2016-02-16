@@ -103,7 +103,6 @@
     <Compile Include="Irc\Impl\BasicWhisperConnection.cs" />
     <Compile Include="Irc\Impl\PingResponder.cs" />
     <Compile Include="Irc\User.cs" />
-    <Compile Include="Irc\IrcEvents.cs" />
     <Compile Include="Irc\PingEventArgs.cs" />
     <Compile Include="Irc\ProtocolDecoder.cs" />
     <Compile Include="Irc\ReplyCode.cs" />
