@@ -15,7 +15,6 @@ namespace HotBot.Core.Irc.Impl
 		public const int TransmitBufferSize = 4096;
 
 		private readonly object _communicationLock = new object();
-		private bool _stopReaderThread = false;
 		private TcpClient _tcpClient;
 		private NetworkStream _stream;
 		private Reader _reader;

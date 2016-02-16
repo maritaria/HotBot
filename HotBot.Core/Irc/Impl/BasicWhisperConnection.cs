@@ -6,8 +6,6 @@ namespace HotBot.Core.Irc.Impl
 {
 	public sealed class BasicWhisperConnection : WhisperConnection
 	{
-		private Thread _readerThread;
-
 		public IrcConnection Connection { get; }
 		public TwitchConnector Connector { get; }
 		public MessageBus Bus { get; }
