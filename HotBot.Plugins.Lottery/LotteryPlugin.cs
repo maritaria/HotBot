@@ -124,7 +124,7 @@ namespace HotBot.Plugins.Lottery
 		[Command("money")]
 		public void GetBalanceCommand(CommandEvent info)
 		{
-			string message = $"{User.HandlePrefix}{info.User.Name} you have {info.User.Money} blorps";
+			string message = $"{BasicUser.HandlePrefix}{info.User.Name} you have {info.User.Money} blorps";
 			//Bus.PublishSpecific(new ChatTransmitRequest(info.Channel, message));
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using HotBot.Core;
 using HotBot.Core.Irc;
+using HotBot.Core.Irc.Impl;
 using HotBot.Core.Plugins;
 using Microsoft.Practices.Unity;
 using System;
@@ -29,7 +30,7 @@ namespace HotBot
 		[Dependency]
 		public TwitchApi TwitchApi { get; set; }
 
-		public Channel PrimaryChannel { get; } = new Channel("maritaria");
+		public Channel PrimaryChannel { get; } = new BasicChannel("maritaria");
 
 		public TwitchBot()
 		{

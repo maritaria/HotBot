@@ -4,20 +4,14 @@ namespace HotBot.Core.Irc
 {
 	public sealed class ChannelUserEventArgs : EventArgs
 	{
-		public Channel Channel { get; }
-		public User User { get; }
+		public ChannelUser User { get; }
 
-		public ChannelUserEventArgs(Channel channel, User user)
+		public ChannelUserEventArgs(ChannelUser user)
 		{
-			if (channel == null)
-			{
-				throw new ArgumentNullException("channel");
-			}
 			if (user == null)
 			{
 				throw new ArgumentNullException("user");
 			}
-			Channel = channel;
 			User = user;
 		}
 	}

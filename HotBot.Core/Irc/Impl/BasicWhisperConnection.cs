@@ -40,7 +40,7 @@ namespace HotBot.Core.Irc.Impl
 		{
 			if (e.Response.Command == "WHISPER")
 			{
-				var user = new User(e.Response.Arguments[0]);
+				var user = new BasicUser(e.Response.Arguments[0]);
 				var message = e.Response.Arguments[1];
 				WhisperReceived?.Invoke(this, new WhisperEventArgs(user, message));
 			}

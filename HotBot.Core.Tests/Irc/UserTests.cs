@@ -12,11 +12,11 @@ namespace HotBot.Core.Irc.Tests
 		[TestMethod()]
 		public void User_Constructor()
 		{
-			TestUtils.AssertArgumentException(() => new User(null));
-			TestUtils.AssertArgumentException(() => new User(""));
-			TestUtils.AssertArgumentException(() => new User("123456789012345678901234567890"));
+			TestUtils.AssertArgumentException(() => new BasicUser(null));
+			TestUtils.AssertArgumentException(() => new BasicUser(""));
+			TestUtils.AssertArgumentException(() => new BasicUser("123456789012345678901234567890"));
 
-			User user = new User("username");
+			BasicUser user = new BasicUser("username");
 			Assert.AreNotEqual(Guid.Empty, user.Id, "Id not randomized");
 			Assert.AreEqual("username", user.Name);
 			Assert.AreEqual(0d, user.Money, "Money does not start at 0");

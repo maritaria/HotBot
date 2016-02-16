@@ -14,8 +14,8 @@ namespace HotBot.Core.Commands.Tests
 		public void CommandInfo_Constructor()
 		{
 			var channel = new Mock<Channel>("TestChannel");
-			var user = new Mock<User>("TestChannel");
-			var authorizer = new Mock<User>("TestAuthorizer");
+			var user = new Mock<BasicUser>("TestChannel");
+			var authorizer = new Mock<BasicUser>("TestAuthorizer");
 			var command = "command";
 			var args = "args";
 			var info1 = new CommandEvent(channel.Object, user.Object, command, args);

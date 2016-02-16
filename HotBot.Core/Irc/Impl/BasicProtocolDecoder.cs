@@ -65,9 +65,9 @@ namespace HotBot.Core.Irc.Impl
 			string channelName = response.Arguments[0];
 			Channel channel = Connector.ConnectedChannels.First(c => c.ChannelData.Name == channelName).ChannelData;
 			string username = response.Arguments[1];
-			User user = new User(username);
+			ChannelUser user = new BasicChannelUser();
 			string message = response.Arguments[2];
-			ChatReceived?.Invoke(this, new ChatEventArgs(channel, user, message));
+			ChatReceived?.Invoke(this, new ChatEventArgs(user, message));
 		}
 
 		private void HandleJoinCommand(IrcConnection connection, Response response)
