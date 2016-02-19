@@ -2,41 +2,37 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
 namespace HotBot.Plugins.Wallet
 {
 	//TODO: Global wallets vs channel wallets
-	public sealed class Wallet : IQueryable<WalletValue>
+	public class Wallet
 	{
-		public User Owner { get; set; }
+		public Guid OwnerId { get; private set; }
 
-		public IQueryable<WalletValue> Values { get; set; }
+		//TODO: How to init this? should i use a diff type that the abstraction will populate for us?
+		public DbSet<WalletValue> Values { get; private set; }
+		
+		protected Wallet()
+		{
+
+		}
+		
+		public Wallet(User owner)
+		{
+			if (owner == null)
+			{
+				throw new ArgumentNullException("owner");
+			}
+			OwnerId = owner.Id;
+		}
 
 		private WalletValue GetCurrency(string currency)
 		{
 			return Values.First(w=>w.Currency.ToLower() == currency.ToLower());
 		}
-
-		#region IQueryable<WalletValue>
-
-		public Type ElementType => ((IQueryable<WalletValue>)Values).ElementType;
-
-		public Expression Expression => ((IQueryable<WalletValue>)Values).Expression;
-
-		public IQueryProvider Provider => ((IQueryable<WalletValue>)Values).Provider;
-
-		public IEnumerator<WalletValue> GetEnumerator()
-		{
-			return ((IQueryable<WalletValue>)Values).GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return ((IQueryable<WalletValue>)Values).GetEnumerator();
-		}
-
-		#endregion IQueryable<WalletValue>
 	}
 }

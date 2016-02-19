@@ -69,6 +69,10 @@
       <Project>{afd7d526-9449-4ec9-834b-a2e1dbfe00f3}</Project>
       <Name>HotBot.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HotBot.Plugins.Wallet\HotBot.Plugins.Wallet.csproj">
+      <Project>{ad738d9f-489e-447f-96f9-6b3b293ff8c5}</Project>
+      <Name>HotBot.Plugins.Wallet</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

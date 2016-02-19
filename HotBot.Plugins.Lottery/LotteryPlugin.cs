@@ -4,11 +4,13 @@ using HotBot.Core.Irc;
 using HotBot.Core.Irc.Impl;
 using HotBot.Core.Plugins;
 using HotBot.Plugins.Lottery;
+using HotBot.Plugins.Wallet;
 using Microsoft.Practices.Unity;
 using System;
 using System.Linq;
 
 [assembly: AssemblyPlugin(typeof(LotteryPlugin))]
+[assembly: PluginDependency(typeof(WalletPlugin))]
 
 namespace HotBot.Plugins.Lottery
 {
@@ -25,6 +27,9 @@ namespace HotBot.Plugins.Lottery
 
 		[Dependency]
 		public MessageBus Bus { get; set; }
+
+		[Dependency]
+		public WalletPlugin Wallets { get; set; }
 
 		public Lottery CurrentLottery { get; private set; }
 
