@@ -2,9 +2,12 @@
 using HotBot.Core.Commands;
 using HotBot.Core.Irc;
 using HotBot.Core.Plugins;
+using HotBot.Plugins.Lottery;
 using Microsoft.Practices.Unity;
 using System;
 using System.Linq;
+
+[assembly: AssemblyPlugin(typeof(LotteryPlugin))]
 
 namespace HotBot.Plugins.Lottery
 {
@@ -67,7 +70,6 @@ namespace HotBot.Plugins.Lottery
 			//Bus.PublishSpecific(new ChatTransmitRequest(message.Lottery.Channel, $"Lottery finished, the winner is {message.Lottery.Winner.Name}!"));
 			message.Lottery.Winner.Money += message.Lottery.Pot;
 			//Bus.PublishSpecific(new ChatTransmitRequest(message.Lottery.Channel, $"{User.HandlePrefix}{message.Lottery.Winner.Name} Congrats, you have won {message.Lottery.Pot} blorps"));
-			Bus.PublishSpecific(new SaveDatabaseChangesRequest());
 		}
 
 		[Command("joinlottery")]
