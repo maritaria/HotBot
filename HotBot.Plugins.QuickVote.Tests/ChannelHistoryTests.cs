@@ -1,5 +1,6 @@
 ﻿using HotBot.Core;
 using HotBot.Core.Irc;
+using HotBot.Core.Irc.Impl;
 using HotBot.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -13,7 +14,7 @@ namespace HotBot.Plugins.QuickVote.Tests
 		[TestMethod()]
 		public void ChannelHistory()
 		{
-			var channel = new Channel("testChannel");
+			var channel = new BasicChannelData("testChannel");
 			var channelHistory = new ChannelHistory(channel);
 
 			Assert.AreEqual(channel, channelHistory.ObservedChannel);
@@ -24,7 +25,7 @@ namespace HotBot.Plugins.QuickVote.Tests
 		[TestMethod()]
 		public void RecordFromChat()
 		{
-			var channel = new Channel("testChannel");
+			var channel = new BasicChannelData("testChannel");
 			var channelHistory = new ChannelHistory(channel);
 			var chat = "#testTag";
 
@@ -50,7 +51,7 @@ namespace HotBot.Plugins.QuickVote.Tests
 		[TestMethod()]
 		public void RecordTag()
 		{
-			var channel = new Channel("testChannel");
+			var channel = new BasicChannelData("testChannel");
 			var channelHistory = new ChannelHistory(channel);
 			var tag = "testTag";
 
@@ -73,7 +74,7 @@ namespace HotBot.Plugins.QuickVote.Tests
 		[TestMethod()]
 		public void GetRecord()
 		{
-			var channel = new Channel("testChannel");
+			var channel = new BasicChannelData("testChannel");
 			var channelHistory = new ChannelHistory(channel);
 			var tag = "testTag";
 			channelHistory.RecordTag(tag);
@@ -88,7 +89,7 @@ namespace HotBot.Plugins.QuickVote.Tests
 		[TestMethod()]
 		public void Delete()
 		{
-			var channel = new Channel("testChannel");
+			var channel = new BasicChannelData("testChannel");
 			var channelHistory = new ChannelHistory(channel);
 			var tag = "testTag";
 			channelHistory.RecordTag(tag);
@@ -102,7 +103,7 @@ namespace HotBot.Plugins.QuickVote.Tests
 		[TestMethod()]
 		public void DeleteExpiredRecords()
 		{
-			var channel = new Channel("testChannel");
+			var channel = new BasicChannelData("testChannel");
 			var channelHistory = new ChannelHistory(channel);
 			var tag = "testTag";
 

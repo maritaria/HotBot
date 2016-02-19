@@ -1,11 +1,15 @@
 ﻿using HotBot.Core;
+using HotBot.Core.Irc;
 using HotBot.Core.Plugins;
+using HotBot.Plugins.Wallet;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+[assembly: AssemblyPlugin(typeof(WalletPlugin))]
 
 namespace HotBot.Plugins.Wallet
 {
@@ -27,6 +31,11 @@ namespace HotBot.Plugins.Wallet
 		public void Unload()
 		{
 			Bus.Unsubscribe(this);
+		}
+		
+		public Wallet GetWallet(User user)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
