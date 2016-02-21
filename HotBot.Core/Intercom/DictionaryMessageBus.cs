@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace HotBot.Core
+namespace HotBot.Core.Intercom
 {
 	public sealed class DictionaryMessageBus : MessageBus
 	{

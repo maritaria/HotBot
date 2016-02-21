@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotBot.Core
+namespace HotBot.Core.Intercom
 {
 	[Obsolete("Use attributes instead")]
 	public interface MessageHandler<TEvent>

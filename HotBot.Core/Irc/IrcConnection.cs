@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotBot.Core.Intercom;
+using System;
 using System.Linq;
 
 namespace HotBot.Core.Irc

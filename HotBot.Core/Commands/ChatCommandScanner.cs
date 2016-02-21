@@ -4,6 +4,7 @@ using System.Linq;
 using HotBot.Core.Irc;
 using HotBot.Core.Util;
 using Microsoft.Practices.Unity;
+using HotBot.Core.Intercom;
 
 namespace HotBot.Core.Commands
 {

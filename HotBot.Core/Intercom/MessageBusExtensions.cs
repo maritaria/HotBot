@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace HotBot.Core
+namespace HotBot.Core.Intercom
 {
 	public static class MessageBusExtensions
 	{

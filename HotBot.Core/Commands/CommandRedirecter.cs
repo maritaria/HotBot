@@ -1,4 +1,5 @@
-﻿using HotBot.Core.Plugins;
+﻿using HotBot.Core.Intercom;
+using HotBot.Core.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;

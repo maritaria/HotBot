@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using HotBot.Core.Intercom;
+using System.Collections.Generic;
 
 namespace HotBot.Core.Plugins
 {

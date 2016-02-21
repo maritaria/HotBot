@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Timers;
 using HotBot.Core;
+using HotBot.Core.Intercom;
 using HotBot.Core.Irc;
 
 namespace HotBot.Plugins.Lottery

@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using HotBot.Core.Intercom;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.IO;

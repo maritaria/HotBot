@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace HotBot.Core
+namespace HotBot.Core.Intercom
 {
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 	public sealed class SubscribeAttribute : Attribute

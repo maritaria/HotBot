@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace HotBot.Core
+namespace HotBot.Core.Intercom
 {
 	/// <summary>
 	/// Sets the default type by which the type will be published when passed to <see cref="MessageBus.PublishSpecific{TEvent}(TEvent)"/>.

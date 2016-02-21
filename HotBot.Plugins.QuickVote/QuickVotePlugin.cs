@@ -1,5 +1,6 @@
 ﻿using HotBot.Core;
 using HotBot.Core.Commands;
+using HotBot.Core.Intercom;
 using HotBot.Core.Irc;
 using HotBot.Core.Plugins;
 using HotBot.Plugins.QuickVote;
