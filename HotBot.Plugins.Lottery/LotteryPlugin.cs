@@ -17,6 +17,8 @@ namespace HotBot.Plugins.Lottery
 	//TODO: public static bootstrapper class, maybe something with attributes again
 	public sealed class LotteryPlugin : Plugin
 	{
+		public const string LotteryCurrency = "lottery";
+
 		public PluginDescription Description { get; } = new PluginDescription("Lottery", "Hosts lotteryies and rewards money to winners");
 
 		[Dependency]
@@ -74,7 +76,8 @@ namespace HotBot.Plugins.Lottery
 		{
 			CurrentLottery = null;
 			//Bus.PublishSpecific(new ChatTransmitRequest(message.Lottery.Channel, $"Lottery finished, the winner is {message.Lottery.Winner.Name}!"));
-			message.Lottery.Winner.Money += message.Lottery.Pot;
+			var value = Wallets.GetCurrency(message.Lottery.Winner, LotteryCurrency);
+			Wallets.SetCurrency(message.Lottery.Winner, LotteryCurrency, value + message.Lottery.Pot);
 			//Bus.PublishSpecific(new ChatTransmitRequest(message.Lottery.Channel, $"{User.HandlePrefix}{message.Lottery.Winner.Name} Congrats, you have won {message.Lottery.Pot} blorps"));
 		}
 
@@ -127,13 +130,6 @@ namespace HotBot.Plugins.Lottery
 			{
 				//Bus.PublishSpecific(new ChatTransmitRequest(info.Channel, "A lottery is already running"));
 			}
-		}
-
-		[Command("money")]
-		public void GetBalanceCommand(CommandEvent info)
-		{
-			string message = $"{BasicUser.HandlePrefix}{info.User.Name} you have {info.User.Money} blorps";
-			//Bus.PublishSpecific(new ChatTransmitRequest(info.Channel, message));
 		}
 	}
 }

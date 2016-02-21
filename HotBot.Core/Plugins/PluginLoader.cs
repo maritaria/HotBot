@@ -5,7 +5,7 @@ namespace HotBot.Core.Plugins
 	/// <summary>
 	/// Declares an interface for loading plugins by name.
 	/// </summary>
-	public interface PluginLoader
+	public interface PluginLoader : Publisher
 	{
 		/// <summary>
 		/// Gets the directory the plugins are loaded from.
@@ -16,6 +16,6 @@ namespace HotBot.Core.Plugins
 		/// Loads all plugins from the plugin directory.
 		/// Yield returns the plugins that are successfully loaded.
 		/// </summary>
-		IEnumerable<Plugin> LoadPlugins();
+		void LoadPlugins();
 	}
 }

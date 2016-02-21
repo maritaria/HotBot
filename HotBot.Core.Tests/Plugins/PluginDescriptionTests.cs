@@ -18,8 +18,7 @@ namespace HotBot.Core.Plugins.Tests
 		{
 			var name = "HelloWorld1";
 			var desc = "Description test!";
-			var dependency = new Dependency();
-			var pluginDescription = new PluginDescription(name, desc, dependency);
+			var pluginDescription = new PluginDescription(name, desc);
 
 			TestUtils.AssertArgumentException(() => new PluginDescription(null, ""));
 			TestUtils.AssertArgumentException(() => new PluginDescription("", ""));
@@ -29,8 +28,6 @@ namespace HotBot.Core.Plugins.Tests
 
 			Assert.AreEqual(name, pluginDescription.Name);
 			Assert.AreEqual(desc, pluginDescription.Description);
-			Assert.AreEqual(dependency, pluginDescription.Dependencies.First());
-			Assert.AreEqual(1, pluginDescription.Dependencies.Count);
 		}
 		
 		[TestMethod()]

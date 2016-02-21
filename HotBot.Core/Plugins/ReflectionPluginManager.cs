@@ -13,8 +13,16 @@ namespace HotBot.Core.Plugins
 		[Dependency]
 		public PluginLoader Loader { get; set; }
 
-		public ReflectionPluginManager()
+		public MessageBus Bus { get; }
+
+		public ReflectionPluginManager(MessageBus bus)
 		{
+			if (bus == null)
+			{
+				throw new ArgumentNullException("bus");
+			}
+			Bus = bus;
+			Bus.Subscribe(this);
 		}
 
 		public void AddPlugin(Plugin plugin)
@@ -92,10 +100,7 @@ namespace HotBot.Core.Plugins
 
 		public void LoadAll()
 		{
-			foreach(Plugin plugin in Loader.LoadPlugins())
-			{
-				AddPlugin(plugin);
-			}
+			Loader.LoadPlugins();
 			foreach (Plugin pl in _typedPlugins.Values)
 			{
 				try
@@ -129,5 +134,12 @@ namespace HotBot.Core.Plugins
 			LoadAll();
 			UnloadAll();
 		}
+
+		[Subscribe]
+		public void OnPluginCreated(PluginCreatedEvent pluginCreated)
+		{
+			AddPlugin(pluginCreated.Plugin);
+		}
+
 	}
 }

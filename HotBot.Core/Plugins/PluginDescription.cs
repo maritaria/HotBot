@@ -21,13 +21,8 @@ namespace HotBot.Core.Plugins
 		/// Gets the descriptionIReflectionPluginDescription of the plugin.
 		/// </summary>
 		public string Description { get; }
-
-		/// <summary>
-		/// Gets the dependencies of the plugin.
-		/// </summary>
-		public IReadOnlyCollection<Dependency> Dependencies { get; }//TODO: Separate class for dependencies
-
-		public PluginDescription(string name, string description, params Dependency[] dependencies)
+		
+		public PluginDescription(string name, string description)
 		{
 			try
 			{
@@ -47,7 +42,6 @@ namespace HotBot.Core.Plugins
 			}
 			Name = name;
 			Description = description;
-			Dependencies = dependencies;
 		}
 
 		public static void VerifyName(string name)

@@ -16,41 +16,62 @@ namespace HotBot.Plugins.Wallet
 {
 	public class WalletPlugin : Plugin
 	{
-		private WalletDatabase _database = new WalletDatabase();
+		public const string DefaultCurrency = "money";
+
+		public string DefaultCurrencyName { get; set; } = DefaultCurrency;
 
 		public PluginDescription Description { get; } = new PluginDescription("Wallet", "Keeps track of players cash and coins.");
 
 		[Dependency]
-		public PluginManager PluginManager { get; }
+		public PluginManager PluginManager { get; set; }
 
 		[Dependency]
-		public MessageBus Bus { get; }
+		public MessageBus Bus { get; set; }
 
 		public void Load()
 		{
 			Bus.Subscribe(this);
-			_database.Database.Initialize(true);
 		}
 
 		public void Unload()
 		{
 			Bus.Unsubscribe(this);
-			_database.SaveChanges();
 		}
 		
-		public Wallet GetWallet(User user)
+		public double GetCurrency(User walletOwner, string currency)
 		{
-			var wallet = _database.Set<Wallet>().FirstOrDefault(w => w.OwnerId == user.Id);
-			if (wallet == null)
+			if (walletOwner == null)
 			{
-				wallet = CreateWallet(user);
+				throw new ArgumentNullException("walletOwner");
 			}
-			return wallet;
+			if (string.IsNullOrEmpty("currency"))
+			{
+				throw new ArgumentException("Cannot be null or empty", "currency");
+			}
+			using (var context = new WalletContext())
+			{
+				var wallet = context.WalletValues.FirstOrDefault(w => w.OwnerId == walletOwner.Id);
+				if (wallet == null)
+				{
+					return 0;
+				}
+				return wallet.Value;
+			}
 		}
-
-		private Wallet CreateWallet(User user)
+		
+		public void SetCurrency(User walletOwner, string currency, double value)
 		{
-			return _database.Set<Wallet>().Create();
+			using (var context = new WalletContext())
+			{
+				var wallet = context.WalletValues.FirstOrDefault(w => w.OwnerId == walletOwner.Id);
+				if (wallet == null)
+				{
+					wallet = new WalletValue(walletOwner, currency);
+					context.WalletValues.Add(wallet);
+				}
+				wallet.Value += value;
+				context.SaveChanges();
+			}
 		}
 	}
 }

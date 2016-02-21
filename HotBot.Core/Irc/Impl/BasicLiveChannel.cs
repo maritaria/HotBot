@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace HotBot.Core.Irc.Impl
 {
-	public sealed class BasicLiveConnection : LiveChannel
+	public sealed class BasicLiveChannel : LiveChannel
 	{
 		private List<ChannelUser> _activeUsers = new List<ChannelUser>();
 
@@ -16,7 +16,7 @@ namespace HotBot.Core.Irc.Impl
 
 		public IReadOnlyCollection<ChannelUser> ActiveUsers { get; }
 		
-		public BasicLiveConnection(TwitchConnector connector, IrcConnection connection, ChannelData data, MessageBus bus)
+		public BasicLiveChannel(TwitchConnector connector, IrcConnection connection, ChannelData data, MessageBus bus)
 		{
 			if (connector == null)
 			{

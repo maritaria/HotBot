@@ -91,7 +91,7 @@
     <Compile Include="Irc\ChatEventArgs.cs" />
     <Compile Include="Irc\ConnectionInfo.cs" />
     <Compile Include="Irc\HostMask.cs" />
-    <Compile Include="Irc\Impl\BasicLiveConnection.cs" />
+    <Compile Include="Irc\Impl\BasicLiveChannel.cs" />
     <Compile Include="Irc\Impl\BasicChannelUser.cs" />
     <Compile Include="Irc\Impl\BasicIrcConnection.Reader.cs" />
     <Compile Include="Irc\Impl\BasicIrcConnection.Writer.cs" />
@@ -115,12 +115,12 @@
     <Compile Include="Irc\WhisperConnection.cs" />
     <Compile Include="Irc\WhisperEventArgs.cs" />
     <Compile Include="MessageBusExtensions.cs" />
+    <Compile Include="Plugins\PluginCreatedEvent.cs" />
+    <Compile Include="Plugins\PluginDependencyAttribute.cs" />
     <Compile Include="Publisher.cs" />
     <Compile Include="SubscribeAttribute.cs" />
-    <Compile Include="Plugins\AssemblyLoadedEvent.cs" />
     <Compile Include="Plugins\AssemblyPluginAttribute.cs" />
     <Compile Include="Commands\CommandAttribute.cs" />
-    <Compile Include="Plugins\PluginInstanceCreatedEvent.cs" />
     <Compile Include="Plugins\PluginLoadedEvent.cs" />
     <Compile Include="Plugins\PluginLoader.cs" />
     <Compile Include="Plugins\AssemblyPluginLoader.cs" />
@@ -135,9 +135,7 @@
     <Compile Include="Commands\CommandListener.cs" />
     <Compile Include="Commands\ChatCommandScanner.cs" />
     <Compile Include="Commands\CommandEvent.cs" />
-    <Compile Include="Plugins\DependencyType.cs" />
     <Compile Include="Plugins\Plugin.cs" />
-    <Compile Include="Plugins\Dependency.cs" />
     <Compile Include="Plugins\PluginDescription.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Plugins\ReflectionPluginManager.cs" />

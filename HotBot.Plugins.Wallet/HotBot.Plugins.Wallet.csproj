@@ -65,8 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Wallet.cs" />
-    <Compile Include="WalletDatabase.cs" />
+    <Compile Include="WalletContext.cs" />
     <Compile Include="WalletPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WalletValue.cs" />

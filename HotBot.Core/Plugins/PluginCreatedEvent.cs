@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace HotBot.Core.Plugins
 {
-	internal sealed class PluginInstanceCreatedEvent
+	public sealed class PluginCreatedEvent
 	{
 		public Plugin Plugin { get; }
 
-		public PluginInstanceCreatedEvent(Plugin plugin)
+		public PluginCreatedEvent(Plugin plugin)
 		{
 			if (plugin == null)
 			{
