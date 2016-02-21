@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotBot.Core.Util;
+using System;
 using System.Linq;
 
 namespace HotBot.Core.Irc
@@ -10,14 +11,8 @@ namespace HotBot.Core.Irc
 
 		public WhisperEventArgs(User sender, string message)
 		{
-			if (sender == null)
-			{
-				throw new ArgumentNullException("sender");
-			}
-			if (message == null)
-			{
-				throw new ArgumentNullException("message");
-			}
+			Verify.NotNull(sender, "sender");
+			Verify.NotNull(message, "message");
 			Sender = sender;
 			Message = message;
 		}

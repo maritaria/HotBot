@@ -1,4 +1,5 @@
 ﻿using HotBot.Core.Intercom;
+using HotBot.Core.Util;
 using System;
 using System.Linq;
 
@@ -12,18 +13,9 @@ namespace HotBot.Core.Irc.Impl
 
 		public BasicWhisperConnection(TwitchConnector connector, IrcConnection connection, MessageBus bus)
 		{
-			if (connector == null)
-			{
-				throw new ArgumentNullException("connector");
-			}
-			if (connection == null)
-			{
-				throw new ArgumentNullException("connection");
-			}
-			if (bus == null)
-			{
-				throw new ArgumentNullException("bus");
-			}
+			Verify.NotNull(connector, "connector");
+			Verify.NotNull(connection, "connection");
+			Verify.NotNull(bus, "bus");
 			Connector = connector;
 			Connection = connection;
 			Connection.ResponseReceived += Connection_ResponseReceived;

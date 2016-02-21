@@ -13,7 +13,7 @@ namespace HotBot.Core.Util
 			}
 		}
 
-		public static void NotEmptyOrNullString(string value, string paramName)
+		public static void NotNullOrEmpty(string value, string paramName)
 		{
 			if (string.IsNullOrEmpty(value))
 			{
@@ -59,7 +59,7 @@ namespace HotBot.Core.Util
 
 		public static void CommandName(string commandName, string paramName)
 		{
-			NotEmptyOrNullString(commandName, paramName);
+			NotNullOrEmpty(commandName, paramName);
 			if (commandName.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("cannot contain whitespace(s)", paramName);

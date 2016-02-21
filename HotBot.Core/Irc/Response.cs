@@ -16,10 +16,7 @@ namespace HotBot.Core.Irc
 
 		public Response(string message)
 		{
-			if (message == null)
-			{
-				throw new ArgumentNullException("message");
-			}
+			Verify.NotNull(message, "message");
 			message = ReadHostmask(message);
 			message = ReadCommand(message);
 			ReadArguments(message);

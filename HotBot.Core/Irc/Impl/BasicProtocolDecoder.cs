@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotBot.Core.Util;
+using System;
 using System.Linq;
 
 namespace HotBot.Core.Irc.Impl
@@ -14,10 +15,7 @@ namespace HotBot.Core.Irc.Impl
 
 		public BasicProtocolDecoder(TwitchConnector connector)
 		{
-			if (connector == null)
-			{
-				throw new ArgumentNullException("connector");
-			}
+			Verify.NotNull(connector, "connector");
 			Connector = connector;
 		}
 
@@ -31,14 +29,8 @@ namespace HotBot.Core.Irc.Impl
 
 		public void Decode(IrcConnection connection, Response response)
 		{
-			if (connection == null)
-			{
-				throw new ArgumentNullException("connection");
-			}
-			if (response == null)
-			{
-				throw new ArgumentNullException("response");
-			}
+			Verify.NotNull(connection, "connection");
+			Verify.NotNull(response, "response");
 			switch (response.Command)
 			{
 				case PingCommand:

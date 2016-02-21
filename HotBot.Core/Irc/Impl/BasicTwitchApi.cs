@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using HotBot.Core.Util;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace HotBot.Core.Irc.Impl
 
 		public IEnumerable<ConnectionInfo> GetChatServers(string channelName)
 		{
+			Verify.ChannelName(channelName, "channelName");
 			string responseJson = _client.DownloadString($"https://api.twitch.tv/api/channels/{channelName}/chat_properties");
 			JObject response = JObject.Parse(responseJson);
 			foreach (JToken token in response.SelectToken("chat_servers"))

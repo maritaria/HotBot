@@ -79,8 +79,6 @@
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandManagerConfig.cs" />
     <Compile Include="Commands\ReflectionCommandManager.cs" />
-    <Compile Include="Commands\RegisterPluginCommandsRequest.cs" />
-    <Compile Include="Commands\UnregisterPluginCommandsRequest.cs" />
     <Compile Include="Intercom\DefaultPublishTypeAttribute.cs" />
     <Compile Include="Irc\LiveChannel.cs" />
     <Compile Include="Irc\UserChannelEventArgs.cs" />

@@ -1,4 +1,5 @@
 ﻿using HotBot.Core.Intercom;
+using HotBot.Core.Util;
 using System;
 using System.IO;
 using System.Linq;
@@ -36,10 +37,7 @@ namespace HotBot.Core.Irc.Impl
 
 		public BasicIrcConnection(MessageBus bus)
 		{
-			if (bus == null)
-			{
-				throw new ArgumentNullException("bus");
-			}
+			Verify.NotNull(bus, "bus");
 			Bus = bus;
 		}
 

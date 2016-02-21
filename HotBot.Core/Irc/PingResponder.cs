@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotBot.Core.Util;
+using System;
 using System.Linq;
 
 namespace HotBot.Core.Irc
@@ -12,10 +13,7 @@ namespace HotBot.Core.Irc
 
 		public PingResponder(IrcConnection connection)
 		{
-			if (connection == null)
-			{
-				throw new ArgumentNullException("connection");
-			}
+			Verify.NotNull(connection, "connection");
 			Connection = connection;
 			Connection.ResponseReceived += Connection_ResponseReceived;
 		}

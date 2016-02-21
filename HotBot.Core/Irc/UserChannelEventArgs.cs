@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotBot.Core.Util;
+using System;
 
 namespace HotBot.Core.Irc
 {
@@ -9,14 +10,8 @@ namespace HotBot.Core.Irc
 
 		public UserChannelEventArgs(User user, LiveChannel channel)
 		{
-			if (user == null)
-			{
-				throw new ArgumentNullException("user");
-			}
-			if (channel == null)
-			{
-				throw new ArgumentNullException("channel");
-			}
+			Verify.NotNull(user, "user");
+			Verify.NotNull(channel, "channel");
 			User = user;
 			Channel = channel;
 		}

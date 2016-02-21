@@ -1,4 +1,5 @@
 ﻿using HotBot.Core.Intercom;
+using HotBot.Core.Util;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +10,7 @@ namespace HotBot.Core.Irc.Impl
 	public sealed class BasicLiveChannel : LiveChannel
 	{
 		private List<User> _activeUsers = new List<User>();
-		
+
 		public IrcConnection Connection { get; }
 		public TwitchConnector Connector { get; }
 		public MessageBus Bus { get; }
@@ -19,22 +20,10 @@ namespace HotBot.Core.Irc.Impl
 
 		public BasicLiveChannel(TwitchConnector connector, IrcConnection connection, MessageBus bus, string channelName)
 		{
-			if (connector == null)
-			{
-				throw new ArgumentNullException("connector");
-			}
-			if (connection == null)
-			{
-				throw new ArgumentNullException("connection");
-			}
-			if (channelName == null)
-			{
-				throw new ArgumentNullException("channelName");
-			}
-			if (bus == null)
-			{
-				throw new ArgumentNullException("bus");
-			}
+			Verify.NotNull(connector, "connector");
+			Verify.NotNull(connection, "connection");
+			Verify.NotNull(bus, "bus");
+			Verify.NotNull(channelName, "channelName");
 			ActiveUsers = new ReadOnlyCollection<User>(_activeUsers);
 			Connector = connector;
 			Connector.Decoder.ChatReceived += Decoder_ChatReceived;

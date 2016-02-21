@@ -31,10 +31,7 @@ namespace HotBot.Core.Irc
 		/// <param name="source">The string that contains the hostmask</param>
 		public HostMask(string source)
 		{
-			if (source == null)
-			{
-				throw new ArgumentNullException("source");
-			}
+			Verify.NotNull(source, "source");
 			if (source.StartsWith(":"))
 			{
 				source = source.Substring(1);

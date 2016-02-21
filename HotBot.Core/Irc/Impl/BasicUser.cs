@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotBot.Core.Irc.Impl
 {
-	public sealed class BasicUser : User
+	public class BasicUser : User
 	{
 		//TODO: Store this somewhere safe.
 		public const string ChannelPrefix = "#";
@@ -14,26 +14,24 @@ namespace HotBot.Core.Irc.Impl
 		public const char HandlePrefix = '@';//TODO: Store this somewhere safe
 
 		[Key]
-		public Guid Id { get; private set; }
+		public Guid Id { get; private set; } = Guid.NewGuid();
 
 		[Index(IsUnique = true)]
 		[StringLength(Verify.MaximumUsernameLength, MinimumLength = Verify.MinimumUsernameLength)]
 		public string Name { get; private set; }
+		
+		public UserRole Role { get; set; } = UserRole.User;
 
-		public double Money { get; set; }
-
-		public UserRole Role { get; set; }
-
-		public BasicUser(string name) : this()
+		public BasicUser(string name)
 		{
 			Verify.Username(name, "name");
 			Name = name;
 		}
 
-		private BasicUser()
+		protected BasicUser()
 		{
-			Id = Guid.NewGuid();
-			Role = UserRole.User;
+
 		}
+
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using HotBot.Core.Util;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,8 @@ namespace HotBot.Core.Irc.Impl
 
 		public BasicTwitchConnector(TwitchApi api, IUnityContainer dependencyInjector)
 		{
+			Verify.NotNull(api, "api");
+			Verify.NotNull(dependencyInjector, "dependencyInjector");
 			Api = api;
 			DependencyInjector = dependencyInjector;
 		}

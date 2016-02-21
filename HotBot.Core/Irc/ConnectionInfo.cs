@@ -11,6 +11,7 @@ namespace HotBot.Core.Irc
 
 		public ConnectionInfo(string source)
 		{
+			Verify.NotNullOrEmpty(source, "source");
 			string[] parts = source.SplitOnce(":");
 			Hostname = parts[0];
 			Port = ushort.Parse(parts[1]);
