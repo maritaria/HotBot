@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotBot.Core.Util;
+using System;
 using System.Linq;
 
 namespace HotBot.Core.Intercom
@@ -13,10 +14,7 @@ namespace HotBot.Core.Intercom
 
 		public DefaultPublishTypeAttribute(Type defaultPublishType)
 		{
-			if (defaultPublishType == null)
-			{
-				throw new ArgumentNullException("defaultPublishType");
-			}
+			Verify.NotNull(defaultPublishType, "defaultPublishType");
 			PublishType = defaultPublishType;
 		}
 	}

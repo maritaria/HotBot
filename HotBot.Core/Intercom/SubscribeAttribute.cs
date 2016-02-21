@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotBot.Core.Util;
+using System;
 using System.Linq;
 
 namespace HotBot.Core.Intercom
@@ -14,10 +15,7 @@ namespace HotBot.Core.Intercom
 
 		public SubscribeAttribute(Type publishedType)
 		{
-			if (publishedType == null)
-			{
-				throw new ArgumentNullException("publishedType");
-			}
+			Verify.NotNull(publishedType, "publishedType");
 			PublishedType = publishedType;
 		}
 	}

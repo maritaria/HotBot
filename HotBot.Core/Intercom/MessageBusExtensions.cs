@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotBot.Core.Util;
+using System;
 using System.Linq;
 
 namespace HotBot.Core.Intercom
@@ -13,6 +14,8 @@ namespace HotBot.Core.Intercom
 		/// <param name="instance">The instance to be published.</param>
 		public static void PublishSpecific<TEvent>(this MessageBus bus, TEvent instance)
 		{
+			Verify.NotNull(bus, "bus");
+			Verify.NotNull(instance, "instance");
 			bus.Publish(instance);
 		}
 	}

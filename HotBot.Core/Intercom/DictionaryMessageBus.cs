@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotBot.Core.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -15,10 +16,7 @@ namespace HotBot.Core.Intercom
 
 		public void Publish(object data)
 		{
-			if (data == null)
-			{
-				throw new ArgumentNullException("data");
-			}
+			Verify.NotNull(data, "data");
 			Type publishType = GetPublishingType(data.GetType());
 			PublishSpecific(publishType, data);
 		}
@@ -35,6 +33,8 @@ namespace HotBot.Core.Intercom
 
 		public void PublishSpecific(Type dataType, object instance)
 		{
+			Verify.NotNull(dataType, "dataType");
+			Verify.NotNull(instance, "instance");
 			if (_subscribers.ContainsKey(dataType))
 			{
 				var handlers = _subscribers[dataType];
@@ -47,6 +47,7 @@ namespace HotBot.Core.Intercom
 
 		public void Subscribe(object handler)
 		{
+			Verify.NotNull(handler, "handler");
 			if (handler == null)
 			{
 				throw new ArgumentException("handler");
@@ -103,6 +104,7 @@ namespace HotBot.Core.Intercom
 
 		public void Unsubscribe(object handler)
 		{
+			Verify.NotNull(handler, "handler");
 			foreach (Dictionary<object, MethodInfo> subs in _subscribers.Values)
 			{
 				subs.Remove(handler);
@@ -111,10 +113,7 @@ namespace HotBot.Core.Intercom
 
 		public bool IsSubscribed(object handler)
 		{
-			if (handler == null)
-			{
-				throw new ArgumentNullException("handler");
-			}
+			Verify.NotNull(handler, "handler");
 			return _subscribers.Any(kv => kv.Value.ContainsKey(handler));
 		}
 	}
