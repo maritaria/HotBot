@@ -1,4 +1,5 @@
-﻿using HotBot.Testing;
+﻿using HotBot.Core.Intercom;
+using HotBot.Testing;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -194,7 +195,8 @@ namespace HotBot.Core.Plugins.Impl.Tests
 		{
 			container = container ?? new Mock<IUnityContainer>();
 			loader = loader ?? new Mock<PluginLoader>();
-			return new ReflectionPluginManager() { Loader = loader.Object };
+			var bus = new Mock<MessageBus>();
+			return new ReflectionPluginManager(bus.Object) { Loader = loader.Object };
 		}
 
 		private static Mock<TPlugin> CreatePlugin<TPlugin>(string name) where TPlugin : class, Plugin
