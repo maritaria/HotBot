@@ -11,6 +11,6 @@ namespace HotBot.Core.Irc
 
 		IEnumerable<ConnectionInfo> GetWhisperServers();
 
-		//User[] GetViewers(Channel channel);
+		//TODO: User[] GetViewers(Channel channel);
 	}
 }
