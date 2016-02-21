@@ -83,7 +83,7 @@
     <Compile Include="Commands\ReflectionCommandManager.cs" />
     <Compile Include="Commands\RegisterPluginCommandsRequest.cs" />
     <Compile Include="Commands\UnregisterPluginCommandsRequest.cs" />
-    <Compile Include="DefaultPublishTypeAttribute.cs" />
+    <Compile Include="Intercom\DefaultPublishTypeAttribute.cs" />
     <Compile Include="Irc\Impl\BasicChannelData.cs" />
     <Compile Include="Irc\LiveChannel.cs" />
     <Compile Include="Irc\ChannelUser.cs" />
@@ -114,11 +114,11 @@
     <Compile Include="Irc\Impl\BasicIrcConnection.cs" />
     <Compile Include="Irc\WhisperConnection.cs" />
     <Compile Include="Irc\WhisperEventArgs.cs" />
-    <Compile Include="MessageBusExtensions.cs" />
+    <Compile Include="Intercom\MessageBusExtensions.cs" />
     <Compile Include="Plugins\PluginCreatedEvent.cs" />
     <Compile Include="Plugins\PluginDependencyAttribute.cs" />
-    <Compile Include="Publisher.cs" />
-    <Compile Include="SubscribeAttribute.cs" />
+    <Compile Include="Intercom\Publisher.cs" />
+    <Compile Include="Intercom\SubscribeAttribute.cs" />
     <Compile Include="Plugins\PluginAttribute.cs" />
     <Compile Include="Commands\CommandAttribute.cs" />
     <Compile Include="Plugins\PluginLoadedEvent.cs" />
@@ -140,9 +140,9 @@
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Plugins\Impl\ReflectionPluginManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MessageHandler.cs" />
-    <Compile Include="DictionaryMessageBus.cs" />
-    <Compile Include="MessageBus.cs" />
+    <Compile Include="Intercom\MessageHandler.cs" />
+    <Compile Include="Intercom\DictionaryMessageBus.cs" />
+    <Compile Include="Intercom\MessageBus.cs" />
     <Compile Include="Util\StringExtensions.cs" />
     <Compile Include="Irc\Impl\BasicUser.cs" />
     <Compile Include="Util\Verify.cs" />
