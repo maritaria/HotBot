@@ -1,4 +1,5 @@
 ﻿using HotBot.Core.Intercom;
+using HotBot.Core.Util;
 using Microsoft.Practices.Unity;
 using System;
 using System.Linq;
@@ -12,16 +13,9 @@ namespace HotBot.Core.Commands
 		[Dependency]
 		public CommandManagerConfig Config { get; set; }
 
-		public ChatCommandScanner(MessageBus bus, CommandManagerConfig config)
+		public ChatCommandScanner(MessageBus bus)
 		{
-			if (bus == null)
-			{
-				throw new ArgumentNullException("bus");
-			}
-			if (config == null)
-			{
-				throw new ArgumentNullException("config");
-			}
+			Verify.NotNull(bus, "bus");
 			Bus = bus;
 			Bus.Subscribe(this);
 		}
@@ -30,10 +24,7 @@ namespace HotBot.Core.Commands
 		[Subscribe]
 		public void HandleMessage(ChatReceivedEvent message)
 		{
-			if (message == null)
-			{
-				throw new ArgumentNullException("message");
-			}
+			Verify.NotNull(message, "message");
 			if (ShouldDecode(message))
 			{
 				var commandInfo = Decode(message);

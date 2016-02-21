@@ -1,5 +1,6 @@
 ﻿using HotBot.Core.Intercom;
 using HotBot.Core.Plugins;
+using HotBot.Core.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,28 +18,15 @@ namespace HotBot.Core.Commands
 
 		public CommandRedirecter(MessageBus bus)
 		{
-			if (bus == null)
-			{
-				throw new ArgumentNullException("bus");
-			}
+			Verify.NotNull(bus, "bus");
 			Bus = bus;
 			Bus.Subscribe(this);
 		}
 
 		public void AddListener(string commandName, CommandListener listener)
 		{
-			try
-			{
-				CommandEvent.VerifyCommandName(commandName);
-			}
-			catch (Exception ex)
-			{
-				throw new ArgumentException(ex.Message, "commandName", ex);
-			}
-			if (listener == null)
-			{
-				throw new ArgumentNullException("listener");
-			}
+			Verify.CommandName(commandName, "commandName");
+			Verify.NotNull(listener, "listener");
 			commandName = commandName.ToLower();
 			lock (_listenersLock)
 			{
@@ -57,18 +45,8 @@ namespace HotBot.Core.Commands
 
 		public void RemoveListener(string commandName, CommandListener listener)
 		{
-			try
-			{
-				CommandEvent.VerifyCommandName(commandName);
-			}
-			catch (Exception ex)
-			{
-				throw new ArgumentException(ex.Message, "commandName", ex);
-			}
-			if (listener == null)
-			{
-				throw new ArgumentNullException("listener");
-			}
+			Verify.CommandName(commandName, "commandName");
+			Verify.NotNull(listener, "listener");
 			commandName = commandName.ToLower();
 			lock (_listenersLock)
 			{
@@ -87,10 +65,7 @@ namespace HotBot.Core.Commands
 		[Subscribe]
 		public void OnCommand(CommandEvent command)
 		{
-			if (command == null)
-			{
-				throw new ArgumentNullException("command");
-			}
+			Verify.NotNull(command, "command");
 			CommandListener[] array = null;
 			lock (_listeners)
 			{
@@ -113,10 +88,7 @@ namespace HotBot.Core.Commands
 		[Subscribe]
 		public void OnRegisterPluginCommands(RegisterPluginCommandsRequest message)
 		{
-			if (message == null)
-			{
-				throw new ArgumentNullException("message");
-			}
+			Verify.NotNull(message, "message");
 			RegisterAllCommandsForPlugin(message.Plugin);
 		}
 

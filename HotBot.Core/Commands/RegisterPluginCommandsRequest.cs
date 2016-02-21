@@ -1,4 +1,5 @@
 ﻿using HotBot.Core.Plugins;
+using HotBot.Core.Util;
 using System;
 using System.Linq;
 
@@ -11,10 +12,7 @@ namespace HotBot.Core.Commands
 
 		public RegisterPluginCommandsRequest(Plugin plugin)
 		{
-			if (plugin == null)
-			{
-				throw new ArgumentNullException("plugin");
-			}
+			Verify.NotNull(plugin, "plugin");
 			Plugin = plugin;
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using HotBot.Core.Irc;
 using HotBot.Core.Permissions;
+using HotBot.Core.Util;
 using System;
 using System.Linq;
 
@@ -38,52 +39,17 @@ namespace HotBot.Core.Commands
 
 		public CommandEvent(ChannelData channel, User sender, User authorizer, string commandName, string argumentText)
 		{
-			if (channel == null)
-			{
-				throw new ArgumentNullException("channel");
-			}
-			if (sender == null)
-			{
-				throw new ArgumentNullException("sender");
-			}
-			if (authorizer == null)
-			{
-				throw new ArgumentNullException("authorizer");
-			}
-			try
-			{
-				VerifyCommandName(commandName);
-			}
-			catch (Exception ex)
-			{
-				throw new ArgumentException(ex.Message, "commandName", ex);
-			}
-			if (argumentText == null)
-			{
-				throw new ArgumentNullException("argumentText");
-			}
+			Verify.NotNull(channel, "channel");
+			Verify.NotNull(sender, "sender");
+			Verify.NotNull(authorizer, "authorizer");
+			Verify.CommandName(commandName, "commandName");
+			Verify.NotNull(argumentText, "argumentText");
 
 			Channel = channel;
 			User = sender;
 			Authorizer = authorizer;
 			CommandName = commandName;
 			ArgumentText = argumentText;
-		}
-
-		public static void VerifyCommandName(string commandName)
-		{
-			if (commandName == null)
-			{
-				throw new ArgumentNullException("commandName");
-			}
-			if (commandName == string.Empty)
-			{
-				throw new ArgumentException("cannot be empty", "commandName");
-			}
-			if (commandName.Any(char.IsWhiteSpace))
-			{
-				throw new ArgumentException("cannot contain whitespace(s)", "commandName");
-			}
 		}
 	}
 }
