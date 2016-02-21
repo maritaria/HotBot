@@ -26,6 +26,25 @@ namespace HotBot.Core.Plugins
 			AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
 		}
 
+		public void LoadPlugins()
+		{
+			foreach (string assemblyFilename in FindPluginAssemblyFilenames())
+			{
+				LoadAssembly(assemblyFilename);
+			}
+		}
+
+		private IEnumerable<string> FindPluginAssemblyFilenames()
+		{
+			return Directory.EnumerateFiles(PluginDirectory, PluginAssemblyNamePattern);
+		}
+
+		private Assembly LoadAssembly(string assemblyFilename)
+		{
+			Assembly assembly = Assembly.LoadFrom(assemblyFilename);
+			return assembly;
+		}
+
 		private void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
 		{
 			if (IsPluginAssembly(args.LoadedAssembly))
@@ -35,39 +54,9 @@ namespace HotBot.Core.Plugins
 			}
 		}
 
-		public void LoadPlugins()
+		private bool IsPluginAssembly(Assembly loadedAssembly)
 		{
-			foreach (string assemblyFilename in FindPluginAssemblyFilenames())
-			{
-				Plugin plugin = null;
-				LoadAssembly(assemblyFilename);
-				continue;
-				try
-				{
-					Assembly asm = LoadAssembly(assemblyFilename);
-					plugin = CreatePluginFromAssembly(asm);
-				}
-				catch (PluginLoadException ex)
-				{
-					Bus.PublishSpecific(ex);
-					plugin = null;
-				}
-				catch (Exception ex)
-				{
-					Bus.PublishSpecific(new PluginLoadException(assemblyFilename, ex.Message, ex));
-					plugin = null;
-				}
-				if (plugin != null)
-				{
-					PublishPlugin(plugin);
-				}
-			}
-		}
-
-		private Assembly LoadAssembly(string assemblyFilename)
-		{
-			Assembly assembly = Assembly.LoadFrom(assemblyFilename);
-			return assembly;
+			return loadedAssembly.GetName().Name.StartsWith(PluginAssemblyNamePrefix);
 		}
 
 		private Plugin CreatePluginFromAssembly(Assembly assembly)
@@ -79,23 +68,6 @@ namespace HotBot.Core.Plugins
 			}
 			DependencyContainer.RegisterType(attr.PluginClass, new ContainerControlledLifetimeManager());
 			return (Plugin)DependencyContainer.Resolve(attr.PluginClass);
-		}
-
-		private IEnumerable<string> FindPluginAssemblyFilenames()
-		{
-			return Directory.EnumerateFiles(PluginDirectory, PluginAssemblyNamePattern);
-		}
-
-		public string GetPluginNameFromAssemblyFilename(string assemblyFilename)
-		{
-			var regex = new Regex(@"HotBot\.Plugins\.([a-zA-Z]+)\.dll");
-			var match = regex.Match(assemblyFilename);
-			return match.Captures[0].Value;
-		}
-
-		private bool IsPluginAssembly(Assembly loadedAssembly)
-		{
-			return loadedAssembly.GetName().Name.StartsWith(PluginAssemblyNamePrefix);
 		}
 
 		private void PublishPlugin(Plugin plugin)
