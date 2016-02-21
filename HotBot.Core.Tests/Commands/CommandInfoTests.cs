@@ -36,10 +36,10 @@ namespace HotBot.Core.Commands.Tests
 			Assert.AreEqual(args, info2.ArgumentText);
 		}
 
-		[TestMethod]
+		[TestMethod]//TODO: Move this to Unit test for Verify
 		public void VerifyCommandName()
 		{
-			TestUtils.AssertArgumentException(() => CommandEvent.VerifyCommandName(null));
+			TestUtils.AssertArgumentException(() => VerifyCommandName.VerifyCommandName(null));
 			TestUtils.AssertArgumentException(() => CommandEvent.VerifyCommandName(""));
 			TestUtils.AssertArgumentException(() => CommandEvent.VerifyCommandName("hello world"));
 

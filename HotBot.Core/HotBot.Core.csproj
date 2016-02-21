@@ -77,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandManager.cs" />
-    <Compile Include="Commands\CommandRedirecter.cs" />
     <Compile Include="Irc\ChannelData.cs" />
     <Compile Include="Commands\CommandManagerConfig.cs" />
     <Compile Include="Commands\ReflectionCommandManager.cs" />
@@ -132,7 +131,6 @@
     <Compile Include="Permissions\PermissionNode.cs" />
     <Compile Include="Permissions\PermissionType.cs" />
     <Compile Include="Permissions\UserRole.cs" />
-    <Compile Include="Commands\CommandListener.cs" />
     <Compile Include="Commands\ChatCommandScanner.cs" />
     <Compile Include="Commands\CommandEvent.cs" />
     <Compile Include="Plugins\Plugin.cs" />
