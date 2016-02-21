@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-[assembly: AssemblyPlugin(typeof(WalletPlugin))]
+[assembly: Plugin(typeof(WalletPlugin))]
 
 namespace HotBot.Plugins.Wallet
 {

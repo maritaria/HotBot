@@ -5,7 +5,7 @@ using Moq;
 using System;
 using System.Linq;
 
-namespace HotBot.Core.Plugins.Tests
+namespace HotBot.Core.Plugins.Impl.Tests
 {
 	[TestClass()]
 	public class ReflectionPluginManagerTests

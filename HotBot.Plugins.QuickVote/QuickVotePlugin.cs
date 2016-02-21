@@ -7,7 +7,7 @@ using Microsoft.Practices.Unity;
 using System;
 using System.Linq;
 
-[assembly: AssemblyPlugin(typeof(QuickVotePlugin))]
+[assembly: Plugin(typeof(QuickVotePlugin))]
 
 namespace HotBot.Plugins.QuickVote
 {

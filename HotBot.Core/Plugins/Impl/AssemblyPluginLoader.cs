@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace HotBot.Core.Plugins
+namespace HotBot.Core.Plugins.Impl
 {
 	internal sealed class AssemblyPluginLoader : PluginLoader
 	{
@@ -61,7 +61,7 @@ namespace HotBot.Core.Plugins
 
 		private Plugin CreatePluginFromAssembly(Assembly assembly)
 		{
-			AssemblyPluginAttribute attr = assembly.GetCustomAttribute<AssemblyPluginAttribute>();
+			PluginAttribute attr = assembly.GetCustomAttribute<PluginAttribute>();
 			if (attr == null)
 			{
 				throw new ArgumentException($"Assembly '{assembly.FullName}' doesn't have a PluginAssemblyAttribute", "assembly");

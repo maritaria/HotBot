@@ -11,11 +11,11 @@ namespace HotBot.Core.Plugins
 	/// The type being indicated must implement <see cref="HotBot.Core.Plugins.Plugin"/>.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
-	public sealed class AssemblyPluginAttribute : Attribute
+	public sealed class PluginAttribute : Attribute
 	{
 		public Type PluginClass { get; }
 
-		public AssemblyPluginAttribute(Type pluginClass)
+		public PluginAttribute(Type pluginClass)
 		{
 			if (pluginClass == null)
 			{

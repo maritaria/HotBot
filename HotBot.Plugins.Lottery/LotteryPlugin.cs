@@ -9,12 +9,11 @@ using Microsoft.Practices.Unity;
 using System;
 using System.Linq;
 
-[assembly: AssemblyPlugin(typeof(LotteryPlugin))]
+[assembly: Plugin(typeof(LotteryPlugin))]
 [assembly: PluginDependency(typeof(WalletPlugin))]
 
 namespace HotBot.Plugins.Lottery
 {
-	//TODO: public static bootstrapper class, maybe something with attributes again
 	public sealed class LotteryPlugin : Plugin
 	{
 		public const string LotteryCurrency = "lottery";
