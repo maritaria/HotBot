@@ -77,21 +77,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandManager.cs" />
-    <Compile Include="Irc\ChannelData.cs" />
     <Compile Include="Commands\CommandManagerConfig.cs" />
     <Compile Include="Commands\ReflectionCommandManager.cs" />
     <Compile Include="Commands\RegisterPluginCommandsRequest.cs" />
     <Compile Include="Commands\UnregisterPluginCommandsRequest.cs" />
     <Compile Include="Intercom\DefaultPublishTypeAttribute.cs" />
-    <Compile Include="Irc\Impl\BasicChannelData.cs" />
     <Compile Include="Irc\LiveChannel.cs" />
-    <Compile Include="Irc\ChannelUser.cs" />
-    <Compile Include="Irc\ChannelUserEventArgs.cs" />
+    <Compile Include="Irc\UserChannelEventArgs.cs" />
     <Compile Include="Irc\ChatEventArgs.cs" />
     <Compile Include="Irc\ConnectionInfo.cs" />
     <Compile Include="Irc\HostMask.cs" />
     <Compile Include="Irc\Impl\BasicLiveChannel.cs" />
-    <Compile Include="Irc\Impl\BasicChannelUser.cs" />
     <Compile Include="Irc\Impl\BasicIrcConnection.Reader.cs" />
     <Compile Include="Irc\Impl\BasicIrcConnection.Writer.cs" />
     <Compile Include="Irc\Impl\BasicProtocolDecoder.cs" />

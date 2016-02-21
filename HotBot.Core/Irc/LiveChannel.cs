@@ -8,12 +8,12 @@ namespace HotBot.Core.Irc
 	{
 		TwitchConnector Connector { get; }
 		IrcConnection Connection { get; }
-		ChannelData Data { get; }
+		string Name { get; }
 
 		/// <summary>
 		/// Gets the users currently in the <see cref="ChannelData"/>.
 		/// </summary>
-		IReadOnlyCollection<ChannelUser> ActiveUsers { get; }
+		IReadOnlyCollection<User> ActiveUsers { get; }
 
 		void Join();
 
@@ -23,8 +23,8 @@ namespace HotBot.Core.Irc
 
 		event EventHandler<ChatEventArgs> ChatReceived;
 
-		event EventHandler<ChannelUserEventArgs> UserJoined;
+		event EventHandler<UserChannelEventArgs> UserJoined;
 
-		event EventHandler<ChannelUserEventArgs> UserLeft;
+		event EventHandler<UserChannelEventArgs> UserLeft;
 	}
 }

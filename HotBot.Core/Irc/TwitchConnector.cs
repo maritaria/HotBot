@@ -11,6 +11,6 @@ namespace HotBot.Core.Irc
 		LiveChannel[] ConnectedChannels { get; }
 		ProtocolDecoder Decoder { get; }
 
-		LiveChannel GetConnection(ChannelData channel);
+		LiveChannel GetConnection(string channelName);
 	}
 }

@@ -12,8 +12,8 @@ namespace HotBot.Core.Irc
 
 		event EventHandler<ChatEventArgs> ChatReceived;
 
-		event EventHandler<ChannelUserEventArgs> UserJoinedChannel;
+		event EventHandler<UserChannelEventArgs> UserJoinedChannel;
 
-		event EventHandler<ChannelUserEventArgs> UserLefthannel;
+		event EventHandler<UserChannelEventArgs> UserLefthannel;
 	}
 }

@@ -1,6 +1,8 @@
-﻿using HotBot.Core.Irc.Impl;
+﻿using HotBot.Core.Irc;
+using HotBot.Core.Irc.Impl;
 using HotBot.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Linq;
 
@@ -12,8 +14,8 @@ namespace HotBot.Plugins.QuickVote.Tests
 		[TestMethod()]
 		public void ChannelHistory()
 		{
-			var channel = new BasicChannelData("testChannel");
-			var channelHistory = new ChannelHistory(channel);
+			var channel = new Mock<LiveChannel>();
+			var channelHistory = new ChannelHistory(channel.Object);
 
 			Assert.AreEqual(channel, channelHistory.ObservedChannel);
 
@@ -23,8 +25,7 @@ namespace HotBot.Plugins.QuickVote.Tests
 		[TestMethod()]
 		public void RecordFromChat()
 		{
-			var channel = new BasicChannelData("testChannel");
-			var channelHistory = new ChannelHistory(channel);
+			var channelHistory = CreateChannelHistory("testChannel");
 			var chat = "#testTag";
 
 			channelHistory.RecordFromChat(chat);
@@ -49,8 +50,7 @@ namespace HotBot.Plugins.QuickVote.Tests
 		[TestMethod()]
 		public void RecordTag()
 		{
-			var channel = new BasicChannelData("testChannel");
-			var channelHistory = new ChannelHistory(channel);
+			var channelHistory = CreateChannelHistory("testChannel");
 			var tag = "testTag";
 
 			var record = channelHistory.RecordTag(tag);
@@ -72,8 +72,7 @@ namespace HotBot.Plugins.QuickVote.Tests
 		[TestMethod()]
 		public void GetRecord()
 		{
-			var channel = new BasicChannelData("testChannel");
-			var channelHistory = new ChannelHistory(channel);
+			var channelHistory = CreateChannelHistory("testChannel");
 			var tag = "testTag";
 			channelHistory.RecordTag(tag);
 
@@ -87,8 +86,7 @@ namespace HotBot.Plugins.QuickVote.Tests
 		[TestMethod()]
 		public void Delete()
 		{
-			var channel = new BasicChannelData("testChannel");
-			var channelHistory = new ChannelHistory(channel);
+			var channelHistory = CreateChannelHistory("testChannel");
 			var tag = "testTag";
 			channelHistory.RecordTag(tag);
 			channelHistory.Delete(channelHistory.GetRecord(tag));
@@ -101,15 +99,21 @@ namespace HotBot.Plugins.QuickVote.Tests
 		[TestMethod()]
 		public void DeleteExpiredRecords()
 		{
-			var channel = new BasicChannelData("testChannel");
-			var channelHistory = new ChannelHistory(channel);
+			var channelHistory = CreateChannelHistory("testChannel");
 			var tag = "testTag";
-
 			channelHistory.RecordLifetime = TimeSpan.FromMilliseconds(100);
 			var record = channelHistory.RecordTag(tag);
 			record.ExpirationDate = DateTime.Now.Subtract(TimeSpan.FromMinutes(1));
 			channelHistory.DeleteExpiredRecords();
 			Assert.IsNull(channelHistory.GetRecord(tag));
 		}
+
+		private static ChannelHistory CreateChannelHistory(string channelName)
+		{
+
+			var channel = new Mock<LiveChannel>();
+			return new ChannelHistory(channel.Object);
+		}
+
 	}
 }

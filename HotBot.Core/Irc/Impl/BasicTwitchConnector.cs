@@ -8,7 +8,7 @@ namespace HotBot.Core.Irc.Impl
 	public sealed class BasicTwitchConnector : TwitchConnector
 	{
 		private Dictionary<ConnectionInfo, IrcConnection> _connections = new Dictionary<ConnectionInfo, IrcConnection>();
-		private Dictionary<ChannelData, LiveChannel> _channels = new Dictionary<ChannelData, LiveChannel>();
+		private Dictionary<string, LiveChannel> _channels = new Dictionary<string, LiveChannel>();
 		private DependencyOverrides _overrides = new DependencyOverrides();
 		private WhisperConnection _whisperServer;
 
@@ -42,28 +42,27 @@ namespace HotBot.Core.Irc.Impl
 			DependencyInjector = dependencyInjector;
 		}
 
-		public LiveChannel GetConnection(ChannelData channel)
+		public LiveChannel GetConnection(string channelName)
 		{
-			if (!_channels.ContainsKey(channel))
+			if (!_channels.ContainsKey(channelName))
 			{
-				_channels.Add(channel, CreateChannelConnection(channel));
+				_channels.Add(channelName, CreateChannelConnection(channelName));
 			}
-			return _channels[channel];
+			return _channels[channelName];
 		}
 
-		private LiveChannel CreateChannelConnection(ChannelData channel)
+		private LiveChannel CreateChannelConnection(string channelName)
 		{
-			var connection = GetIrcConnection(channel);
+			var connection = GetIrcConnection(channelName);
 			var overrides = new DependencyOverrides();
 			overrides.Add(typeof(TwitchConnector), this);
 			overrides.Add(typeof(IrcConnection), connection);
-			overrides.Add(typeof(ChannelData), channel);
-			return DependencyInjector.Resolve<LiveChannel>(overrides);
+			return DependencyInjector.Resolve<LiveChannel>(overrides, new ParameterOverride("channelName", channelName));//TODO: Encapsulate parameters
 		}
 
-		private IrcConnection GetIrcConnection(ChannelData channel)
+		private IrcConnection GetIrcConnection(string channelName)
 		{
-			var connections = Api.GetChatServers(channel);
+			var connections = Api.GetChatServers(channelName);
 			foreach (KeyValuePair<ConnectionInfo, IrcConnection> pair in _connections)
 			{
 				if (connections.Contains(pair.Key))

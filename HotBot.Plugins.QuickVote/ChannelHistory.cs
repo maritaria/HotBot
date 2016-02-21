@@ -14,9 +14,9 @@ namespace HotBot.Plugins.QuickVote
 		private Dictionary<string, TagRecord> _history = new Dictionary<string, TagRecord>();
 
 		/// <summary>
-		/// Gets the <see cref="ChannelData"/> the <see cref="ChannelHistory"/> is monitoring.
+		/// Gets the <see cref="LiveChannel"/> the <see cref="ChannelHistory"/> is monitoring.
 		/// </summary>
-		public ChannelData ObservedChannel { get; }
+		public LiveChannel ObservedChannel { get; }
 
 		/// <summary>
 		/// Gets or sets the amount of time a <see cref="TagRecord"/> stays alive for.
@@ -24,7 +24,7 @@ namespace HotBot.Plugins.QuickVote
 		/// </summary>
 		public TimeSpan RecordLifetime { get; set; }//TODO: read from config (Requires dynamic config support)
 
-		public ChannelHistory(ChannelData channel)
+		public ChannelHistory(LiveChannel channel)
 		{
 			if (channel == null)
 			{

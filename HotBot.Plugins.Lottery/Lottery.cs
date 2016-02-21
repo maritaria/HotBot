@@ -15,7 +15,7 @@ namespace HotBot.Plugins.Lottery
 
 		private Collection<User> _participants = new Collection<User>();
 		public ReadOnlyCollection<User> Participants { get; private set; }
-		public ChannelData Channel { get; private set; }
+		public LiveChannel Channel { get; private set; }
 		public MessageBus Bus { get; }
 
 		/// <summary>
@@ -92,7 +92,7 @@ namespace HotBot.Plugins.Lottery
 			}
 		}
 
-		public void Start(ChannelData channel)
+		public void Start(LiveChannel channel)
 		{
 			if (channel == null)
 			{

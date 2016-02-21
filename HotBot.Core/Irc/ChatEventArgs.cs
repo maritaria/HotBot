@@ -6,10 +6,10 @@ namespace HotBot.Core.Irc
 	public sealed class ChatEventArgs : EventArgs
 	{
 		public LiveChannel Channel { get; }
-		public ChannelUser Sender { get; }
+		public User Sender { get; }
 		public string Message { get; }
 
-		public ChatEventArgs(LiveChannel channel, ChannelUser sender, string message)
+		public ChatEventArgs(LiveChannel channel, User sender, string message)
 		{
 			if (channel == null)
 			{
@@ -18,10 +18,6 @@ namespace HotBot.Core.Irc
 			if (sender == null)
 			{
 				throw new ArgumentNullException("sender");
-			}
-			if (channel.Data != sender.Channel)
-			{
-				throw new ArgumentException("ChannelUser doesn't belong to the specified ChannelConnection");
 			}
 			if (message == null)
 			{

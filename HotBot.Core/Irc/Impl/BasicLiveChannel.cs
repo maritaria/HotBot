@@ -8,16 +8,16 @@ namespace HotBot.Core.Irc.Impl
 {
 	public sealed class BasicLiveChannel : LiveChannel
 	{
-		private List<ChannelUser> _activeUsers = new List<ChannelUser>();
-
-		public ChannelData Data { get; }
+		private List<User> _activeUsers = new List<User>();
+		
 		public IrcConnection Connection { get; }
 		public TwitchConnector Connector { get; }
 		public MessageBus Bus { get; }
+		public string Name { get; }
 
-		public IReadOnlyCollection<ChannelUser> ActiveUsers { get; }
+		public IReadOnlyCollection<User> ActiveUsers { get; }
 
-		public BasicLiveChannel(TwitchConnector connector, IrcConnection connection, ChannelData data, MessageBus bus)
+		public BasicLiveChannel(TwitchConnector connector, IrcConnection connection, MessageBus bus, string channelName)
 		{
 			if (connector == null)
 			{
@@ -27,25 +27,25 @@ namespace HotBot.Core.Irc.Impl
 			{
 				throw new ArgumentNullException("connection");
 			}
-			if (data == null)
+			if (channelName == null)
 			{
-				throw new ArgumentNullException("data");
+				throw new ArgumentNullException("channelName");
 			}
 			if (bus == null)
 			{
 				throw new ArgumentNullException("bus");
 			}
-			ActiveUsers = new ReadOnlyCollection<ChannelUser>(_activeUsers);
+			ActiveUsers = new ReadOnlyCollection<User>(_activeUsers);
 			Connector = connector;
 			Connector.Decoder.ChatReceived += Decoder_ChatReceived;
 			Connection = connection;
-			Data = data;
+			Name = channelName;
 			Bus = bus;
 		}
 
 		private void Decoder_ChatReceived(object sender, ChatEventArgs e)
 		{
-			if (e.Sender.Channel == Data)
+			if (e.Channel == this)
 			{
 				ChatReceived?.Invoke(this, e);
 			}
@@ -53,23 +53,23 @@ namespace HotBot.Core.Irc.Impl
 
 		public event EventHandler<ChatEventArgs> ChatReceived;
 
-		public event EventHandler<ChannelUserEventArgs> UserJoined;
+		public event EventHandler<UserChannelEventArgs> UserJoined;
 
-		public event EventHandler<ChannelUserEventArgs> UserLeft;
+		public event EventHandler<UserChannelEventArgs> UserLeft;
 
 		public void Join()
 		{
-			Connection.SendCommand($"JOIN #{Data.Name}");
+			Connection.SendCommand($"JOIN #{Name}");
 		}
 
 		public void Leave()
 		{
-			Connection.SendCommand($"PART #{Data.Name}");
+			Connection.SendCommand($"PART #{Name}");
 		}
 
 		public void Say(string message)
 		{
-			Connection.SendCommand($"PRIVMSG #{Data.Name} :{message}");
+			Connection.SendCommand($"PRIVMSG #{Name} :{message}");
 		}
 	}
 }

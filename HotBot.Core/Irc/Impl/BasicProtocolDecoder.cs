@@ -25,9 +25,9 @@ namespace HotBot.Core.Irc.Impl
 
 		public event EventHandler<PingEventArgs> PingReceived;
 
-		public event EventHandler<ChannelUserEventArgs> UserJoinedChannel;
+		public event EventHandler<UserChannelEventArgs> UserJoinedChannel;
 
-		public event EventHandler<ChannelUserEventArgs> UserLefthannel;
+		public event EventHandler<UserChannelEventArgs> UserLefthannel;
 
 		public void Decode(IrcConnection connection, Response response)
 		{
@@ -70,7 +70,7 @@ namespace HotBot.Core.Irc.Impl
 			string username = response.Arguments[1];
 			string message = response.Arguments[2];
 			LiveChannel channel = GetChannel(channelName);
-			ChannelUser user = GetChannelUser(channel, username);
+			var user = GetUser(username);
 			ChatReceived?.Invoke(this, new ChatEventArgs(channel, user, message));
 		}
 
@@ -80,7 +80,7 @@ namespace HotBot.Core.Irc.Impl
 			string username = response.Arguments[1];
 			string message = response.Arguments[2];
 			LiveChannel channel = GetChannel(channelName);
-			ChannelUser user = GetChannelUser(channel, username);
+			var user = GetUser(username);
 			ChatReceived?.Invoke(this, new ChatEventArgs(channel, user, message));
 		}
 
@@ -90,18 +90,13 @@ namespace HotBot.Core.Irc.Impl
 			string username = response.HostMask.Username;
 			string message = response.Arguments[2];
 			LiveChannel channel = GetChannel(channelName);
-			ChannelUser user = GetChannelUser(channel, username);
+			var user = GetUser(username);
 			ChatReceived?.Invoke(this, new ChatEventArgs(channel, user, message));
 		}
 
 		private LiveChannel GetChannel(string channelName)
 		{
-			return Connector.ConnectedChannels.First(c => c.Data.Name == channelName);
-		}
-
-		private ChannelUser GetChannelUser(LiveChannel channel, string username)
-		{
-			return new BasicChannelUser(channel.Data, GetUser(username));
+			return Connector.ConnectedChannels.First(c => c.Name == channelName);
 		}
 
 		private BasicUser GetUser(string username)
