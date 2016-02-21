@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace HotBot.Core.Intercom
+namespace HotBot.Core.Intercom.Impl
 {
 	public sealed class DictionaryMessageBus : MessageBus
 	{
