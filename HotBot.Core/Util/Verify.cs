@@ -5,41 +5,56 @@ namespace HotBot.Core.Util
 {
 	public static class Verify
 	{
-		public const int MinimumUsernameLength = 4;
-		public const int MaximumUsernameLength = 25;
-		public const int MinimumChannelNameLength = MinimumUsernameLength;
-		public const int MaximumChannelNameLength = MaximumUsernameLength;
-
-		public static void Username(string username)
+		public static void NotNull(object value, string paramName)
 		{
-			if (username == null)
+			if (value == null)
 			{
-				throw new ArgumentNullException("username");
-			}
-			if (username.Length < MinimumUsernameLength)
-			{
-				throw new ArgumentException($"A username must be at least {MinimumUsernameLength} characters", "username");
-			}
-			if (username.Length > MaximumUsernameLength)
-			{
-				throw new ArgumentException($"A username cannot be longer than {MaximumUsernameLength} characters", "username");
+				throw new ArgumentNullException(paramName);
 			}
 		}
 
-		public static void ChannelName(string channelName)
+		public static void NonEmptyString(string value, string paramName)
 		{
-			if (channelName == null)
+			if (string.IsNullOrEmpty(value))
 			{
-				throw new ArgumentNullException("channelName");
+				throw new ArgumentException("Cannot be null or empty", value);
 			}
-			if (channelName.Length < MinimumUsernameLength)
+		}
+
+		public static void MinimumLength(string value, int length, string paramName)
+		{
+			if (value.Length < length)
 			{
-				throw new ArgumentException($"A channel name must be at least {MinimumUsernameLength} characters", "channelName");
+				throw new ArgumentException($"Must have a length of at least {length}", paramName);
 			}
-			if (channelName.Length > MaximumUsernameLength)
+		}
+
+		public static void MaximumLength(string value, int length, string paramName)
+		{
+			if (value.Length > length)
 			{
-				throw new ArgumentException($"A channel name cannot be longer than {MaximumUsernameLength} characters", "channelName");
+				throw new ArgumentException($"May have a length of at most {length}", paramName);
 			}
+		}
+
+		public const int MinimumUsernameLength = 4;
+		public const int MaximumUsernameLength = 25;
+
+		public static void Username(string username, string paramName)
+		{
+			NotNull(username, paramName);
+			MinimumLength(username, MinimumUsernameLength, paramName);
+			MaximumLength(username, MaximumUsernameLength, paramName);
+		}
+
+		public const int MinimumChannelNameLength = MinimumUsernameLength;
+		public const int MaximumChannelNameLength = MaximumUsernameLength;
+
+		public static void ChannelName(string channelName, string paramName)
+		{
+			NotNull(channelName, paramName);
+			MinimumLength(channelName, MinimumChannelNameLength, paramName);
+			MaximumLength(channelName, MaximumChannelNameLength, paramName);
 		}
 	}
 }

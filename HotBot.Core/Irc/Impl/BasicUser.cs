@@ -26,14 +26,7 @@ namespace HotBot.Core.Irc.Impl
 
 		public BasicUser(string name) : this()
 		{
-			try
-			{
-				Verify.Username(name);
-			}
-			catch (Exception ex)
-			{
-				throw new ArgumentException(ex.Message, "name", ex);
-			}
+			Verify.Username(name, "name");
 			Name = name;
 		}
 

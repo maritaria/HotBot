@@ -17,14 +17,7 @@ namespace HotBot.Core.Irc.Impl
 
 		public DatabaseChannel(string name) : this()
 		{
-			try
-			{
-				Verify.ChannelName(name);
-			}
-			catch (Exception ex)
-			{
-				throw new ArgumentException(ex.Message, "name", ex);
-			}
+			Verify.ChannelName(name, "name");
 			Name = name;
 		}
 
