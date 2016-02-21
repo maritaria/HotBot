@@ -79,6 +79,7 @@ namespace HotBot.Core.Irc.Impl
 			var connection = DependencyInjector.Resolve<IrcConnection>();
 			connection.Connect(connectionInfo);
 			ApplyCredentials(connection);
+			ApplyPingResponder(connection);
 			return connection;
 		}
 
@@ -91,6 +92,11 @@ namespace HotBot.Core.Irc.Impl
 			connection.SendCommand("CAP REQ :twitch.tv/commands");
 			connection.SendCommand("CAP REQ :twitch.tv/membership");
 			connection.SendCommand("CAP END");
+		}
+
+		private void ApplyPingResponder(IrcConnection connection)
+		{
+			new PingResponder(connection);
 		}
 
 		private WhisperConnection CreateWhisperConnection()

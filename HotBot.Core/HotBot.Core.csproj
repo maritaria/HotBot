@@ -100,7 +100,7 @@
     <Compile Include="Irc\Impl\BasicTwitchConnector.cs" />
     <Compile Include="Irc\Impl\BasicWhisperConnection.cs" />
     <Compile Include="Irc\Impl\DatabaseChannel.cs" />
-    <Compile Include="Irc\Impl\PingResponder.cs" />
+    <Compile Include="Irc\PingResponder.cs" />
     <Compile Include="Irc\User.cs" />
     <Compile Include="Irc\PingEventArgs.cs" />
     <Compile Include="Irc\ProtocolDecoder.cs" />
