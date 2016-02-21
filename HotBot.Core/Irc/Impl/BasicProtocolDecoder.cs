@@ -61,7 +61,7 @@ namespace HotBot.Core.Irc.Impl
 			string channelName = response.Arguments[0];
 			string username = response.Arguments[1];
 			string message = response.Arguments[2];
-			LiveChannel channel = GetChannel(channelName);
+			Channel channel = GetChannel(channelName);
 			var user = GetUser(username);
 			ChatReceived?.Invoke(this, new ChatEventArgs(channel, user, message));
 		}
@@ -71,7 +71,7 @@ namespace HotBot.Core.Irc.Impl
 			string channelName = response.Arguments[0];
 			string username = response.Arguments[1];
 			string message = response.Arguments[2];
-			LiveChannel channel = GetChannel(channelName);
+			Channel channel = GetChannel(channelName);
 			var user = GetUser(username);
 			ChatReceived?.Invoke(this, new ChatEventArgs(channel, user, message));
 		}
@@ -81,12 +81,12 @@ namespace HotBot.Core.Irc.Impl
 			string channelName = response.Arguments[0];
 			string username = response.HostMask.Username;
 			string message = response.Arguments[2];
-			LiveChannel channel = GetChannel(channelName);
+			Channel channel = GetChannel(channelName);
 			var user = GetUser(username);
 			ChatReceived?.Invoke(this, new ChatEventArgs(channel, user, message));
 		}
 
-		private LiveChannel GetChannel(string channelName)
+		private Channel GetChannel(string channelName)
 		{
 			return Connector.ConnectedChannels.First(c => c.Name == channelName);
 		}

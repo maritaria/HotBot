@@ -6,11 +6,11 @@ namespace HotBot.Core.Irc
 {
 	public sealed class ChatEventArgs : EventArgs
 	{
-		public LiveChannel Channel { get; }
+		public Channel Channel { get; }
 		public User Sender { get; }
 		public string Message { get; }
 
-		public ChatEventArgs(LiveChannel channel, User sender, string message)
+		public ChatEventArgs(Channel channel, User sender, string message)
 		{
 			Verify.NotNull(channel, "channel");
 			Verify.NotNull(sender, "sender");

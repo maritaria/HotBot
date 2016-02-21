@@ -14,7 +14,7 @@ namespace HotBot.Plugins.QuickVote.Tests
 		[TestMethod()]
 		public void ChannelHistory()
 		{
-			var channel = new Mock<LiveChannel>();
+			var channel = new Mock<Channel>();
 			var channelHistory = new ChannelHistory(channel.Object);
 
 			Assert.AreEqual(channel, channelHistory.ObservedChannel);
@@ -111,7 +111,7 @@ namespace HotBot.Plugins.QuickVote.Tests
 		private static ChannelHistory CreateChannelHistory(string channelName)
 		{
 
-			var channel = new Mock<LiveChannel>();
+			var channel = new Mock<Channel>();
 			return new ChannelHistory(channel.Object);
 		}
 

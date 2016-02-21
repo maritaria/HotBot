@@ -9,7 +9,7 @@ namespace HotBot.Core.Irc.Impl
 	public sealed class BasicTwitchConnector : TwitchConnector
 	{
 		private Dictionary<ConnectionInfo, IrcConnection> _connections = new Dictionary<ConnectionInfo, IrcConnection>();
-		private Dictionary<string, LiveChannel> _channels = new Dictionary<string, LiveChannel>();
+		private Dictionary<string, Channel> _channels = new Dictionary<string, Channel>();
 		private DependencyOverrides _overrides = new DependencyOverrides();
 		private WhisperConnection _whisperServer;
 
@@ -17,7 +17,7 @@ namespace HotBot.Core.Irc.Impl
 
 		public Credentials DefaultCredentials { get; set; }
 
-		public LiveChannel[] ConnectedChannels => _channels.Values.ToArray();
+		public Channel[] ConnectedChannels => _channels.Values.ToArray();
 
 		public IrcConnection[] GroupServers => _connections.Values.ToArray();
 
@@ -45,7 +45,7 @@ namespace HotBot.Core.Irc.Impl
 			DependencyInjector = dependencyInjector;
 		}
 
-		public LiveChannel GetConnection(string channelName)
+		public Channel GetConnection(string channelName)
 		{
 			if (!_channels.ContainsKey(channelName))
 			{
@@ -54,13 +54,13 @@ namespace HotBot.Core.Irc.Impl
 			return _channels[channelName];
 		}
 
-		private LiveChannel CreateChannelConnection(string channelName)
+		private Channel CreateChannelConnection(string channelName)
 		{
 			var connection = GetIrcConnection(channelName);
 			var overrides = new DependencyOverrides();
 			overrides.Add(typeof(TwitchConnector), this);
 			overrides.Add(typeof(IrcConnection), connection);
-			return DependencyInjector.Resolve<LiveChannel>(overrides, new ParameterOverride("channelName", channelName));//TODO: Encapsulate parameters
+			return DependencyInjector.Resolve<Channel>(overrides, new ParameterOverride("channelName", channelName));//TODO: Encapsulate parameters
 		}
 
 		private IrcConnection GetIrcConnection(string channelName)

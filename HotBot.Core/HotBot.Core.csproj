@@ -80,12 +80,12 @@
     <Compile Include="Commands\CommandManagerConfig.cs" />
     <Compile Include="Commands\ReflectionCommandManager.cs" />
     <Compile Include="Intercom\DefaultPublishTypeAttribute.cs" />
-    <Compile Include="Irc\LiveChannel.cs" />
+    <Compile Include="Irc\Channel.cs" />
     <Compile Include="Irc\UserChannelEventArgs.cs" />
     <Compile Include="Irc\ChatEventArgs.cs" />
     <Compile Include="Irc\ConnectionInfo.cs" />
     <Compile Include="Irc\HostMask.cs" />
-    <Compile Include="Irc\Impl\BasicLiveChannel.cs" />
+    <Compile Include="Irc\Impl\BasicChannel.cs" />
     <Compile Include="Irc\Impl\BasicIrcConnection.Reader.cs" />
     <Compile Include="Irc\Impl\BasicIrcConnection.Writer.cs" />
     <Compile Include="Irc\Impl\BasicProtocolDecoder.cs" />

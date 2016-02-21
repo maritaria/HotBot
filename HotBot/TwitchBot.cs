@@ -31,7 +31,7 @@ namespace HotBot
 		[Dependency]
 		public TwitchApi TwitchApi { get; set; }
 
-		public LiveChannel PrimaryChannel { get; set; }
+		public Channel PrimaryChannel { get; set; }
 
 		public TwitchBot()
 		{

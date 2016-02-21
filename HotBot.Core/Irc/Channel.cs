@@ -4,16 +4,12 @@ using System.Collections.Generic;
 
 namespace HotBot.Core.Irc
 {
-	public interface LiveChannel : Publisher
+	public interface Channel : Publisher
 	{
-		TwitchConnector Connector { get; }
-		IrcConnection Connection { get; }
-		string Name { get; }
-
-		/// <summary>
-		/// Gets the users currently in the <see cref="ChannelData"/>.
-		/// </summary>
 		IReadOnlyCollection<User> ActiveUsers { get; }
+		IrcConnection Connection { get; }
+		TwitchConnector Connector { get; }
+		string Name { get; }
 
 		void Join();
 

@@ -16,7 +16,7 @@ namespace HotBot.Core.Commands
 		/// <summary>
 		/// The channel the command is being executed in
 		/// </summary>
-		public LiveChannel Channel { get; }
+		public Channel Channel { get; }
 
 		/// <summary>
 		/// Gets or sets the entity holding the permissions available for the command
@@ -33,11 +33,11 @@ namespace HotBot.Core.Commands
 		/// </summary>
 		public string ArgumentText { get; }
 
-		public CommandEvent(LiveChannel channel, User sender, string commandName, string argumentText) : this(channel, sender, sender, commandName, argumentText)
+		public CommandEvent(Channel channel, User sender, string commandName, string argumentText) : this(channel, sender, sender, commandName, argumentText)
 		{
 		}
 
-		public CommandEvent(LiveChannel channel, User sender, User authorizer, string commandName, string argumentText)
+		public CommandEvent(Channel channel, User sender, User authorizer, string commandName, string argumentText)
 		{
 			Verify.NotNull(channel, "channel");
 			Verify.NotNull(sender, "sender");
