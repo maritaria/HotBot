@@ -4,7 +4,7 @@ using Moq;
 using System;
 using System.Linq;
 
-namespace HotBot.Core.Intercom.Tests
+namespace HotBot.Core.Intercom.Impl.Tests
 {
 	[TestClass()]
 	public class DictionaryMessageBusTests
