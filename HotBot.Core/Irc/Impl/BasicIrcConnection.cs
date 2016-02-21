@@ -1,12 +1,9 @@
 ﻿using HotBot.Core.Intercom;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc.Impl
 {
@@ -87,7 +84,7 @@ namespace HotBot.Core.Irc.Impl
 			lock (_communicationLock)
 			{
 				VerifyConnection();
-				foreach(string com in ircCommands)
+				foreach (string com in ircCommands)
 				{
 					_writer.Queue(com);
 				}
@@ -127,6 +124,5 @@ namespace HotBot.Core.Irc.Impl
 		{
 			ResponseReceived?.Invoke(this, new ResponseEventArgs(this, response));
 		}
-
 	}
 }

@@ -12,6 +12,5 @@ namespace HotBot.Core.Irc
 		void SendWhisper(User user, string message);
 
 		event EventHandler<WhisperEventArgs> WhisperReceived;
-
 	}
 }

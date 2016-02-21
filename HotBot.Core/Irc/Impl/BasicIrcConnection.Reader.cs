@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
@@ -37,7 +36,7 @@ namespace HotBot.Core.Irc.Impl
 			{
 				_cancellation.Cancel();
 			}
-			
+
 			private void ReaderThreadMethod()
 			{
 				while (!_cancellation.IsCancellationRequested)
@@ -57,7 +56,7 @@ namespace HotBot.Core.Irc.Impl
 					*/
 				}
 			}
-			
+
 			private void DataReceived(byte[] buffer, int length)
 			{
 				string message = Decode(buffer, length);
@@ -77,7 +76,7 @@ namespace HotBot.Core.Irc.Impl
 			}
 
 			#region IDisposable Support
-			
+
 			protected virtual void Dispose(bool disposing)
 			{
 				if (!_disposed)

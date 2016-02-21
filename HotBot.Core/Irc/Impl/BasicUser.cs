@@ -1,9 +1,8 @@
-﻿using System;
+﻿using HotBot.Core.Permissions;
+using HotBot.Core.Util;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Serialization;
-using HotBot.Core.Permissions;
-using HotBot.Core.Util;
 
 namespace HotBot.Core.Irc.Impl
 {
@@ -11,6 +10,7 @@ namespace HotBot.Core.Irc.Impl
 	{
 		//TODO: Store this somewhere safe.
 		public const string ChannelPrefix = "#";
+
 		public const char HandlePrefix = '@';//TODO: Store this somewhere safe
 
 		[Key]
@@ -30,7 +30,7 @@ namespace HotBot.Core.Irc.Impl
 			{
 				Verify.Username(name);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				throw new ArgumentException(ex.Message, "name", ex);
 			}
@@ -42,6 +42,5 @@ namespace HotBot.Core.Irc.Impl
 			Id = Guid.NewGuid();
 			Role = UserRole.User;
 		}
-
 	}
 }

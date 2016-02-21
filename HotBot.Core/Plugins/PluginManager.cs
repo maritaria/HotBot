@@ -35,6 +35,7 @@ namespace HotBot.Core.Plugins
 		/// <param name="name">The name of the plugin to be found.</param>
 		/// <returns>The plugin with the specified name. Null if none were found.</returns>
 		Plugin GetPlugin(string name);
+
 		/// <summary>
 		/// Gets a plugin instance by it's type.
 		/// The type is compared to the type of the instance, not by baseclasses or interfaces.
@@ -47,10 +48,12 @@ namespace HotBot.Core.Plugins
 		/// Loads all not-loaded plugins.
 		/// </summary>
 		void LoadAll();
+
 		/// <summary>
 		/// Unloads all loaded plugins.
 		/// </summary>
 		void UnloadAll();
+
 		/// <summary>
 		/// Unloads all loaded plugins and then loads them again.
 		/// Does not load perviously unloaded plugins.

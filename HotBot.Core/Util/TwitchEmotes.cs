@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotBot.Core.Util
 {
@@ -65,9 +62,9 @@ namespace HotBot.Core.Util
 		{
 			public const string Reptile = @"OSkomodo";
 			public const string Sloth = @"OSfrog";
-			public const string Frog = @"OSsloth"; 
-			public const string Dog1 = @"OhMyDog"; 
-			public const string Dog2 = @"RalpherZ"; 
+			public const string Frog = @"OSsloth";
+			public const string Dog1 = @"OhMyDog";
+			public const string Dog2 = @"RalpherZ";
 			public const string Dog3 = @"FrankerZ";
 			public const string Dog4 = @"CorgiDerp";
 			public const string Orc = @"SMOrc";
@@ -76,6 +73,5 @@ namespace HotBot.Core.Util
 			public const string Robot = @"MrDestructoid";
 			public const string Creeper = @"SSSsss";
 		}
-
 	}
 }

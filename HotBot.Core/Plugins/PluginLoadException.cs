@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Reflection;
-using System.Runtime.Serialization;
 
 namespace HotBot.Core.Plugins
 {
@@ -8,7 +6,7 @@ namespace HotBot.Core.Plugins
 	public sealed class PluginLoadException : Exception
 	{
 		public string PluginName { get; }
-		
+
 		public PluginLoadException(string pluginName, string message) : base(message)
 		{
 			if (pluginName == null)

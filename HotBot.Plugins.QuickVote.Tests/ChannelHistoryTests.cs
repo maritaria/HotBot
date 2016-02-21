@@ -1,6 +1,4 @@
-﻿using HotBot.Core;
-using HotBot.Core.Irc;
-using HotBot.Core.Irc.Impl;
+﻿using HotBot.Core.Irc.Impl;
 using HotBot.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

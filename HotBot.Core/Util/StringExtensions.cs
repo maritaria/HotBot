@@ -151,6 +151,5 @@ namespace HotBot.Core.Util
 			}
 			return source;
 		}
-
 	}
 }

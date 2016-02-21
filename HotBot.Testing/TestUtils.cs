@@ -75,6 +75,7 @@ namespace HotBot.Testing
 			}
 			Assert.Fail($"No exception was thrown but expected was <{typeof(ArgumentException).FullName}>");
 		}
+
 		/// <summary>
 		/// Waits for the specified amount of time.
 		/// </summary>
@@ -83,6 +84,7 @@ namespace HotBot.Testing
 		{
 			Thread.Sleep(timeSpan);
 		}
+
 		/// <summary>
 		/// Blocks until the predicate returns true.
 		/// </summary>

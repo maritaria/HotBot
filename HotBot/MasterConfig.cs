@@ -1,5 +1,4 @@
 ﻿using HotBot.Core.Commands;
-using HotBot.Core.Irc;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

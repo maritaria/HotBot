@@ -1,5 +1,4 @@
-﻿using Microsoft.Practices.Unity;
-using System;
+﻿using System;
 using System.Linq;
 
 namespace HotBot.Core.Plugins

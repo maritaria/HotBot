@@ -1,4 +1,4 @@
-﻿using HotBot.Core;
+﻿using HotBot.Core.Intercom;
 using HotBot.Core.Irc;
 using HotBot.Core.Irc.Impl;
 using HotBot.Core.Plugins;
@@ -15,6 +15,7 @@ namespace HotBot
 		public static readonly UInt16 Port = 6667;
 
 		private object _consoleLock = new object();
+
 		[Dependency]
 		public MessageBus Bus { get; set; }
 
@@ -26,7 +27,7 @@ namespace HotBot
 
 		[Dependency]
 		public TwitchConnector ChatConnector { get; set; }
-		
+
 		[Dependency]
 		public TwitchApi TwitchApi { get; set; }
 

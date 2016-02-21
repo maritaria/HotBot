@@ -10,11 +10,13 @@ namespace HotBot.Core.Intercom
 		/// All methods decorated with a <see cref="SubscribeAttribute"/> will be registered.
 		/// </summary>
 		void Subscribe(object handler);
+
 		/// <summary>
 		/// Unsubscribes a handler so it no longer receives messages from the current <see cref="MessageBus"/>.
 		/// </summary>
 		/// <param name="handler">The object of which to unsubscribe the methods</param>
 		void Unsubscribe(object handler);
+
 		/// <summary>
 		/// Checks whether a handler has any subscriptions on the current <see cref="MessageBus"/>.
 		/// </summary>
@@ -36,7 +38,5 @@ namespace HotBot.Core.Intercom
 		/// <param name="instance">An instance of the dataType</param>
 		/// <exception cref="ArgumentException">The given instance is not of the given dataType</exception>
 		void PublishSpecific(Type dataType, object instance);
-
-
 	}
 }

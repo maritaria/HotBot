@@ -12,7 +12,7 @@ namespace HotBot.Core.Intercom
 		public DictionaryMessageBus()
 		{
 		}
-		
+
 		public void Publish(object data)
 		{
 			if (data == null)
@@ -38,7 +38,7 @@ namespace HotBot.Core.Intercom
 			if (_subscribers.ContainsKey(dataType))
 			{
 				var handlers = _subscribers[dataType];
-				foreach(KeyValuePair<object, MethodInfo> handler in handlers)
+				foreach (KeyValuePair<object, MethodInfo> handler in handlers)
 				{
 					handler.Value.Invoke(handler.Key, new object[] { instance });
 				}
@@ -56,7 +56,7 @@ namespace HotBot.Core.Intercom
 				Subscribe(handler, handlerMethod);
 			}
 		}
-		
+
 		private void Subscribe(object handler, MethodInfo handlerMethod)
 		{
 			foreach (SubscribeAttribute attr in handlerMethod.GetCustomAttributes<SubscribeAttribute>())
@@ -64,7 +64,7 @@ namespace HotBot.Core.Intercom
 				Subscribe(handler, handlerMethod, attr);
 			}
 		}
-		
+
 		private void Subscribe(object handler, MethodInfo handlerMethod, SubscribeAttribute attr)
 		{
 			Type publishedType = GetPublishingType(handlerMethod, attr);
@@ -103,7 +103,7 @@ namespace HotBot.Core.Intercom
 
 		public void Unsubscribe(object handler)
 		{
-			foreach(Dictionary<object, MethodInfo> subs in _subscribers.Values)
+			foreach (Dictionary<object, MethodInfo> subs in _subscribers.Values)
 			{
 				subs.Remove(handler);
 			}

@@ -1,15 +1,10 @@
-﻿using HotBot.Core;
-using HotBot.Core.Intercom;
+﻿using HotBot.Core.Intercom;
 using HotBot.Core.Irc;
 using HotBot.Core.Plugins;
 using HotBot.Plugins.Wallet;
 using Microsoft.Practices.Unity;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 [assembly: Plugin(typeof(WalletPlugin))]
 
@@ -38,7 +33,7 @@ namespace HotBot.Plugins.Wallet
 		{
 			Bus.Unsubscribe(this);
 		}
-		
+
 		public double GetCurrency(User walletOwner, string currency)
 		{
 			if (walletOwner == null)
@@ -59,7 +54,7 @@ namespace HotBot.Plugins.Wallet
 				return wallet.Value;
 			}
 		}
-		
+
 		public void SetCurrency(User walletOwner, string currency, double value)
 		{
 			using (var context = new WalletContext())

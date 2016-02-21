@@ -1,12 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HotBot.Core.Plugins;
+﻿using HotBot.Testing;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.Unity;
-using HotBot.Testing;
 
 namespace HotBot.Core.Plugins.Tests
 {
@@ -29,7 +24,7 @@ namespace HotBot.Core.Plugins.Tests
 			Assert.AreEqual(name, pluginDescription.Name);
 			Assert.AreEqual(desc, pluginDescription.Description);
 		}
-		
+
 		[TestMethod()]
 		public void VerifyName()
 		{

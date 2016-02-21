@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using HotBot.Core.Irc;
-using HotBot.Core.Util;
+﻿using HotBot.Core.Intercom;
 using Microsoft.Practices.Unity;
-using HotBot.Core.Intercom;
+using System;
+using System.Linq;
 
 namespace HotBot.Core.Commands
 {
 	public sealed class ChatCommandScanner
 	{
 		public MessageBus Bus { get; }
+
 		[Dependency]
 		public CommandManagerConfig Config { get; set; }
 
@@ -27,6 +25,7 @@ namespace HotBot.Core.Commands
 			Bus = bus;
 			Bus.Subscribe(this);
 		}
+
 		/*
 		[Subscribe]
 		public void HandleMessage(ChatReceivedEvent message)
@@ -68,9 +67,10 @@ namespace HotBot.Core.Commands
 			return commandInfo;
 		}
 		*/
+
 		private string RemovePrefix(string text)
 		{
-			foreach(string prefix in Config.Prefixes)
+			foreach (string prefix in Config.Prefixes)
 			{
 				if (text.StartsWith(prefix))
 				{

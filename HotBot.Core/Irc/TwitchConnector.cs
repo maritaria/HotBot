@@ -10,6 +10,7 @@ namespace HotBot.Core.Irc
 		WhisperConnection WhisperServer { get; }//TODO: Dictionary<Login, WhisperConnection> WhisperConnections{get;}
 		LiveChannel[] ConnectedChannels { get; }
 		ProtocolDecoder Decoder { get; }
+
 		LiveChannel GetConnection(ChannelData channel);
 	}
 }

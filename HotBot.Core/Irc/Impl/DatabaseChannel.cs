@@ -1,15 +1,12 @@
 ﻿using HotBot.Core.Util;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotBot.Core.Irc.Impl
 {
-	class DatabaseChannel
+	internal class DatabaseChannel
 	{
 		[Key]
 		public Guid Id { get; private set; }

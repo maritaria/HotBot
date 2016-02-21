@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotBot.Core.Plugins
 {
@@ -21,7 +18,7 @@ namespace HotBot.Core.Plugins
 		/// Gets the descriptionIReflectionPluginDescription of the plugin.
 		/// </summary>
 		public string Description { get; }
-		
+
 		public PluginDescription(string name, string description)
 		{
 			try

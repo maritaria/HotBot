@@ -43,7 +43,6 @@ namespace HotBot.Core.Util.Tests
 			SplitOnce_MultiTest("HelloHello world :D", "Hello", "Q", "", "Hello world :D");
 			SplitOnce_MultiTest("Hello world :D", "_", "Q", "Hello world :D", "");
 			SplitOnce_MultiTest("Hello world :D", "", "Q", "Hello world :D", "");
-
 		}
 
 		private static void SplitOnce_MultiTest(string source, string splitter1, string splitter2, string expectedResult, string expectedLeftover)

@@ -23,7 +23,7 @@ namespace HotBot.Core.Irc.Impl
 		public IUnityContainer DependencyInjector { get; }
 
 		public ProtocolDecoder Decoder { get; }
-		
+
 		public WhisperConnection WhisperServer
 		{
 			get

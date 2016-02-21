@@ -24,7 +24,9 @@ namespace HotBot.Core.Irc.Impl
 		public event EventHandler<ChatEventArgs> ChatReceived;
 
 		public event EventHandler<PingEventArgs> PingReceived;
+
 		public event EventHandler<ChannelUserEventArgs> UserJoinedChannel;
+
 		public event EventHandler<ChannelUserEventArgs> UserLefthannel;
 
 		public void Decode(IrcConnection connection, Response response)
@@ -71,6 +73,7 @@ namespace HotBot.Core.Irc.Impl
 			ChannelUser user = GetChannelUser(channel, username);
 			ChatReceived?.Invoke(this, new ChatEventArgs(channel, user, message));
 		}
+
 		private void HandleJoinCommand(IrcConnection connection, Response response)
 		{
 			string channelName = response.Arguments[0];
@@ -83,7 +86,6 @@ namespace HotBot.Core.Irc.Impl
 
 		private void HandleLeaveCommand(IrcConnection connection, Response response)
 		{
-			
 			string channelName = response.Arguments[0];
 			string username = response.HostMask.Username;
 			string message = response.Arguments[2];
@@ -106,6 +108,5 @@ namespace HotBot.Core.Irc.Impl
 		{
 			return new BasicUser(username);
 		}
-
 	}
 }

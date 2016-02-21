@@ -9,8 +9,11 @@ namespace HotBot.Core.Irc
 		void Decode(IrcConnection connection, Response response);
 
 		event EventHandler<PingEventArgs> PingReceived;
+
 		event EventHandler<ChatEventArgs> ChatReceived;
+
 		event EventHandler<ChannelUserEventArgs> UserJoinedChannel;
+
 		event EventHandler<ChannelUserEventArgs> UserLefthannel;
 	}
 }

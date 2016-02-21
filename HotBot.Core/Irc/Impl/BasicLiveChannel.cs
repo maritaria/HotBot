@@ -16,7 +16,7 @@ namespace HotBot.Core.Irc.Impl
 		public MessageBus Bus { get; }
 
 		public IReadOnlyCollection<ChannelUser> ActiveUsers { get; }
-		
+
 		public BasicLiveChannel(TwitchConnector connector, IrcConnection connection, ChannelData data, MessageBus bus)
 		{
 			if (connector == null)

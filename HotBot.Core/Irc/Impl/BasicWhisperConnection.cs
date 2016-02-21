@@ -1,7 +1,6 @@
 ﻿using HotBot.Core.Intercom;
 using System;
 using System.Linq;
-using System.Threading;
 
 namespace HotBot.Core.Irc.Impl
 {

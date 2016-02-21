@@ -122,10 +122,10 @@ namespace HotBot.Core.Commands
 
 		private void RegisterAllCommandsForPlugin(Plugin plugin)
 		{
-			foreach(MethodInfo method in plugin.GetType().GetMethods())
+			foreach (MethodInfo method in plugin.GetType().GetMethods())
 			{
 				CommandAttribute attr = method.GetCustomAttribute<CommandAttribute>();
-				if (attr!=null)
+				if (attr != null)
 				{
 					AddListener(new PluginCommandListener(plugin, attr.CommandName, method));
 				}
@@ -151,7 +151,7 @@ namespace HotBot.Core.Commands
 					}
 				}
 			}
-			foreach(PluginCommandListener listener in removalQueue)
+			foreach (PluginCommandListener listener in removalQueue)
 			{
 				_listeners.Remove(listener.Command);
 			}
@@ -169,12 +169,11 @@ namespace HotBot.Core.Commands
 				CallbackMethod = callback;
 				Command = command;
 			}
-			
+
 			public void OnCommand(CommandEvent info)
 			{
 				CallbackMethod.Invoke(Plugin, new object[] { info });
 			}
 		}
-
 	}
 }

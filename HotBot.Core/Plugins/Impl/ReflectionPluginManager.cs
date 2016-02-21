@@ -141,6 +141,5 @@ namespace HotBot.Core.Plugins.Impl
 		{
 			AddPlugin(pluginCreated.Plugin);
 		}
-
 	}
 }

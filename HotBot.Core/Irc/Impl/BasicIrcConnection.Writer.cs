@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Sockets;
-using System.Text;
 
 namespace HotBot.Core.Irc.Impl
 {
@@ -45,6 +43,7 @@ namespace HotBot.Core.Irc.Impl
 					return _queue.Dequeue();
 				}
 			}
+
 			/*
 			private void WriteCompleted(IAsyncResult ar)
 			{
@@ -67,7 +66,7 @@ namespace HotBot.Core.Irc.Impl
 
 			protected virtual void Dispose(bool disposing)
 			{
-				lock(_queueLock)
+				lock (_queueLock)
 				{
 					if (!_disposed)
 					{
