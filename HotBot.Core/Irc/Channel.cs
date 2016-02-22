@@ -17,7 +17,7 @@ namespace HotBot.Core.Irc
 
 		void Say(string message);
 
-		void Broadcast(string message);
+		void Announce(string message);
 
 		event EventHandler<ChatEventArgs> ChatReceived;
 

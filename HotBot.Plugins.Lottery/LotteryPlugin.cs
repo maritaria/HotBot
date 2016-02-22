@@ -100,7 +100,7 @@ namespace HotBot.Plugins.Lottery
 						Console.WriteLine(ex.ToString());
 						return;
 					}
-					info.Channel.Broadcast($"New lottery participant: (@{info.User.Name})");
+					info.Channel.Announce($"New lottery participant: (@{info.User.Name})");
 				}
 			}
 		}
@@ -114,7 +114,7 @@ namespace HotBot.Plugins.Lottery
 				CurrentLottery.Pot = 1000;
 				CurrentLottery.Duration = TimeSpan.FromMinutes(1);
 				CurrentLottery.Start(info.Channel);
-				info.Channel.Broadcast("A new lottery has been started. You have 1 minute to type !joinlottery to participate :D");
+				info.Channel.Announce("A new lottery has been started. You have 1 minute to type !joinlottery to participate :D");
 			}
 			else
 			{

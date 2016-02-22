@@ -47,9 +47,10 @@ namespace HotBot
 		private void JoinPrimaryChannel()
 		{
 			ChatConnector.DefaultCredentials = new Credentials { AuthKey = MasterConfig.AuthKey, Username = MasterConfig.Username };
-			PrimaryChannel = ChatConnector.GetConnection("maritaria");
+			//PrimaryChannel = ChatConnector.GetConnection("maritaria");
+			PrimaryChannel = ChatConnector.GetConnection("qazitv");
 			PrimaryChannel.Join();
-			PrimaryChannel.Say(@"/me is now online");
+			PrimaryChannel.Announce(@"is now online");
 			ChatConnector.WhisperServer.WhisperReceived += WhisperServer_WhisperReceived;
 		}
 

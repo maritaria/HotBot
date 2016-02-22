@@ -1,5 +1,6 @@
 ﻿using HotBot.Core.Irc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HotBot.Core.Util
@@ -26,6 +27,22 @@ namespace HotBot.Core.Util
 			whisperConnection.SendWhisper(user, message);
 		}
 
+		public static void Broadcast(IEnumerable<Channel> channels, string message)
+		{
+			foreach (Channel channel in channels)
+			{
+				channel.Say(message);
+			}
+		}
+
+		public static void BroadcastAnnounce(IEnumerable<Channel> channels, string message)
+		{
+			foreach(Channel channel in channels)
+			{
+				channel.Announce(message);
+			}
+		}
+
 		public static void Callout(this User user, Channel channel, string message)
 		{
 			Verify.NotNull(channel, "channel");
@@ -39,17 +56,17 @@ namespace HotBot.Core.Util
 			user.Callout(channel, message);
 		}
 
-		public static void BroadcastCallout(this User user, Channel channel, string message)
+		public static void CalloutByAnnounce(this User user, Channel channel, string message)
 		{
 			Verify.NotNull(channel, "channel");
 			Verify.NotNull(user, "user");
 			Verify.NotNull(message, "message");
-			channel.Broadcast($"@{user.Name} {message}");
+			channel.Announce($"@{user.Name} {message}");
 		}
 
-		public static void BroadcastCallout(this Channel channel, User user, string message)
+		public static void CalloutByAnnounce(this Channel channel, User user, string message)
 		{
-			user.BroadcastCallout(channel, message);
+			user.CalloutByAnnounce(channel, message);
 		}
 	}
 }

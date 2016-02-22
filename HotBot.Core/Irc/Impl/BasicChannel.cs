@@ -82,7 +82,7 @@ namespace HotBot.Core.Irc.Impl
 			Connection.SendCommand($"PRIVMSG #{Name} :{message}");
 		}
 
-		public void Broadcast(string message)
+		public void Announce(string message)
 		{
 			Verify.NotNull(message, "message");
 			Say($"/me {message}");
