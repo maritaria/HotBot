@@ -35,7 +35,7 @@ namespace HotBot.Plugins.QuickVote
 			CommandManager.Unregister(this);
 		}
 
-		[Subscribe]
+		//[Subscribe]
 		public void OnChatMessage(/*ChatReceivedEvent receivedChat*/)
 		{
 			//TODO: Keep track of data

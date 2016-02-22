@@ -41,10 +41,7 @@ namespace HotBot
 		{
 			Bus.Subscribe(this);
 			PluginManager.LoadAll();
-			while (true)
-			{
-				Thread.Sleep(1);
-			}
+			JoinPrimaryChannel();
 		}
 
 		private void JoinPrimaryChannel()
