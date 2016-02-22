@@ -25,10 +25,12 @@ namespace HotBot.Core.Irc.Impl
 			Verify.NotNull(connector, "connector");
 			Verify.NotNull(connection, "connection");
 			Verify.NotNull(bus, "bus");
-			Verify.NotNull(channelName, "channelName");
+			Verify.ChannelName(channelName, "channelName");
 			ActiveUsers = new ReadOnlyCollection<User>(_activeUsers);
 			Connector = connector;
 			Connector.Decoder.ChatReceived += Decoder_ChatReceived;
+			Connector.Decoder.UserJoinedChannel += Decoder_UserJoinedChannel;
+			Connector.Decoder.UserLefthannel += Decoder_UserLefthannel;
 			Connection = connection;
 			Name = channelName;
 			Bus = bus;
@@ -39,6 +41,22 @@ namespace HotBot.Core.Irc.Impl
 			if (e.Channel == this)
 			{
 				ChatReceived?.Invoke(this, e);
+			}
+		}
+
+		private void Decoder_UserJoinedChannel(object sender, UserChannelEventArgs e)
+		{
+			if (e.Channel == this)
+			{
+				UserJoined?.Invoke(this, e);
+			}
+		}
+
+		private void Decoder_UserLefthannel(object sender, UserChannelEventArgs e)
+		{
+			if (e.Channel == this)
+			{
+				UserLeft?.Invoke(this, e);
 			}
 		}
 
