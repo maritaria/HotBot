@@ -141,6 +141,7 @@
     <Compile Include="Intercom\MessageBus.cs" />
     <Compile Include="Util\StringExtensions.cs" />
     <Compile Include="Irc\Impl\BasicUser.cs" />
+    <Compile Include="Util\ChatExtensions.cs" />
     <Compile Include="Util\Verify.cs" />
   </ItemGroup>
   <ItemGroup>
