@@ -1,6 +1,8 @@
 ﻿using HotBot.Core.Commands;
 using HotBot.Core.Intercom;
+using HotBot.Core.Irc;
 using HotBot.Core.Plugins;
+using HotBot.Core.Util;
 using HotBot.Plugins.Lottery;
 using HotBot.Plugins.Wallet;
 using Microsoft.Practices.Unity;
@@ -72,10 +74,10 @@ namespace HotBot.Plugins.Lottery
 		public void OnLotteryWinner(LotteryWinnerEvent message)
 		{
 			CurrentLottery = null;
-			//Bus.PublishSpecific(new ChatTransmitRequest(message.Lottery.Channel, $"Lottery finished, the winner is {message.Lottery.Winner.Name}!"));
+			message.Lottery.Channel.Say($"Lottery finished, the winner is {message.Lottery.Winner.Name}!");
 			var value = Wallets.GetCurrency(message.Lottery.Winner, LotteryCurrency);
 			Wallets.SetCurrency(message.Lottery.Winner, LotteryCurrency, value + message.Lottery.Pot);
-			//Bus.PublishSpecific(new ChatTransmitRequest(message.Lottery.Channel, $"{User.HandlePrefix}{message.Lottery.Winner.Name} Congrats, you have won {message.Lottery.Pot} blorps"));
+			message.Lottery.Winner.Whisper(message.Lottery.Channel, $"Congrats, you have won {message.Lottery.Pot} {LotteryCurrency}");
 		}
 
 		[Command("joinlottery")]
@@ -83,31 +85,22 @@ namespace HotBot.Plugins.Lottery
 		{
 			if (CurrentLottery == null)
 			{
-				//Bus.PublishSpecific(new ChatTransmitRequest(info.Channel, $"@{info.User.Name}, there is no lottery right now :("));
+				info.User.Whisper(info.Channel, $"There is no lottery right now :(");
 			}
 			else
 			{
-				if (CurrentLottery.Participants.Contains(info.User))
+				if (!CurrentLottery.Participants.Contains(info.User))
 				{
-					//Bus.PublishSpecific(new ChatTransmitRequest(info.Channel, $""));
-				}
-				else
-				{
-					bool success = true;
 					try
 					{
 						CurrentLottery.Join(info.User);
 					}
 					catch (LotteryException ex)
 					{
-						success = false;
-						//Bus.PublishSpecific(new ChatTransmitRequest(info.Channel, $"@{info.User.Name} ERROR: {ex.Message}"));
+						Console.WriteLine(ex.ToString());
 						return;
 					}
-					if (success)
-					{
-						//Bus.PublishSpecific(new ChatTransmitRequest(info.Channel, $"New lottery participant: (@{info.User.Name})"));
-					}
+					info.Channel.Broadcast($"New lottery participant: (@{info.User.Name})");
 				}
 			}
 		}
@@ -121,11 +114,11 @@ namespace HotBot.Plugins.Lottery
 				CurrentLottery.Pot = 1000;
 				CurrentLottery.Duration = TimeSpan.FromMinutes(1);
 				CurrentLottery.Start(info.Channel);
-				//Bus.PublishSpecific(new ChatTransmitRequest(info.Channel, "A new lottery has been started. You have 1 minute to type !joinlottery to participate :D"));
+				info.Channel.Broadcast("A new lottery has been started. You have 1 minute to type !joinlottery to participate :D");
 			}
 			else
 			{
-				//Bus.PublishSpecific(new ChatTransmitRequest(info.Channel, "A lottery is already running"));
+				info.User.Whisper(info.Channel, "A lottery is already running");
 			}
 		}
 	}
