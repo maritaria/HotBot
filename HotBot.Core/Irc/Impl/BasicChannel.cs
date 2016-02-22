@@ -78,7 +78,14 @@ namespace HotBot.Core.Irc.Impl
 
 		public void Say(string message)
 		{
+			Verify.NotNull(message, "message");
 			Connection.SendCommand($"PRIVMSG #{Name} :{message}");
+		}
+
+		public void Broadcast(string message)
+		{
+			Verify.NotNull(message, "message");
+			Say($"/me {message}");
 		}
 	}
 }
