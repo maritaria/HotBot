@@ -39,12 +39,14 @@ namespace HotBot.Core.Irc.Impl
 			}
 		}
 
-		public BasicTwitchConnector(TwitchApi api, IUnityContainer dependencyInjector)
+		public BasicTwitchConnector(TwitchApi api, IUnityContainer dependencyInjector, ProtocolDecoder decoder)
 		{
 			Verify.NotNull(api, "api");
 			Verify.NotNull(dependencyInjector, "dependencyInjector");
+			Verify.NotNull(decoder, "decoder");
 			Api = api;
 			DependencyInjector = dependencyInjector;
+			Decoder = decoder;
 		}
 
 		public Channel GetConnection(string channelName)
