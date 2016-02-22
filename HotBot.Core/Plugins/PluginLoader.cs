@@ -7,6 +7,8 @@ namespace HotBot.Core.Plugins
 	/// </summary>
 	public interface PluginLoader : Publisher
 	{
+		PluginManager Manager { get; set; }
+
 		/// <summary>
 		/// Gets the directory the plugins are loaded from.
 		/// </summary>

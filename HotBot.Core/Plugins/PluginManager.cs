@@ -12,7 +12,7 @@ namespace HotBot.Core.Plugins
 		/// Gets the object that used for loading the plugins
 		/// </summary>
 		PluginLoader Loader { get; }
-
+		
 		/// <summary>
 		/// Registers a plugin to be managed by the current PluginManager.
 		/// The plugin does not get automatically loaded.

@@ -1,10 +1,10 @@
 ﻿using HotBot.Core.Intercom;
 using HotBot.Core.Irc;
-using HotBot.Core.Irc.Impl;
 using HotBot.Core.Plugins;
 using Microsoft.Practices.Unity;
 using System;
 using System.Linq;
+using System.Threading;
 
 namespace HotBot
 {
@@ -41,6 +41,10 @@ namespace HotBot
 		{
 			Bus.Subscribe(this);
 			PluginManager.LoadAll();
+			while (true)
+			{
+				Thread.Sleep(1);
+			}
 		}
 
 		private void JoinPrimaryChannel()

@@ -1,10 +1,12 @@
 ﻿using HotBot.Core.Intercom;
+using HotBot.Core.Unity;
 using HotBot.Core.Util;
 using System;
 using System.Linq;
 
 namespace HotBot.Core.Irc.Impl
 {
+	[RegisterFor(typeof(WhisperConnection))]
 	public sealed class BasicWhisperConnection : WhisperConnection
 	{
 		public IrcConnection Connection { get; }

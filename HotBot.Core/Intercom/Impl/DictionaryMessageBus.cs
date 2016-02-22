@@ -1,4 +1,6 @@
-﻿using HotBot.Core.Util;
+﻿using HotBot.Core.Unity;
+using HotBot.Core.Util;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +8,8 @@ using System.Reflection;
 
 namespace HotBot.Core.Intercom.Impl
 {
+	[RegisterFor(typeof(MessageBus))]
+	[RegisterLifetime(typeof(ContainerControlledLifetimeManager))]
 	public sealed class DictionaryMessageBus : MessageBus
 	{
 		private Dictionary<Type, Dictionary<object, MethodInfo>> _subscribers = new Dictionary<Type, Dictionary<object, MethodInfo>>();

@@ -1,5 +1,7 @@
 ﻿using HotBot.Core.Intercom;
+using HotBot.Core.Unity;
 using HotBot.Core.Util;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +9,8 @@ using System.Reflection;
 
 namespace HotBot.Core.Commands
 {
+	[RegisterFor(typeof(CommandManager))]
+	[RegisterLifetime(typeof(ContainerControlledLifetimeManager))]
 	public sealed class ReflectionCommandManager : CommandManager
 	{
 		private Dictionary<string, Dictionary<object, MethodInfo>> _handlers = new Dictionary<string, Dictionary<object, MethodInfo>>();

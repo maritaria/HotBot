@@ -1,9 +1,11 @@
-﻿using HotBot.Core.Util;
+﻿using HotBot.Core.Unity;
+using HotBot.Core.Util;
 using System;
 using System.Linq;
 
 namespace HotBot.Core.Irc.Impl
 {
+	[RegisterFor(typeof(ProtocolDecoder))]
 	public sealed class BasicProtocolDecoder : ProtocolDecoder
 	{
 		public const string PingCommand = "PING";

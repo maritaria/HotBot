@@ -108,6 +108,9 @@
     <Compile Include="Irc\WhisperConnection.cs" />
     <Compile Include="Irc\WhisperEventArgs.cs" />
     <Compile Include="Intercom\MessageBusExtensions.cs" />
+    <Compile Include="Unity\RegisterLifetime.cs" />
+    <Compile Include="Unity\HotBotRegistrationConvention.cs" />
+    <Compile Include="Plugins\Impl\UnityPluginLoader.cs" />
     <Compile Include="Plugins\PluginCreatedEvent.cs" />
     <Compile Include="Plugins\PluginDependencyAttribute.cs" />
     <Compile Include="Intercom\Publisher.cs" />
@@ -119,6 +122,8 @@
     <Compile Include="Plugins\Impl\AssemblyPluginLoader.cs" />
     <Compile Include="Plugins\PluginLoadEvent.cs" />
     <Compile Include="Plugins\PluginLoadException.cs" />
+    <Compile Include="Unity\RegisterForAttribute.cs" />
+    <Compile Include="Unity\RegisterNameAttribute.cs" />
     <Compile Include="Util\TwitchColor.cs" />
     <Compile Include="Util\TwitchEmotes.cs" />
     <Compile Include="Permissions\Authorizer.cs" />

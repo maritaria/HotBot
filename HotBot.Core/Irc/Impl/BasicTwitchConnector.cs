@@ -1,4 +1,5 @@
-﻿using HotBot.Core.Util;
+﻿using HotBot.Core.Unity;
+using HotBot.Core.Util;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 
 namespace HotBot.Core.Irc.Impl
 {
+	[RegisterFor(typeof(TwitchConnector))]
 	public sealed class BasicTwitchConnector : TwitchConnector
 	{
 		private Dictionary<ConnectionInfo, IrcConnection> _connections = new Dictionary<ConnectionInfo, IrcConnection>();

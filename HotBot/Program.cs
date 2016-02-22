@@ -1,8 +1,13 @@
-﻿using HotBot.Core.Commands;
+﻿using HotBot.Core;
+using HotBot.Core.Commands;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using System;
 using System.Linq;
+using System.Reflection;
+using System.Collections.Generic;
+using HotBot.Core.Util;
+using HotBot.Core.Unity;
 
 namespace HotBot
 {
@@ -10,28 +15,35 @@ namespace HotBot
 	{
 		private static void Main(string[] args)
 		{
-			UnityContainer container = CreateContainer();
-			InitializeConfig(container);
+			var container = CreateContainer();
+			container.RegisterTypes(new HotBotRegistrationConvention(Assembly.GetExecutingAssembly()));
+			container.RegisterTypes(new HotBotRegistrationConvention(typeof(HotBotRegistrationConvention).Assembly));
+			ApplyUnityConfig(container);
+			InitializeMasterConfig(container);
 			InitializeInstances(container);
 		}
 
-		private static UnityContainer CreateContainer()
+		private static IUnityContainer CreateContainer()
 		{
 			var container = new UnityContainer();
-			var section = (UnityConfigurationSection)System.Configuration.ConfigurationManager.GetSection("unity");
-			section.Configure(container);
 			container.RegisterInstance(typeof(IUnityContainer), container, new ContainerControlledLifetimeManager());
 			return container;
 		}
 
-		private static void InitializeConfig(UnityContainer container)
+		private static void ApplyUnityConfig(IUnityContainer container)
+		{
+			var section = (UnityConfigurationSection)System.Configuration.ConfigurationManager.GetSection("unity");
+			section.Configure(container);
+		}
+
+		private static void InitializeMasterConfig(IUnityContainer container)
 		{
 			MasterConfig config = new MasterConfig();
 			container.RegisterInstance(config, new ContainerControlledLifetimeManager());
 			container.RegisterInstance<CommandManagerConfig>(config, new ExternallyControlledLifetimeManager());
 		}
 
-		private static void InitializeInstances(UnityContainer container)
+		private static void InitializeInstances(IUnityContainer container)
 		{
 			container.Resolve<ChatCommandScanner>();
 			var bot = container.Resolve<TwitchBot>();

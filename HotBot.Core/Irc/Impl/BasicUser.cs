@@ -1,4 +1,5 @@
 ﻿using HotBot.Core.Permissions;
+using HotBot.Core.Unity;
 using HotBot.Core.Util;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -6,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotBot.Core.Irc.Impl
 {
+	[RegisterFor(typeof(User))]
 	public class BasicUser : User
 	{
 		//TODO: Store this somewhere safe.

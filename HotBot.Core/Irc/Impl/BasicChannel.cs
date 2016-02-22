@@ -1,4 +1,5 @@
 ﻿using HotBot.Core.Intercom;
+using HotBot.Core.Unity;
 using HotBot.Core.Util;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 
 namespace HotBot.Core.Irc.Impl
 {
+	[RegisterFor(typeof(Channel))]
 	public sealed class BasicChannel : Channel
 	{
 		private List<User> _activeUsers = new List<User>();

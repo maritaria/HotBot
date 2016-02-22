@@ -1,4 +1,5 @@
 ﻿using HotBot.Core.Intercom;
+using HotBot.Core.Unity;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Reflection;
 
 namespace HotBot.Core.Plugins.Impl
 {
+	[RegisterFor(typeof(PluginLoader))]
 	internal sealed class AssemblyPluginLoader : PluginLoader
 	{
 		public const string PluginAssemblyNamePrefix = "HotBot.Plugins.";
@@ -20,6 +22,8 @@ namespace HotBot.Core.Plugins.Impl
 
 		[Dependency]
 		public MessageBus Bus { get; set; }
+		
+		public PluginManager Manager { get; set; }
 
 		public AssemblyPluginLoader()
 		{
@@ -30,7 +34,7 @@ namespace HotBot.Core.Plugins.Impl
 		{
 			foreach (string assemblyFilename in FindPluginAssemblyFilenames())
 			{
-				LoadAssembly(assemblyFilename);
+				var assembly = LoadAssembly(assemblyFilename);
 			}
 		}
 
@@ -67,7 +71,9 @@ namespace HotBot.Core.Plugins.Impl
 				throw new ArgumentException($"Assembly '{assembly.FullName}' doesn't have a PluginAssemblyAttribute", "assembly");
 			}
 			DependencyContainer.RegisterType(attr.PluginClass, new ContainerControlledLifetimeManager());
-			return (Plugin)DependencyContainer.Resolve(attr.PluginClass);
+			var overrides = new DependencyOverrides();
+			overrides.Add(typeof(PluginManager), Manager);
+			return (Plugin)DependencyContainer.Resolve(attr.PluginClass, overrides);
 		}
 
 		private void PublishPlugin(Plugin plugin)

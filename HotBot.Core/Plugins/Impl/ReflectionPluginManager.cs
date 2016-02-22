@@ -1,4 +1,5 @@
 ﻿using HotBot.Core.Intercom;
+using HotBot.Core.Unity;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -6,15 +7,29 @@ using System.Linq;
 
 namespace HotBot.Core.Plugins.Impl
 {
+	[RegisterFor(typeof(PluginManager))]
+	[RegisterLifetime(typeof(ContainerControlledLifetimeManager))]
 	public class ReflectionPluginManager : PluginManager
 	{
 		private Dictionary<string, Plugin> _namedPlugins = new Dictionary<string, Plugin>();
 		private Dictionary<Type, Plugin> _typedPlugins = new Dictionary<Type, Plugin>();
+		private PluginLoader _loader;
 
 		[Dependency]
-		public PluginLoader Loader { get; set; }
+		public PluginLoader Loader
+		{
+			get { return _loader; }
+			set
+			{
+				_loader = value;
+				if (value != null)
+				{
+					value.Manager = this;
+				}
+			}
+		}
 
-		public MessageBus Bus { get; }
+		public MessageBus Bus { get; }//TODO CREATE BASE CLASS FOR MESSAGEBUS COMPONENTS
 
 		public ReflectionPluginManager(MessageBus bus)
 		{

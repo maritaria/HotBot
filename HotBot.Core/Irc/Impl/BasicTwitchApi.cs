@@ -1,4 +1,5 @@
-﻿using HotBot.Core.Util;
+﻿using HotBot.Core.Unity;
+using HotBot.Core.Util;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Net;
 
 namespace HotBot.Core.Irc.Impl
 {
+	[RegisterFor(typeof(TwitchApi))]
 	public sealed class BasicTwitchApi : TwitchApi
 	{
 		private WebClient _client = new WebClient();
