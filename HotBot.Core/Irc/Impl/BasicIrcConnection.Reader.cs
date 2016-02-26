@@ -41,7 +41,11 @@ namespace HotBot.Core.Irc.Impl
 			{
 				while (!_cancellation.IsCancellationRequested)
 				{
-					HandleReceivedData(_stream.ReadLine());
+					string line = _stream.ReadLine();
+					if (line != null)
+					{
+						HandleReceivedData(line);
+					}
 					/*
 					var task = _stream.ReadAsync(_buffer, 0, _buffer.Length, _cancellation.Token);
 					task.Wait(_cancellation.Token);
