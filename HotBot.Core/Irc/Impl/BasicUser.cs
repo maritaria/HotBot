@@ -15,8 +15,8 @@ namespace HotBot.Core.Irc.Impl
 
 		public const char HandlePrefix = '@';//TODO: Store this somewhere safe
 
-		[Key]
-		public Guid Id { get; private set; } = Guid.NewGuid();
+		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public Guid Id { get; protected set; }
 
 		[Index(IsUnique = true)]
 		[StringLength(Verify.MaximumUsernameLength, MinimumLength = Verify.MinimumUsernameLength)]
@@ -24,15 +24,16 @@ namespace HotBot.Core.Irc.Impl
 		
 		public UserRole Role { get; set; } = UserRole.User;
 
-		public BasicUser(string name)
-		{
-			Verify.Username(name, "name");
-			Name = name;
-		}
 
 		protected BasicUser()
 		{
 
+		}
+
+		public BasicUser(string name)
+		{
+			Verify.Username(name, "name");
+			Name = name;
 		}
 
 	}
