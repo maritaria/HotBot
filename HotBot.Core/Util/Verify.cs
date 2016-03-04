@@ -62,6 +62,7 @@ namespace HotBot.Core.Util
 			MinimumLength(username, MinimumUsernameLength, paramName);
 			MaximumLength(username, MaximumUsernameLength, paramName);
 		}
+
 		public const int MinimumChannelNameLength = MinimumUsernameLength;
 		public const int MaximumChannelNameLength = MaximumUsernameLength;
 
@@ -92,11 +93,18 @@ namespace HotBot.Core.Util
 			NotNullOrEmpty(node, paramName);
 			NoSpaces(node, paramName);
 			MaximumLength(node, MaximumPermissionNodeLength, paramName);
-			if (!node.All(c=> char.IsLetterOrDigit(c) || c == PermissionNodeSeparator))
+			if (!node.All(c => char.IsLetterOrDigit(c) || c == PermissionNodeSeparator))
 			{
 				throw new ArgumentException("May only contain alphanumeric characters and the permission-node separator");
 			}
 		}
 
+		public const int MaximumCurrencyLength = 64;
+
+		public static void Currency(string currency, string paramName)
+		{
+			NotNullOrEmpty(currency, paramName);
+			MaximumLength(currency, MaximumCurrencyLength, paramName);
+		}
 	}
 }

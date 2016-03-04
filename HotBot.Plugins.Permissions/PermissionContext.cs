@@ -2,7 +2,6 @@
 using HotBot.Core.Util;
 using System;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 
 namespace HotBot.Plugins.Permissions
@@ -11,12 +10,7 @@ namespace HotBot.Plugins.Permissions
 	{
 		public DbSet<PermissionNode> Nodes { get; set; }
 		public DbSet<UserGroup> Groups { get; set; }
-		public PermissionContext()
-		{
-			Database.Log = s=> Debug.Write(s);
-		}
-
-
+		
 		public UserGroup GetUserGroup(User user)
 		{
 			Verify.NotNull(user, "user");
@@ -38,7 +32,7 @@ namespace HotBot.Plugins.Permissions
 			Verify.NotNull(user, "user");
 			Verify.UserGroup(group, "group");
 			var userGroup = GetUserGroup(user);
-			if (userGroup== null)
+			if (userGroup == null)
 			{
 				InsertUserGroup(user, group);
 			}
@@ -55,7 +49,7 @@ namespace HotBot.Plugins.Permissions
 
 		private void InsertUserGroup(User user, string group)
 		{
-			UserGroup usergroup = new UserGroup { UserId = user.Id, Group = group};
+			UserGroup usergroup = new UserGroup { UserId = user.Id, Group = group };
 			Groups.Add(usergroup);
 		}
 	}

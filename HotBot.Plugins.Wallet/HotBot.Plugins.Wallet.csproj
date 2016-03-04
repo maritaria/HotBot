@@ -68,7 +68,7 @@
     <Compile Include="WalletContext.cs" />
     <Compile Include="WalletPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WalletValue.cs" />
+    <Compile Include="UserWallet.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotBot.Core\HotBot.Core.csproj">

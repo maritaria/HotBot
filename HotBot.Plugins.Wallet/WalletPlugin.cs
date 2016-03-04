@@ -1,6 +1,7 @@
 ﻿using HotBot.Core.Intercom;
 using HotBot.Core.Irc;
 using HotBot.Core.Plugins;
+using HotBot.Core.Util;
 using HotBot.Plugins.Wallet;
 using Microsoft.Practices.Unity;
 using System;
@@ -34,19 +35,13 @@ namespace HotBot.Plugins.Wallet
 			Bus.Unsubscribe(this);
 		}
 
-		public double GetCurrency(User walletOwner, string currency)
+		public double GetCurrency(User user, string currency)
 		{
-			if (walletOwner == null)
-			{
-				throw new ArgumentNullException("walletOwner");
-			}
-			if (string.IsNullOrEmpty("currency"))
-			{
-				throw new ArgumentException("Cannot be null or empty", "currency");
-			}
+			Verify.NotNull(user, "user");
+			Verify.Currency(currency, "currency");
 			using (var context = new WalletContext())
 			{
-				var wallet = context.WalletValues.FirstOrDefault(w => w.OwnerId == walletOwner.Id);
+				var wallet = context.GetWalletValue(user, currency);
 				if (wallet == null)
 				{
 					return 0;
@@ -55,18 +50,24 @@ namespace HotBot.Plugins.Wallet
 			}
 		}
 
-		public void SetCurrency(User walletOwner, string currency, double value)
+		public void SetCurrency(User user, string currency, double value)
 		{
+			Verify.NotNull(user, "user");
+			Verify.Currency(currency, "currency");
 			using (var context = new WalletContext())
 			{
-				var wallet = context.WalletValues.FirstOrDefault(w => w.OwnerId == walletOwner.Id);
-				if (wallet == null)
-				{
-					wallet = new WalletValue(walletOwner, currency);
-					context.WalletValues.Add(wallet);
-				}
+				var wallet = context.GetOrCreateWalletValue(user, currency);
 				wallet.Value += value;
 				context.SaveChanges();
+			}
+		}
+
+		public void RemoveCurrency(string currency)
+		{
+			Verify.Currency(currency, "currency");
+			using (var context = new WalletContext())
+			{
+				IQueryable<UserWallet> wallets = context.GetWallets(currency);
 			}
 		}
 	}

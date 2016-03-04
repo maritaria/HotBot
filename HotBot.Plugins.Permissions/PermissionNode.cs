@@ -9,7 +9,7 @@ namespace HotBot.Plugins.Permissions
 	{
 		private const string UniqueConstraintName = "UniqueNodePerUser";
 
-		[Key]
+		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public Guid NodeId { get; set; }
 
 		[MaxLength(Verify.MaximumPermissionNodeLength)]
