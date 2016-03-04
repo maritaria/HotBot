@@ -37,6 +37,22 @@ namespace HotBot.Core.Util
 			}
 		}
 
+		public static void NoSpaces(string value, string paramName)
+		{
+			if (value.Any(char.IsWhiteSpace))
+			{
+				throw new ArgumentException("Cannot contain any whitespaces", paramName);
+			}
+		}
+
+		public static void AlphanumericOnly(string value, string paramName)
+		{
+			if (!value.All(char.IsLetterOrDigit))
+			{
+				throw new ArgumentException("Cannot contain non-alphanumeric characters");
+			}
+		}
+
 		public const int MinimumUsernameLength = 4;
 		public const int MaximumUsernameLength = 25;
 
@@ -46,7 +62,6 @@ namespace HotBot.Core.Util
 			MinimumLength(username, MinimumUsernameLength, paramName);
 			MaximumLength(username, MaximumUsernameLength, paramName);
 		}
-
 		public const int MinimumChannelNameLength = MinimumUsernameLength;
 		public const int MaximumChannelNameLength = MaximumUsernameLength;
 
@@ -60,10 +75,28 @@ namespace HotBot.Core.Util
 		public static void CommandName(string commandName, string paramName)
 		{
 			NotNullOrEmpty(commandName, paramName);
-			if (commandName.Any(char.IsWhiteSpace))
+			NoSpaces(commandName, paramName);
+		}
+
+		public static void UserGroup(string group, string paramName)
+		{
+			NotNullOrEmpty(group, paramName);
+			NoSpaces(group, paramName);
+		}
+
+		public const char PermissionNodeSeparator = '.';
+		public const int MaximumPermissionNodeLength = 64;
+
+		public static void PermissionNode(string node, string paramName)
+		{
+			NotNullOrEmpty(node, paramName);
+			NoSpaces(node, paramName);
+			MaximumLength(node, MaximumPermissionNodeLength, paramName);
+			if (!node.All(c=> char.IsLetterOrDigit(c) || c == PermissionNodeSeparator))
 			{
-				throw new ArgumentException("cannot contain whitespace(s)", paramName);
+				throw new ArgumentException("May only contain alphanumeric characters and the permission-node separator");
 			}
 		}
+
 	}
 }
