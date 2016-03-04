@@ -3,7 +3,7 @@ using System;
 
 namespace HotBot.Core.Irc
 {
-	public interface User : Authorizer
+	public interface User
 	{
 		Guid Id { get; }
 		string Name { get; }

@@ -21,9 +21,6 @@ namespace HotBot.Core.Irc.Impl
 		[Index(IsUnique = true)]
 		[StringLength(Verify.MaximumUsernameLength, MinimumLength = Verify.MinimumUsernameLength)]
 		public string Name { get; private set; }
-		
-		public UserRole Role { get; set; } = UserRole.User;
-
 
 		protected BasicUser()
 		{

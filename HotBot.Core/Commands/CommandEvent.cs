@@ -19,9 +19,9 @@ namespace HotBot.Core.Commands
 		public Channel Channel { get; }
 
 		/// <summary>
-		/// Gets or sets the entity holding the permissions available for the command
+		/// Gets or sets the user holding the permissions available for the command
 		/// </summary>
-		public Authorizer Authorizer { get; set; }
+		public User Authorizer { get; set; }
 
 		/// <summary>
 		/// The name of the command
