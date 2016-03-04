@@ -127,7 +127,6 @@
     <Compile Include="Unity\RegisterNameAttribute.cs" />
     <Compile Include="Util\TwitchColor.cs" />
     <Compile Include="Util\TwitchEmotes.cs" />
-    <Compile Include="Permissions\UserRole.cs" />
     <Compile Include="Commands\ChatCommandScanner.cs" />
     <Compile Include="Commands\CommandEvent.cs" />
     <Compile Include="Plugins\Plugin.cs" />
